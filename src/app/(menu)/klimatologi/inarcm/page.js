@@ -9,7 +9,7 @@ export default function Inarcm() {
         </h1>
         <div className="grow relative">
           <div id="map" className="h-full relative z-0"></div>
-          <div className="absolute z-10 top-0 right-0">
+          {/* <div className="absolute z-10 top-0 right-0">
             <div className="flex flex-col">
               <button
                 type="button"
@@ -26,7 +26,7 @@ export default function Inarcm() {
                 Temp
               </button>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 
