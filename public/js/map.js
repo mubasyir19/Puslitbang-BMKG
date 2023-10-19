@@ -11,31 +11,57 @@ L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png', {
 }).addTo(map)
 
 // tempLayer()
-windLayer()
+// windLayer()
+
+const windLayerGroup = L.layerGroup()
+const tempLayerGroup = L.layerGroup()
+
+let windLayerActive = false
+let tempLayerActive = false
 
 function windLayer() {
-  var url_u = 'https://tes-leaflet-be.vercel.app/api/storage/U.asc'
-  var url_v = 'https://tes-leaflet-be.vercel.app/api/storage/V.asc'
-  var urls = [url_u, url_v]
-  var promises = urls.map((url) => fetch(url).then((r) => r.text()))
-  Promise.all(promises).then(function (arrays) {
-    let vf = L.VectorField.fromASCIIGrids(arrays[0], arrays[1], 50)
-    let layer = L.canvasLayer.vectorFieldAnim(vf).addTo(map)
-    map.fitBounds(layer.getBounds())
-  })
+  if (!windLayerActive) {
+    var url_u = 'https://tes-leaflet-be.vercel.app/api/storage/U.asc'
+    var url_v = 'https://tes-leaflet-be.vercel.app/api/storage/V.asc'
+    var urls = [url_u, url_v]
+    var promises = urls.map((url) => fetch(url).then((r) => r.text()))
+    Promise.all(promises).then(function (arrays) {
+      let vf = L.VectorField.fromASCIIGrids(arrays[0], arrays[1], 50)
+      let windLayerInstance = L.canvasLayer.vectorFieldAnim(vf).addTo(map)
+      map.fitBounds(windLayerInstance.getBounds())
+
+      windLayerActive = true
+      tempLayerActive = false
+    })
+  }
 }
 
 function tempLayer() {
-  var url_t = 'https://tes-leaflet-be.vercel.app/api/storage/T.asc'
-  var urls = [url_t]
-  var promises = urls.map((url) => fetch(url).then((r) => r.text()))
-  Promise.all(promises).then(function (arrays) {
-    var s = L.ScalarField.fromASCIIGrid(arrays[0])
-    var layer = L.canvasLayer
-      .scalarField(s, {
-        color: chroma.scale('OrRd').domain(s.range),
-      })
-      .addTo(map)
-    map.fitBounds(layer.getBounds())
-  })
+  if (!tempLayerActive) {
+    var url_t = 'https://tes-leaflet-be.vercel.app/api/storage/T.asc'
+    var urls = [url_t]
+    var promises = urls.map((url) => fetch(url).then((r) => r.text()))
+    Promise.all(promises).then(function (arrays) {
+      var s = L.ScalarField.fromASCIIGrid(arrays[0])
+      let tempLayerInstance = L.canvasLayer
+        .scalarField(s, {
+          color: chroma.scale('OrRd').domain(s.range),
+        })
+        .addTo(map)
+      map.fitBounds(tempLayerInstance.getBounds())
+
+      tempLayerActive = true
+      windLayerActive = false
+    })
+  }
 }
+
+const windId = document.getElementById('ButtonWind')
+const toogleWind = windId.addEventListener('click', function () {
+  windLayer()
+})
+
+const tempId = document.getElementById('ButtonTemp')
+const toogleTemp = tempId.addEventListener('click', function () {
+  tempLayer()
+})
