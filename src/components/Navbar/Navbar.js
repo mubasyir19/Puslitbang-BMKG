@@ -93,12 +93,13 @@ export default function Navbar() {
             Geofisika
           </button>
 
-          <Link
-            href="/artikel"
+          <button
             className="p-2 hover:underline hover:underline-offset-4"
+            onClick={() => changeSubMenu('artikel')}
           >
             Artikel
-          </Link>
+          </button>
+
           <Link
             href="/profil"
             className="p-2 hover:underline hover:underline-offset-4"
@@ -205,7 +206,22 @@ export default function Navbar() {
                       <Link href="/">Product3</Link>
                     </div>
                   )}
-                  <Link href="/artikel">Artikel</Link>
+                  <button
+                    className={`${
+                      openSubmenuResponsive === 'artikel'
+                        ? 'underline underline-offset-4'
+                        : ''
+                    }`}
+                    onClick={() => changeSubMenuResponsive('artikel')}
+                  >
+                    Artikel
+                  </button>
+                  {openSubmenuResponsive === 'artikel' && (
+                    <div className="w-full flex flex-col mx-auto py-4 px-10 gap-y-3 bg-background rounded-lg">
+                      <Link href="#">Berita</Link>
+                      <Link href="https://jmg.bmkg.go.id/">JMG</Link>
+                    </div>
+                  )}
                   <Link href="/profil">Profil</Link>
                 </div>
               </div>
@@ -217,10 +233,16 @@ export default function Navbar() {
         <div className="bg-background text-white">
           <div className="mx-auto max-w-6xl flex">
             <div className="my-auto">Klimatologi</div>
-            <div className="ml-60 py-4">
-              <p>Klimatologi1</p>
-              <p>Klimatologi2</p>
-              <p>Klimatologi3</p>
+            <div className="flex flex-col ml-60 py-4">
+              <Link href="#" className="hover:text-sky-400" target="_blank">
+                InaRCM
+              </Link>
+              <Link href="#" className="hover:text-sky-400" target="_blank">
+                Hotspot Occurrence
+              </Link>
+              <Link href="#" className="hover:text-sky-400" target="_blank">
+                InaAQM
+              </Link>
             </div>
           </div>
         </div>
@@ -229,10 +251,10 @@ export default function Navbar() {
         <div className="bg-background text-white">
           <div className="mx-auto max-w-6xl flex">
             <div className="my-auto">Meteorologi</div>
-            <div className="ml-60 py-4">
-              <p>Meteorologi1</p>
-              <p>Meteorologi2</p>
-              <p>Meteorologi3</p>
+            <div className="flex flex-col ml-60 py-4">
+              <Link href="#" className="hover:text-sky-400" target="_blank">
+                InaNWP
+              </Link>
             </div>
           </div>
         </div>
@@ -241,10 +263,35 @@ export default function Navbar() {
         <div className="bg-background text-white">
           <div className="mx-auto max-w-6xl flex">
             <div className="my-auto">Geofisika</div>
-            <div className="ml-60 py-4">
-              <p>Geofisika1</p>
-              <p>Geofisika2</p>
-              <p>Geofisika3</p>
+            <div className="flex flex-col ml-60 py-4">
+              <Link href="#" className="hover:text-sky-400" target="_blank">
+                Geofisika1
+              </Link>
+              <Link href="#" className="hover:text-sky-400" target="_blank">
+                Geofisika2
+              </Link>
+              <Link href="#" className="hover:text-sky-400" target="_blank">
+                Geofisika3
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
+      {openSubmenu == 'artikel' && (
+        <div className="bg-background text-white">
+          <div className="mx-auto max-w-6xl flex">
+            <div className="my-auto">Artikel</div>
+            <div className="flex flex-col ml-60 py-4">
+              <Link href="#" className="hover:text-sky-400" target="_blank">
+                Berita
+              </Link>
+              <Link
+                href="https://jmg.bmkg.go.id/"
+                className="hover:text-sky-400"
+                target="_blank"
+              >
+                JMG (Jurnal Meteorologi dan Geofisika)
+              </Link>
             </div>
           </div>
         </div>
