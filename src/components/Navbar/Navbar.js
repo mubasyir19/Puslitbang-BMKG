@@ -90,7 +90,7 @@ export default function Navbar() {
             href="/profil"
             className="p-2 hover:underline hover:underline-offset-4"
           >
-            Profil
+            Profile
           </Link>
         </div>
       </div>
