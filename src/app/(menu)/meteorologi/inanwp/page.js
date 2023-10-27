@@ -7,7 +7,7 @@ export default function Inarcm() {
       <div className="h-full flex flex-col">
         <div className="grow relative">
           <div id="map" className="h-full relative z-0"></div>
-          <Components.NavbarMap title="Indonesia Regional Climate Model (InaRCM)" />
+          <Components.NavbarMap title="Indonesia Numerical Weather Prediction (InaNWP)" />
           {/* <div className="absolute z-10 top-0 right-0">
             <div className="flex flex-col">
               <button
@@ -33,7 +33,7 @@ export default function Inarcm() {
       <Script src="//d3js.org/d3.v4.min.js" />
       <Script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.4.2/chroma.min.js" />
       <Script src="/js/leaflet.canvaslayer.field.js" />
-      <Script src="/js/inarcm.js" />
+      <Script src="/js/inanwp.js" />
     </>
   )
 }
