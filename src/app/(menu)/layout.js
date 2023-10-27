@@ -24,8 +24,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className={poppins.className}>
-        <Components.Navbar />
-        <main className="h-screen bg-black pt-24">{children}</main>
+        <main className="h-screen">{children}</main>
       </body>
     </html>
   )
