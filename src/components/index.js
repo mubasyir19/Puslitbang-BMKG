@@ -1,4 +1,5 @@
 import Navbar from './Navbar/Navbar'
+import NavbarMap from './NavbarMap/NavbarMap'
 import Header from './Header/Header'
 import Footer from './Footer/Footer'
 import Footer2 from './Footer2/Footer2'
@@ -9,6 +10,7 @@ import Article from './Article/Article'
 
 const Components = {
   Navbar,
+  NavbarMap,
   Header,
   Footer,
   Footer2,

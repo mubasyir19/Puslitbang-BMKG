@@ -234,7 +234,11 @@ export default function Navbar() {
           <div className="mx-auto max-w-6xl flex">
             <div className="my-auto">Klimatologi</div>
             <div className="flex flex-col ml-60 py-4">
-              <Link href="#" className="hover:text-sky-400" target="_blank">
+              <Link
+                href="/klimatologi/inarcm"
+                className="hover:text-sky-400"
+                target="_blank"
+              >
                 InaRCM
               </Link>
               <Link href="#" className="hover:text-sky-400" target="_blank">
@@ -252,7 +256,11 @@ export default function Navbar() {
           <div className="mx-auto max-w-6xl flex">
             <div className="my-auto">Meteorologi</div>
             <div className="flex flex-col ml-60 py-4">
-              <Link href="#" className="hover:text-sky-400" target="_blank">
+              <Link
+                href="/meteorologi/inanwp"
+                className="hover:text-sky-400"
+                target="_blank"
+              >
                 InaNWP
               </Link>
             </div>
