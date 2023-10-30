@@ -8,24 +8,21 @@ export default function Inarcm() {
         <div className="grow relative">
           <div id="map" className="h-full relative z-0"></div>
           <Components.NavbarMap title="Indonesia Numerical Weather Prediction (InaNWP)" />
-          {/* <div className="absolute z-10 top-0 right-0">
-            <div className="flex flex-col">
-              <button
-                type="button"
-                className="p-4 text-white bg-slate-400 hover:bg-slate-200"
-                id="ButtonWind"
-              >
-                Wind
-              </button>
-              <button
-                type="button"
-                className="p-4 text-white bg-slate-400 hover:bg-slate-200"
-                id="ButtonTemp"
-              >
-                Temp
-              </button>
-            </div>
-          </div> */}
+          <div className="absolute bottom-0 z-10 flex w-screen">
+            <button
+              id="btnPrev"
+              className="bg-slate-400 p-4 rounded ml-1 flex-none"
+            >
+              {'<'}
+            </button>
+            <button
+              id="btnNext"
+              className="bg-slate-400 p-4 rounded ml-1 flex-none"
+            >
+              {'>'}
+            </button>
+            <input id="dateRange" type="range" className="grow mx-2" />
+          </div>
         </div>
       </div>
 
