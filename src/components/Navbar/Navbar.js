@@ -234,17 +234,13 @@ export default function Navbar() {
           <div className="mx-auto max-w-6xl flex">
             <div className="my-auto">Klimatologi</div>
             <div className="flex flex-col ml-60 py-4">
-              <Link
-                href="/klimatologi/inarcm"
-                className="hover:text-sky-400"
-                target="_blank"
-              >
+              <Link href="/klimatologi/inarcm" className="hover:text-sky-400">
                 InaRCM
               </Link>
-              <Link href="#" className="hover:text-sky-400" target="_blank">
+              <Link href="#" className="hover:text-sky-400">
                 Hotspot Occurrence
               </Link>
-              <Link href="#" className="hover:text-sky-400" target="_blank">
+              <Link href="#" className="hover:text-sky-400">
                 InaAQM
               </Link>
             </div>
@@ -256,11 +252,7 @@ export default function Navbar() {
           <div className="mx-auto max-w-6xl flex">
             <div className="my-auto">Meteorologi</div>
             <div className="flex flex-col ml-60 py-4">
-              <Link
-                href="/meteorologi/inanwp"
-                className="hover:text-sky-400"
-                target="_blank"
-              >
+              <Link href="/meteorologi/inanwp" className="hover:text-sky-400">
                 InaNWP
               </Link>
             </div>
@@ -272,13 +264,13 @@ export default function Navbar() {
           <div className="mx-auto max-w-6xl flex">
             <div className="my-auto">Geofisika</div>
             <div className="flex flex-col ml-60 py-4">
-              <Link href="#" className="hover:text-sky-400" target="_blank">
+              <Link href="#" className="hover:text-sky-400">
                 Geofisika1
               </Link>
-              <Link href="#" className="hover:text-sky-400" target="_blank">
+              <Link href="#" className="hover:text-sky-400">
                 Geofisika2
               </Link>
-              <Link href="#" className="hover:text-sky-400" target="_blank">
+              <Link href="#" className="hover:text-sky-400">
                 Geofisika3
               </Link>
             </div>
@@ -290,13 +282,12 @@ export default function Navbar() {
           <div className="mx-auto max-w-6xl flex">
             <div className="my-auto">Artikel</div>
             <div className="flex flex-col ml-60 py-4">
-              <Link href="#" className="hover:text-sky-400" target="_blank">
+              <Link href="#" className="hover:text-sky-400">
                 Berita
               </Link>
               <Link
                 href="https://jmg.bmkg.go.id/"
                 className="hover:text-sky-400"
-                target="_blank"
               >
                 JMG (Jurnal Meteorologi dan Geofisika)
               </Link>
