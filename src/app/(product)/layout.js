@@ -17,13 +17,14 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+        />
+      </head>
       <body className={poppins.className}>
-        <Components.Navbar />
-        <div className="h-20 bg-background bg-opacity-70"></div>
-        <div className="flex">
-          <main className="relative mx-auto max-w-6xl">{children}</main>
-        </div>
-        <Components.Footer2 />
+        <main className="h-screen">{children}</main>
       </body>
     </html>
   )

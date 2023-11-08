@@ -95,9 +95,9 @@ export default function AirQuality() {
 
   return (
     <section className="mt-32 ">
-      <div className="px-10 flex justify-between">
+      <div className="flex justify-between">
         <h2 className="font-bold text-black text-4xl">Kualitas Udara</h2>
-        <Link href="#" className="my-auto text-blue-400">
+        <Link href="#" className="my-auto text-blue-300">
           Lihat Semua
         </Link>
       </div>
