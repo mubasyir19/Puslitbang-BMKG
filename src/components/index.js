@@ -7,6 +7,9 @@ import Weather from './Weather/Weather'
 import Scope from './Scope/Scope'
 import AirQuality from './AirQuality/airQuality'
 import Article from './Article/Article'
+import SidebarDashboard from './Dashboard/Sidebar/Sidebar'
+import NavbarDashboard from './Dashboard/Navbar/Navbar'
+import FooterDashboard from './Dashboard/Footer/Footer'
 
 const Components = {
   Navbar,
@@ -18,6 +21,9 @@ const Components = {
   Scope,
   AirQuality,
   Article,
+  SidebarDashboard,
+  NavbarDashboard,
+  FooterDashboard,
 }
 
 export { Components }
