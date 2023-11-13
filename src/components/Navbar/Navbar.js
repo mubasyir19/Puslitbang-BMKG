@@ -218,7 +218,7 @@ export default function Navbar() {
                   </button>
                   {openSubmenuResponsive === 'artikel' && (
                     <div className="w-full flex flex-col mx-auto py-4 px-10 gap-y-3 bg-background rounded-lg">
-                      <Link href="#">Berita</Link>
+                      <Link href="/">Berita</Link>
                       <Link href="https://jmg.bmkg.go.id/">JMG</Link>
                     </div>
                   )}
@@ -282,7 +282,7 @@ export default function Navbar() {
           <div className="mx-auto max-w-6xl flex">
             <div className="my-auto">Artikel</div>
             <div className="flex flex-col ml-60 py-4">
-              <Link href="#" className="hover:text-sky-400">
+              <Link href="/berita" className="hover:text-sky-400">
                 Berita
               </Link>
               <Link
