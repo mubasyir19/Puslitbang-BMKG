@@ -14,7 +14,7 @@ module.exports = {
         'image-meteo': "url('/images/meteo.png')",
         'image-climate': "url('/images/climate.png')",
         'image-geo': "url('/images/geo.png')",
-        background: "url('/images/background.png')",
+        'image-background': "url('/images/background.png')",
       },
       colors: {
         background: '#00104A',
