@@ -6,8 +6,60 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { Autoplay, Pagination } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/pagination'
+import { useCallback, useEffect, useState } from 'react'
+// import { useCallback } from 'react'
+import { getDataWeather } from '@/services/weather'
+// import { data } from 'autoprefixer'
 
 export default function Weather() {
+  const [wilayah, setWilayah] = useState([])
+  const [weather, setWeather] = useState([])
+  const [temperature, setTemperature] = useState([])
+
+  useEffect(() => {
+    const fetchDataWeather = async () => {
+      const responseData = await getDataWeather()
+
+      const filteredParamData = responseData.map((d) => {
+        const filterWeather = d.Parameter.filter(
+          (param) => param.Id === 'weather',
+        )
+
+        const filterTemperature = d.Parameter.filter(
+          (param) => param.Id === 't',
+        )
+
+        // const response = {
+        //   ID: d.ID,
+        //   Kota: d.Kota,
+        //   Provinsi: d.Provinsi,
+        //   Latitude: d.Latitude,
+        //   Longtitude: d.Longitude,
+        //   Coordinate: d.Coordinate,
+        //   Weather: filterWeather,
+        //   Temperature: filterTemperature,
+        // }
+
+        return {
+          ID: d.ID,
+          Kota: d.Kota,
+          Provinsi: d.Provinsi,
+          Latitude: d.Latitude,
+          Longtitude: d.Longitude,
+          Coordinate: d.Coordinate,
+          Weather: filterWeather,
+          Temperature: filterTemperature,
+        }
+      })
+
+      setWilayah(filteredParamData)
+      // console.log('result :', responseData)
+      console.log('test :', filteredParamData)
+    }
+
+    fetchDataWeather()
+  }, [])
+
   const WEATHER_DATA = [
     {
       place: 'Jakarta',
@@ -89,18 +141,120 @@ export default function Weather() {
         modules={[Autoplay, Pagination]}
         className=""
       >
-        {WEATHER_DATA.map((data, index) => (
+        {wilayah.map((data, index) => (
           <SwiperSlide
             key={index}
             className="card p-5 bg-black bg-opacity-40 w-[175px] h-[287px] text-white text-center rounded-3xl border-2 border-white"
           >
-            <p className="font-medium text-lg">{data.place}</p>
+            <p className="font-medium text-lg">{data.Kota}</p>
             <p className="font-medium text-md">{data.time}</p>
+            {/* {data.Weather[0].Elements.map((hour, i) => {
+              return (
+                <p key={i} className="font-medium text-md">
+                  {hour.h} == {hour.elements[0].value}
+                </p>
+              )
+            })} */}
             <div className="flex justify-center">
-              <Image src={data.img} width={101} height={101} alt="icon" />
+              {data.Weather[0].Elements[0].elements[0].value === '0' ? (
+                <Image
+                  src="/images/cerah.png"
+                  width={101}
+                  height={101}
+                  alt="icon"
+                />
+              ) : data.Weather[0].Elements[0].elements[0].value === '1' ? (
+                <Image
+                  src="/images/cerah-berawan.png"
+                  width={101}
+                  height={101}
+                  alt="icon"
+                />
+              ) : data.Weather[0].Elements[0].elements[0].value === '3' ? (
+                <Image
+                  src="/images/berawan.png"
+                  width={101}
+                  height={101}
+                  alt="icon"
+                />
+              ) : data.Weather[0].Elements[0].elements[0].value === '4' ? (
+                <Image
+                  src="/images/berawan-tebal.png"
+                  width={101}
+                  height={101}
+                  alt="icon"
+                />
+              ) : data.Weather[0].Elements[0].elements[0].value === '5' ? (
+                <Image
+                  src="/images/berawan-tebal.png"
+                  width={101}
+                  height={101}
+                  alt="icon"
+                />
+              ) : data.Weather[0].Elements[0].elements[0].value === '10' ? (
+                <Image
+                  src="/images/asap.png"
+                  width={101}
+                  height={101}
+                  alt="icon"
+                />
+              ) : data.Weather[0].Elements[0].elements[0].value === '45' ? (
+                <Image
+                  src="/images/kabut.png"
+                  width={101}
+                  height={101}
+                  alt="icon"
+                />
+              ) : data.Weather[0].Elements[0].elements[0].value === '60' ? (
+                <Image
+                  src="/images/hujan-ringan.png"
+                  width={101}
+                  height={101}
+                  alt="icon"
+                />
+              ) : data.Weather[0].Elements[0].elements[0].value === '61' ? (
+                <Image
+                  src="/images/hujan-ringan.png"
+                  width={101}
+                  height={101}
+                  alt="icon"
+                />
+              ) : data.Weather[0].Elements[0].elements[0].value === '63' ? (
+                <Image
+                  src="/images/hujan-lebat.png"
+                  width={101}
+                  height={101}
+                  alt="icon"
+                />
+              ) : data.Weather[0].Elements[0].elements[0].value === '80' ? (
+                <Image
+                  src="/images/hujan-lebat.png"
+                  width={101}
+                  height={101}
+                  alt="icon"
+                />
+              ) : data.Weather[0].Elements[0].elements[0].value === '95' ? (
+                <Image
+                  src="/images/hujan-petir.png"
+                  width={101}
+                  height={101}
+                  alt="icon"
+                />
+              ) : data.Weather[0].Elements[0].elements[0].value === '97' ? (
+                <Image
+                  src="/images/hujan-petir.png"
+                  width={101}
+                  height={101}
+                  alt="icon"
+                />
+              ) : (
+                <p>icon</p>
+              )}
             </div>
             <p className="font-medium text-md">{data.weather}</p>
-            <p className="font-medium text-lg">{data.temp}</p>
+            <p className="font-medium text-lg">
+              {data.Temperature[0].Elements[0].elements[0].value}°C
+            </p>
             <Link
               href="#"
               className="flex justify-center gap-x-2 font-medium text-sm"

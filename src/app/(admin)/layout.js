@@ -1,8 +1,6 @@
 import { Poppins } from 'next/font/google'
 import '../globals.css'
 
-import { Components } from '@/components'
-
 const poppins = Poppins({
   weight: ['300', '400', '500', '600', '700'],
   style: ['normal', 'italic'],
@@ -18,12 +16,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <Components.Navbar />
-        <Components.Header />
-        <div className="flex">
-          <main className="relative mx-auto max-w-6xl">{children}</main>
-        </div>
-        <Components.Footer2 />
+        <main>{children}</main>
       </body>
     </html>
   )
