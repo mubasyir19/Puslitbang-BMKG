@@ -1,14 +1,12 @@
-'use client'
-
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 
 export default function Login() {
-  const router = useRouter()
-  const handleSubmit = () => {
-    router.push('/dashboard/home')
-  }
+  // const router = useRouter()
+  // const handleSubmit = () => {
+  //   router.push('/dashboard/home')
+  // }
   return (
     <section className="flex h-screen w-full justify-center items-center bg-image-background bg-cover">
       <div className="p-10 bg-black/50 border-2 border-white rounded-xl">
@@ -50,7 +48,7 @@ export default function Login() {
             <button
               type="submit"
               className="w-full px-10 py-2 text-white bg-blue-500 rounded-xl"
-              onClick={handleSubmit}
+              // onClick={handleSubmit}
             >
               Login
             </button>
