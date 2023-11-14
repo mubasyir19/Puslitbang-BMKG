@@ -10,7 +10,7 @@ export default function Login() {
     router.push('/dashboard/home')
   }
   return (
-    <section className="flex h-screen w-full justify-center items-center bg-slate-300 bg-background bg-cover">
+    <section className="flex h-screen w-full justify-center items-center bg-image-background bg-cover">
       <div className="p-10 bg-black/50 border-2 border-white rounded-xl">
         <div className="flex gap-x-4 w-fit mx-auto">
           <Image
