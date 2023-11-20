@@ -1,4 +1,6 @@
-const mapBeUrl = 'https://falbas.net/tiles'
+import { map } from './map'
+
+const mapBeUrl = process.env.NEXT_PUBLIC_TILES_URL
 
 const dateRangeText = document.getElementById('dateRangeText')
 const dateRangeInput = document.getElementById('dateRangeInput')
@@ -11,7 +13,7 @@ const levelLayerController = document
   .getElementById('levelLayerController')
   .getElementsByTagName('button')
 const windAnimationLayerControl = document.getElementById(
-  'windAnimationLayerControl'
+  'windAnimationLayerControl',
 )
 const initialTime = document.getElementById('initialTime')
 const initialHour = document.getElementById('initialHour')
@@ -63,9 +65,9 @@ windAnimationLayerControl.addEventListener('click', () => {
 
 mapControl.activeLayer = L.tileLayer(
   `${mapBeUrl}/${mapControl.initialTime}/${getDateStr(
-    mapControl.predictionTime[mapControl.predictionTimeActive]
+    mapControl.predictionTime[mapControl.predictionTimeActive],
   )}/${mapControl.level}/${mapControl.variable}/{z}/{x}/{y}.png`,
-  { tms: true }
+  { tms: true },
 ).addTo(map)
 
 async function setWindLayer() {
@@ -119,7 +121,7 @@ btnPrev.addEventListener('click', () => {
 function playerHandler(v) {
   dateRangeInput.value = v
   dateRangeText.innerText = getWibStr(
-    mapControl.predictionTime[mapControl.predictionTimeActive]
+    mapControl.predictionTime[mapControl.predictionTimeActive],
   )
   textPosition = (v / 24) * 100
   if (textPosition < 50) {
@@ -158,10 +160,10 @@ function getWibStr(d) {
 async function windAnimationLayerHandler() {
   const uvUrl = [
     `${mapBeUrl}/${mapControl.initialTime}/${getDateStr(
-      mapControl.predictionTime[mapControl.predictionTimeActive]
+      mapControl.predictionTime[mapControl.predictionTimeActive],
     )}/${mapControl.level}/u/u.tif`,
     `${mapBeUrl}/${mapControl.initialTime}/${getDateStr(
-      mapControl.predictionTime[mapControl.predictionTimeActive]
+      mapControl.predictionTime[mapControl.predictionTimeActive],
     )}/${mapControl.level}/v/v.tif`,
   ]
 
@@ -184,9 +186,9 @@ async function windAnimationLayerHandler() {
 async function changeLayer() {
   const nextLayer = L.tileLayer(
     `${mapBeUrl}/${mapControl.initialTime}/${getDateStr(
-      mapControl.predictionTime[mapControl.predictionTimeActive]
+      mapControl.predictionTime[mapControl.predictionTimeActive],
     )}/${mapControl.level}/${mapControl.variable}/{z}/{x}/{y}.png`,
-    { tms: true }
+    { tms: true },
   )
   nextLayer.addTo(map)
   mapControl.activeLayer = nextLayer
@@ -220,7 +222,7 @@ function predTimeHandler() {
     mapControl.predictionTime.push(d)
   }
   dateRangeText.innerText = getWibStr(
-    mapControl.predictionTime[mapControl.predictionTimeActive]
+    mapControl.predictionTime[mapControl.predictionTimeActive],
   )
 }
 
@@ -229,7 +231,7 @@ async function onClickLayerHandler(e) {
     `/assets/xlat.tif`,
     `/assets/xlong.tif`,
     `${mapBeUrl}/${mapControl.initialTime}/${getDateStr(
-      mapControl.predictionTime[mapControl.predictionTimeActive]
+      mapControl.predictionTime[mapControl.predictionTimeActive],
     )}/${mapControl.level}/${mapControl.variable}/${mapControl.variable}.tif`,
   ]
 

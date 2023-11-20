@@ -20,30 +20,31 @@ map.createPane('labels')
 map.getPane('labels').style.zIndex = 650
 map.getPane('labels').style.pointerEvents = 'none'
 
-const bgLayer = L.tileLayer(
-  'http://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png',
-  {
-    attribution:
-      '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>',
-  }
-).addTo(map)
+// background layer
+L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png', {
+  attribution:
+    '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>',
+}).addTo(map)
 
-Promise.resolve(fetch('/assets/indonesia-bg.geojson').then((r) => r.text())).then(
-  (v) => {
-    const country = JSON.parse(v)
-    L.geoJson(country, {
-      style: function () {
-        return {
-          color: 'black',
-          weight: 1,
-          fillOpacity: 0,
-        }
-      },
-    }).addTo(map)
-  }
-)
-
-const labelLayer = L.tileLayer(
+// label layer
+L.tileLayer(
   'https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png',
-  { pane: 'labels' }
+  { pane: 'labels' },
 ).addTo(map)
+
+Promise.resolve(
+  fetch('/assets/indonesia-bg.geojson').then((r) => r.text()),
+).then((v) => {
+  const country = JSON.parse(v)
+  L.geoJson(country, {
+    style: function () {
+      return {
+        color: 'black',
+        weight: 1,
+        fillOpacity: 0,
+      }
+    },
+  }).addTo(map)
+})
+
+export { map }
