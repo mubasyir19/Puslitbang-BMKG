@@ -11,6 +11,8 @@ import SidebarDashboard from './Dashboard/Sidebar/Sidebar'
 import NavbarDashboard from './Dashboard/Navbar/Navbar'
 import FooterDashboard from './Dashboard/Footer/Footer'
 
+import { MapComponents } from './MapComponents/_index'
+
 const Components = {
   Navbar,
   NavbarMap,
@@ -26,4 +28,4 @@ const Components = {
   FooterDashboard,
 }
 
-export { Components }
+export { Components, MapComponents }
