@@ -6,9 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "webpack": "webpack"
   },
   "dependencies": {
+    "@heroicons/react": "^2.0.18",
     "axios": "^1.6.0",
     "next": "13.5.5",
     "react": "^18",
@@ -18,10 +20,13 @@
   },
   "devDependencies": {
     "autoprefixer": "^10",
+    "dotenv-webpack": "^8.0.1",
     "eslint": "^8",
     "eslint-config-next": "13.5.5",
     "postcss": "^8",
     "prettier": "^3.0.3",
-    "tailwindcss": "^3"
+    "tailwindcss": "^3",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
   }
 }
