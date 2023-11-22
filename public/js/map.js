@@ -49,5 +49,3 @@ Promise.resolve(
     },
   }).addTo(map)
 })
-
-export { map }
