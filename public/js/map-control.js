@@ -1,6 +1,4 @@
-import { map } from './map'
-
-const mapBeUrl = process.env.NEXT_PUBLIC_TILES_URL
+const mapBeUrl = 'https://storage.googleapis.com/tiles-pi-project-392410'
 
 const dateRangeText = document.getElementById('dateRangeText')
 const dateRangeInput = document.getElementById('dateRangeInput')
