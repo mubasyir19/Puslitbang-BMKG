@@ -21,7 +21,7 @@ export default function SidebarDashboard() {
         </div>
         <ul className="flex flex-col mt-5">
           <Link
-            href="#"
+            href="/dashboard/home"
             className="flex gap-x-2 p-4 hover:bg-blue-500 rounded-e-full"
           >
             <svg
@@ -41,7 +41,7 @@ export default function SidebarDashboard() {
             <span className="my-auto">Dashboard</span>
           </Link>
           <Link
-            href="#"
+            href="/dashboard/user"
             className="flex gap-x-2 p-4 hover:bg-blue-500 rounded-e-full"
           >
             <svg

@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.table-data {
+  @apply px-4 py-2;
+}
+
+.button-info {
+  @apply px-2 border-2 text-cyan-300 border-cyan-300 rounded-lg hover:bg-cyan-300 hover:text-white;
+}
+
+.button-danger {
+  @apply px-2 border-2 text-red-300 border-red-300 rounded-lg hover:bg-red-300 hover:text-white;
+}
