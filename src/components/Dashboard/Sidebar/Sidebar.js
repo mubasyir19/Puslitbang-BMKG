@@ -62,7 +62,7 @@ export default function SidebarDashboard() {
             <span className="my-auto">Users</span>
           </Link>
           <Link
-            href="#"
+            href="/dashboard/tags"
             className="flex gap-x-2 p-4 hover:bg-blue-500 rounded-e-full"
           >
             <svg
@@ -80,7 +80,7 @@ export default function SidebarDashboard() {
               />
             </svg>
 
-            <span className="my-auto">Kategori</span>
+            <span className="my-auto">Tags</span>
           </Link>
           <Link
             href="#"
