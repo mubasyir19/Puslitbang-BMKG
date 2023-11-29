@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import Swal from 'sweetalert2'
 
 export default function ListUserDashboard() {
@@ -22,7 +23,10 @@ export default function ListUserDashboard() {
         <h1 className="text-2xl font-semibold">List User</h1>
       </div>
       <div className="mt-8">
-        <button className="px-3 py-1 flex text-white bg-blue-400 rounded-lg">
+        <Link
+          href="/dashboard/user/add"
+          className="px-3 py-1 w-fit flex text-white bg-blue-400 rounded-lg"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -38,7 +42,7 @@ export default function ListUserDashboard() {
             />
           </svg>
           Tambah
-        </button>
+        </Link>
       </div>
       <table className="w-full mt-4 border-collapse">
         <thead>
@@ -47,7 +51,7 @@ export default function ListUserDashboard() {
               Nama
             </th>
             <th className="text-start table-data border border-slate-600">
-              Username
+              Email
             </th>
             <th className="text-start table-data border border-slate-600">
               Role
@@ -58,8 +62,10 @@ export default function ListUserDashboard() {
         <tbody>
           <tr>
             <td className="table-data border border-slate-600">Person 1</td>
-            <td className="table-data border border-slate-600">person1</td>
-            <td className="table-data border border-slate-600">SuperAdmin</td>
+            <td className="table-data border border-slate-600">
+              person1@example.com
+            </td>
+            <td className="table-data border border-slate-600">admin</td>
             <td className="table-data border border-slate-600 text-center">
               <button className="button-info mr-1">Edit</button>
               <button className="button-danger ml-1" onClick={handleDelete}>
