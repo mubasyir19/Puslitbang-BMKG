@@ -11,12 +11,12 @@ export default function Scope() {
         </div>
         <div className="px-4 lg:px-24">
           <h1 className="mt-4 md:mt-6 lg:mt-8 text-lg md:text-xl lg:text-3xl font-bold">
-            Kami Menyajikan Informasi Terkait Meteorologi, Klimatologi, dan
-            Geofisika
+            Kami Menyajikan Informasi Terkait Meteorologi, Klimatologi,
+            Geofisika, Serta Artikel Yang Akurat dan Terpercaya.
           </h1>
         </div>
       </div>
-      <div className="mt-8 md:mt-10 lg:mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+      <div className="mt-8 md:mt-10 lg:mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  gap-10">
         <div className="card bg-image-meteo bg-cover w-auto h-[421px] rounded-3xl">
           <div className="content flex flex-col justify-center items-start text-white px-5 bg-black bg-opacity-50 w-full h-full rounded-3xl">
             <h3 className="text-2xl font-bold">Meteorologi</h3>
@@ -53,6 +53,21 @@ export default function Scope() {
             <p className="text-base mt-5">
               Kami memberikan info secara tepat dan akurat terkait cuaca di tiap
               harinya dengan data yang akurat dan juga real time.
+            </p>
+            <Link
+              href="#"
+              className="mt-10 w-fit bg-white py-4 px-8 text-black rounded"
+            >
+              Selengkapnya
+            </Link>
+          </div>
+        </div>
+        <div className="card bg-image-news bg-cover w-auto h-[421px] rounded-3xl">
+          <div className="content flex flex-col justify-center items-start text-white px-5 bg-black bg-opacity-50 w-full h-full rounded-3xl">
+            <h3 className="text-2xl font-bold">Artikel</h3>
+            <p className="text-base mt-5">
+              Kami menyediakan berita-berita seputar cuaca, bencana alam dan
+              meteorologi secara akurat dan terpercaya.
             </p>
             <Link
               href="#"

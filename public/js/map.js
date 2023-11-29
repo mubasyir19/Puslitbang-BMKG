@@ -13,6 +13,9 @@ const map = L.map('map', {
   zoomControl: false,
 })
 map.fitBounds(bounds)
+map.createPane('variable')
+map.getPane('variable').style.zIndex = 200
+map.getPane('variable').style.pointerEvents = 'none'
 map.createPane('country-line')
 map.getPane('country-line').style.zIndex = 640
 map.getPane('country-line').style.pointerEvents = 'none'
@@ -21,7 +24,7 @@ map.getPane('labels').style.zIndex = 650
 map.getPane('labels').style.pointerEvents = 'none'
 
 // background layer
-L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png', {
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png', {
   attribution:
     '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>',
 }).addTo(map)
@@ -46,5 +49,3 @@ Promise.resolve(
     },
   }).addTo(map)
 })
-
-export { map }

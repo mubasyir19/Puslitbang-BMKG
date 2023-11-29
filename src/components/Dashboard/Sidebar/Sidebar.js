@@ -99,7 +99,7 @@ export default function SidebarDashboard() {
               />
             </svg>
 
-            <span className="my-auto">Kategori</span>
+            <span className="my-auto">Tags</span>
           </Link>
           <Link
             href="#"
