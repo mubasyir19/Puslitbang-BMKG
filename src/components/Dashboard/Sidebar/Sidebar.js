@@ -1,7 +1,14 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 export default function SidebarDashboard() {
+  const pathname = usePathname()
+
+  const linkActive = (path) => pathname.startsWith(path)
+
   return (
     <>
       {/* sidebar */}
@@ -22,7 +29,11 @@ export default function SidebarDashboard() {
         <ul className="flex flex-col mt-5">
           <Link
             href="/dashboard/home"
-            className="flex gap-x-2 p-4 hover:bg-blue-500 rounded-e-full"
+            className={`flex gap-x-2 p-4 hover:bg-blue-500 rounded-e-full ${
+              linkActive('/dashboard/home')
+                ? 'bg-blue-500'
+                : 'hover:bg-blue-500'
+            }`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -42,7 +53,11 @@ export default function SidebarDashboard() {
           </Link>
           <Link
             href="/dashboard/user"
-            className="flex gap-x-2 p-4 hover:bg-blue-500 rounded-e-full"
+            className={`flex gap-x-2 p-4 hover:bg-blue-500 rounded-e-full ${
+              linkActive('/dashboard/user')
+                ? 'bg-blue-500'
+                : 'hover:bg-blue-500'
+            }`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -63,7 +78,11 @@ export default function SidebarDashboard() {
           </Link>
           <Link
             href="#"
-            className="flex gap-x-2 p-4 hover:bg-blue-500 rounded-e-full"
+            className={`flex gap-x-2 p-4 hover:bg-blue-500 rounded-e-full ${
+              linkActive('/dashboard/category')
+                ? 'bg-blue-500'
+                : 'hover:bg-blue-500'
+            }`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
