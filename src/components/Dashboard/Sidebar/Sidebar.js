@@ -77,9 +77,9 @@ export default function SidebarDashboard() {
             <span className="my-auto">Users</span>
           </Link>
           <Link
-            href="#"
+            href="/dashboard/tags"
             className={`flex gap-x-2 p-4 hover:bg-blue-500 rounded-e-full ${
-              linkActive('/dashboard/category')
+              linkActive('/dashboard/tags')
                 ? 'bg-blue-500'
                 : 'hover:bg-blue-500'
             }`}
