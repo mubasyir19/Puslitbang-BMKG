@@ -5,12 +5,18 @@ import { useState } from 'react'
 import { useAuthContext } from '@/contexts/AuthContext'
 
 export default function NavbarDashboard() {
-  const { user } = useAuthContext()
+  const { user, setIsLogin } = useAuthContext()
   const [detailMenu, setDetailMenu] = useState(false)
 
   const toogleDetailMenu = () => {
     setDetailMenu(!detailMenu)
   }
+
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    setIsLogin(false)
+  }
+
   return (
     <>
       {/* navbar */}
@@ -81,7 +87,10 @@ export default function NavbarDashboard() {
               </svg>
               <span>Setting</span>
             </Link>
-            <Link href="#" className="text-white px-6 py-2 flex  gap-x-2">
+            <button
+              onClick={handleLogout}
+              className="text-white px-6 py-2 flex  gap-x-2"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -98,7 +107,7 @@ export default function NavbarDashboard() {
               </svg>
 
               <span>Logout</span>
-            </Link>
+            </button>
           </div>
         )}
       </nav>

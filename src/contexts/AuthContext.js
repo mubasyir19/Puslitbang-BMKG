@@ -18,11 +18,13 @@ const AuthContextProvider = ({ children }) => {
 
   const loginVerify = async (token, targetpath) => {
     try {
+      if (!token) throw Error
       const res = await axios.get('https://falbas.net/api/users/verify', {
         headers: { Authorization: 'Bearer ' + token },
       })
       if (res.status === 200) {
         setUser({ email: res.data.email, token: token })
+        setIsLogin(true)
         setIsLoading(false)
         if (targetpath) {
           router.push(targetpath)
@@ -40,8 +42,7 @@ const AuthContextProvider = ({ children }) => {
     const token = localStorage.getItem('token')
     if (pathname !== '/login') {
       loginVerify(token, pathname)
-    }
-    if (pathname === '/login') {
+    } else {
       if (token) {
         loginVerify(token)
       } else {
