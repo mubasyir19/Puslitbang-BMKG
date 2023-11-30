@@ -1,7 +1,14 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 export default function SidebarDashboard() {
+  const pathname = usePathname()
+
+  const linkActive = (path) => pathname.startsWith(path)
+
   return (
     <>
       {/* sidebar */}
@@ -21,8 +28,12 @@ export default function SidebarDashboard() {
         </div>
         <ul className="flex flex-col mt-5">
           <Link
-            href="#"
-            className="flex gap-x-2 p-4 hover:bg-blue-500 rounded-e-full"
+            href="/dashboard/home"
+            className={`flex gap-x-2 p-4 hover:bg-blue-500 rounded-e-full ${
+              linkActive('/dashboard/home')
+                ? 'bg-blue-500'
+                : 'hover:bg-blue-500'
+            }`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -41,8 +52,12 @@ export default function SidebarDashboard() {
             <span className="my-auto">Dashboard</span>
           </Link>
           <Link
-            href="#"
-            className="flex gap-x-2 p-4 hover:bg-blue-500 rounded-e-full"
+            href="/dashboard/user"
+            className={`flex gap-x-2 p-4 hover:bg-blue-500 rounded-e-full ${
+              linkActive('/dashboard/user')
+                ? 'bg-blue-500'
+                : 'hover:bg-blue-500'
+            }`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -62,8 +77,12 @@ export default function SidebarDashboard() {
             <span className="my-auto">Users</span>
           </Link>
           <Link
-            href="#"
-            className="flex gap-x-2 p-4 hover:bg-blue-500 rounded-e-full"
+            href="/dashboard/tags"
+            className={`flex gap-x-2 p-4 hover:bg-blue-500 rounded-e-full ${
+              linkActive('/dashboard/tags')
+                ? 'bg-blue-500'
+                : 'hover:bg-blue-500'
+            }`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -80,7 +99,7 @@ export default function SidebarDashboard() {
               />
             </svg>
 
-            <span className="my-auto">Kategori</span>
+            <span className="my-auto">Tags</span>
           </Link>
           <Link
             href="#"

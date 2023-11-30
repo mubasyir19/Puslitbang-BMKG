@@ -1,6 +1,4 @@
-import { map } from './map'
-
-const mapBeUrl = process.env.NEXT_PUBLIC_TILES_URL
+const mapBeUrl = 'https://storage.googleapis.com/tiles-pi-project-392410'
 
 const dateRangeText = document.getElementById('dateRangeText')
 const dateRangeInput = document.getElementById('dateRangeInput')
@@ -63,12 +61,21 @@ windAnimationLayerControl.addEventListener('click', () => {
   }
 })
 
-mapControl.activeLayer = L.tileLayer(
-  `${mapBeUrl}/${mapControl.initialTime}/${getDateStr(
-    mapControl.predictionTime[mapControl.predictionTimeActive],
-  )}/${mapControl.level}/${mapControl.variable}/{z}/{x}/{y}.png`,
-  { tms: true },
-).addTo(map)
+// mapControl.activeLayer = L.tileLayer(
+//   `${mapBeUrl}/${mapControl.initialTime}/${getDateStr(
+//     mapControl.predictionTime[mapControl.predictionTimeActive],
+//   )}/${mapControl.level}/${mapControl.variable}/{z}/{x}/{y}.png`,
+//   { tms: true },
+// ).addTo(map)
+
+async function setVariableLayer() {
+  const layer = await variableLayerHandler()
+  if (layer !== null) {
+    mapControl.activeLayer = layer
+    mapControl.activeLayer.addTo(map)
+  }
+}
+setVariableLayer()
 
 async function setWindLayer() {
   const layer = await windAnimationLayerHandler()
@@ -157,6 +164,35 @@ function getWibStr(d) {
   return `${day} ${month} ${hours}:${minutes}`
 }
 
+async function variableLayerHandler() {
+  return fetch('/assets/xlat.tif')
+    .then((r) => r.arrayBuffer())
+    .then(function (buffer) {
+      const s = L.ScalarField.fromGeoTIFF(buffer)
+      const latLngBounds = [
+        [s.yllCorner, s.xllCorner],
+        [s.yurCorner, s.xurCorner],
+      ]
+      const img = `${mapBeUrl}/${mapControl.initialTime}/${getDateStr(
+        mapControl.predictionTime[mapControl.predictionTimeActive],
+      )}/${mapControl.level}/${mapControl.variable}/${mapControl.variable}.jpg`
+      // const img =
+      //   'https://storage.googleapis.com/tiles-pi-project-392410/2023110800/2023110800/1000/tc/tc.jpg'
+      try {
+        return fetch(img).then((r) => {
+          if (r.ok) {
+            const layer = L.imageOverlay(img, latLngBounds, {
+              pane: 'variable',
+            })
+            return layer
+          } else {
+            return null
+          }
+        })
+      } catch (err) {}
+    })
+}
+
 async function windAnimationLayerHandler() {
   const uvUrl = [
     `${mapBeUrl}/${mapControl.initialTime}/${getDateStr(
@@ -184,14 +220,25 @@ async function windAnimationLayerHandler() {
 }
 
 async function changeLayer() {
-  const nextLayer = L.tileLayer(
-    `${mapBeUrl}/${mapControl.initialTime}/${getDateStr(
-      mapControl.predictionTime[mapControl.predictionTimeActive],
-    )}/${mapControl.level}/${mapControl.variable}/{z}/{x}/{y}.png`,
-    { tms: true },
-  )
-  nextLayer.addTo(map)
-  mapControl.activeLayer = nextLayer
+  // const nextLayer = L.tileLayer(
+  //   `${mapBeUrl}/${mapControl.initialTime}/${getDateStr(
+  //     mapControl.predictionTime[mapControl.predictionTimeActive],
+  //   )}/${mapControl.level}/${mapControl.variable}/{z}/{x}/{y}.png`,
+  //   { tms: true },
+  // )
+  // nextLayer.addTo(map)
+  // mapControl.activeLayer = nextLayer
+
+  const nextVariableLayer = await variableLayerHandler()
+  if (nextVariableLayer !== null) {
+    map.getPane('variable').style.display = 'block'
+    nextVariableLayer.addTo(map)
+    mapControl.activeLayer = nextVariableLayer
+  } else {
+    if (mapControl.activeLayer !== null) {
+      map.getPane('variable').style.display = 'none'
+    }
+  }
 
   const nextWindLayer = await windAnimationLayerHandler()
   if (nextWindLayer !== null) {
