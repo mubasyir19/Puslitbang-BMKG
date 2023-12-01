@@ -32,7 +32,7 @@ const columns = [
     flex: 1,
     align: 'left',
     renderCell: (params) => (
-      <>
+      <div className="flex gap-x-2">
         <Button
           variant="contained"
           color="primary"
@@ -49,7 +49,7 @@ const columns = [
         >
           Delete
         </Button>
-      </>
+      </div>
     ),
   },
 ]
