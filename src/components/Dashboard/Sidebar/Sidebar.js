@@ -102,8 +102,12 @@ export default function SidebarDashboard() {
             <span className="my-auto">Tags</span>
           </Link>
           <Link
-            href="#"
-            className="flex gap-x-2 p-4 hover:bg-blue-500 rounded-e-full"
+            href="/dashboard/article"
+            className={`flex gap-x-2 p-4 hover:bg-blue-500 rounded-e-full ${
+              linkActive('/dashboard/article')
+                ? 'bg-blue-500'
+                : 'hover:bg-blue-500'
+            }`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
