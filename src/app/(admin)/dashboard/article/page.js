@@ -2,6 +2,7 @@
 
 import { Box, Button } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
+import Link from 'next/link'
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 90 },
@@ -37,7 +38,7 @@ const columns = [
           variant="contained"
           color="primary"
           size="small"
-          onClick={() => handleEdit(params.row.id)}
+          // onClick={() => handleEdit(params.row.id)}
         >
           Edit
         </Button>
@@ -45,7 +46,7 @@ const columns = [
           variant="contained"
           color="error"
           size="small"
-          onClick={() => handleDelete(params.row.id)}
+          // onClick={() => handleDelete(params.row.id)}
         >
           Delete
         </Button>
@@ -67,26 +68,16 @@ const rows = [
 ]
 
 export default function ArticlePage() {
-  //   const handleDelete = (e) => {
-  //     e.preventDefault()
-  //     Swal.fire({
-  //       title: 'Warning!',
-  //       text: 'Are you sure want to delete?',
-  //       icon: 'warning',
-  //       confirmButtonText: 'Yes',
-  //       confirmButtonColor: 'blue',
-  //       showCancelButton: true,
-  //       cancelButtonText: 'Cancel',
-  //       cancelButtonColor: 'red',
-  //     })
-  //   }
   return (
     <section className="px-5 pt-6">
       <div>
         <h1 className="text-2xl font-semibold">Article</h1>
       </div>
       <div className="mt-8">
-        <button className="px-3 py-1 flex text-white bg-blue-400 rounded-lg">
+        <Link
+          href="/dashboard/article/add"
+          className="px-3 py-1 w-fit flex text-white bg-blue-400 rounded-lg"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -102,7 +93,7 @@ export default function ArticlePage() {
             />
           </svg>
           Tambah
-        </button>
+        </Link>
       </div>
       <div className="mt-4">
         <Box sx={{ height: 400, width: 'fit' }}>
@@ -119,49 +110,9 @@ export default function ArticlePage() {
             pageSizeOptions={[5]}
             checkboxSelection
             disableRowSelectionOnClick
-            // headerClassName="bg-blue-500 text-white"
           />
         </Box>
       </div>
-      {/* <table className="w-full mt-4 border-collapse">
-        <thead>
-          <tr className="bg-slate-300">
-            <th className="text-start table-data border border-slate-600">
-              Nama
-            </th>
-            <th className="table-data border border-slate-600"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td className="table-data border border-slate-600">Meteorologi</td>
-            <td className="table-data border border-slate-600 text-center">
-              <button className="button-info mr-1">Edit</button>
-              <button className="button-danger ml-1" onClick={handleDelete}>
-                Hapus
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td className="table-data border border-slate-600">Klimatologi</td>
-            <td className="table-data border border-slate-600 text-center">
-              <button className="button-info mr-1">Edit</button>
-              <button className="button-danger ml-1" onClick={handleDelete}>
-                Hapus
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td className="table-data border border-slate-600">Geofisika</td>
-            <td className="table-data border border-slate-600 text-center">
-              <button className="button-info mr-1">Edit</button>
-              <button className="button-danger ml-1" onClick={handleDelete}>
-                Hapus
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table> */}
     </section>
   )
 }
