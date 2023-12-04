@@ -20,8 +20,11 @@ map.createPane('country-line')
 map.getPane('country-line').style.zIndex = 640
 map.getPane('country-line').style.pointerEvents = 'none'
 map.createPane('labels')
-map.getPane('labels').style.zIndex = 650
+map.getPane('labels').style.zIndex = 645
 map.getPane('labels').style.pointerEvents = 'none'
+map.createPane('variable-label')
+map.getPane('variable-label').style.zIndex = 645
+map.getPane('variable-label').style.pointerEvents = 'none'
 
 // background layer
 L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png', {

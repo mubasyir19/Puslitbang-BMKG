@@ -1,0 +1,233 @@
+[
+  {
+    "id": "501397",
+    "latitude": "5.54491",
+    "longitude": "95.34312",
+    "description": "Banda Aceh",
+    "domain": "Aceh"
+  },
+  {
+    "id": "501164",
+    "latitude": "-8.643480",
+    "longitude": "115.224609",
+    "description": "Denpasar",
+    "domain": "Bali"
+  },
+  {
+    "id": "501174",
+    "latitude": "-6.133333334",
+    "longitude": "106.1667",
+    "description": "Serang",
+    "domain": "Banten"
+  },
+  {
+    "id": "501178",
+    "latitude": "-3.794373",
+    "longitude": "102.304688",
+    "description": "Bengkulu",
+    "domain": "Bengkulu"
+  },
+  {
+    "id": "501190",
+    "latitude": "-7.80279",
+    "longitude": "110.37625",
+    "description": "Yogyakarta",
+    "domain": "DI Yogyakarta"
+  },
+  {
+    "id": "501195",
+    "latitude": "-6.176396",
+    "longitude": "106.826591",
+    "description": "Jakarta Pusat",
+    "domain": "DKI Jakarta"
+  },
+  {
+    "id": "501197",
+    "latitude": "0.53175",
+    "longitude": "123.08807",
+    "description": "Gorontalo",
+    "domain": "Gorontalo"
+  },
+  {
+    "id": "501205",
+    "latitude": "-1.61",
+    "longitude": "103.59",
+    "description": "Jambi",
+    "domain": "Jambi"
+  },
+  {
+    "id": "501212",
+    "latitude": "-6.90992",
+    "longitude": "107.64691",
+    "description": "Bandung",
+    "domain": "Jawa Barat"
+  },
+  {
+    "id": "501262",
+    "latitude": "-6.959144",
+    "longitude": "110.438690",
+    "description": "Semarang",
+    "domain": "Jawa Tengah"
+  },
+  {
+    "id": "501306",
+    "latitude": "-7.27981",
+    "longitude": "112.71109",
+    "description": "Surabaya",
+    "domain": "Jawa Timur"
+  },
+  {
+    "id": "501315",
+    "latitude": "-0.08902",
+    "longitude": "109.35144",
+    "description": "Pontianak",
+    "domain": "Kalimantan Barat"
+  },
+  {
+    "id": "501325",
+    "latitude": "-3.32828",
+    "longitude": "114.57315",
+    "description": "Banjarmasin",
+    "domain": "Kalimantan Selatan"
+  },
+  {
+    "id": "501342",
+    "latitude": "-2.21",
+    "longitude": "113.92",
+    "description": "Palangkaraya",
+    "domain": "Kalimantan Tengah"
+  },
+  {
+    "id": "501354",
+    "latitude": "-0.43018",
+    "longitude": "117.17432",
+    "description": "Samarinda",
+    "domain": "Kalimantan Timur"
+  },
+  {
+    "id": "501360",
+    "latitude": "3.329128",
+    "longitude": "117.571049",
+    "description": "Tarakan",
+    "domain": "Kalimantan Utara"
+  },
+  {
+    "id": "501365",
+    "latitude": "-2.19216",
+    "longitude": "106.12806",
+    "description": "Pangkal Pinang",
+    "domain": "Kep. Bangka Belitung"
+  },
+  {
+    "id": "501371",
+    "latitude": "0.906334",
+    "longitude": "104.562378",
+    "description": "Tanjung Pinang",
+    "domain": "Kep. Riau"
+  },
+  {
+    "id": "501373",
+    "latitude": "-5.42396",
+    "longitude": "105.25113",
+    "description": "Bandar Lampung",
+    "domain": "Lampung"
+  },
+  {
+    "id": "501382",
+    "latitude": "-3.67265",
+    "longitude": "128.23381",
+    "description": "Ambon",
+    "domain": "Maluku"
+  },
+  {
+    "id": "501394",
+    "latitude": "0.833215",
+    "longitude": "127.365532",
+    "description": "Ternate",
+    "domain": "Maluku Utara"
+  },
+  {
+    "id": "501421",
+    "latitude": "-8.58142",
+    "longitude": "116.11737",
+    "description": "Mataram",
+    "domain": "Nusa Tenggara Barat"
+  },
+  {
+    "id": "501434",
+    "latitude": "-10.22498",
+    "longitude": "123.60374",
+    "description": "Kupang",
+    "domain": "Nusa Tenggara Timur"
+  },
+  {
+    "id": "501447",
+    "latitude": "-2.556219",
+    "longitude": "140.703278",
+    "description": "Kota Jayapura",
+    "domain": "Papua"
+  },
+  {
+    "id": "501467",
+    "latitude": "-0.900000002",
+    "longitude": "134.00001",
+    "description": "Manokwari",
+    "domain": "Papua Barat"
+  },
+  {
+    "id": "501478",
+    "latitude": "0.55742",
+    "longitude": "101.46218",
+    "description": "Pekanbaru",
+    "domain": "Riau"
+  },
+  {
+    "id": "501485",
+    "latitude": "-2.683333335",
+    "longitude": "118.8333",
+    "description": "Mamuju",
+    "domain": "Sulawesi Barat"
+  },
+  {
+    "id": "501495",
+    "latitude": "-5.121379",
+    "longitude": "119.418983",
+    "description": "Makassar",
+    "domain": "Sulawesi Selatan"
+  },
+  {
+    "id": "5013053",
+    "latitude": "-3.966",
+    "longitude": "122.6",
+    "description": "Kendari",
+    "domain": "Sulawesi Tenggara"
+  },
+  {
+    "id": "501534",
+    "latitude": "1.50213",
+    "longitude": "124.85236",
+    "description": "Manado",
+    "domain": "Sulawesi Utara"
+  },
+  {
+    "id": "501545",
+    "latitude": "-0.88",
+    "longitude": "100.4",
+    "description": "Padang",
+    "domain": "Sumatera Barat"
+  },
+  {
+    "id": "501568",
+    "latitude": "-2.978699",
+    "longitude": "104.751892",
+    "description": "Palembang",
+    "domain": "Sumatera Selatan"
+  },
+  {
+    "id": "501580",
+    "latitude": "3.66681",
+    "longitude": "98.67123",
+    "description": "Medan",
+    "domain": "Sumatera Utara"
+  }
+]
