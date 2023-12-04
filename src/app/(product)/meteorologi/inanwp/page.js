@@ -53,6 +53,16 @@ export default function InaNwp() {
             </MapComponents.MapLayerContainer>
             <MapComponents.MapLayerContainer id="levelLayerController">
               <MapComponents.MapLayerButton
+                id="200"
+                icon={dotIcon}
+                text={'200'}
+              />
+              <MapComponents.MapLayerButton
+                id="500"
+                icon={dotIcon}
+                text={'500'}
+              />
+              <MapComponents.MapLayerButton
                 id="700"
                 icon={dotIcon}
                 text={'700'}
@@ -73,6 +83,10 @@ export default function InaNwp() {
               <MapComponents.MapLayerCheckButton
                 id="windAnimationLayerControl"
                 text={'Wind Animation'}
+              />
+              <MapComponents.MapLayerCheckButton
+                id="valueLabelLayerControl"
+                text={'Value Label'}
               />
             </MapComponents.MapLayerCheckContainer>
           </div>
