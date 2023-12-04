@@ -1,12 +1,36 @@
+'use client'
+
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
-import React from 'react'
+import { useAuthContext } from '@/contexts/AuthContext'
+import { useState } from 'react'
+import { fetcher } from '@/helpers/fetcher'
+import Cookies from 'js-cookie'
 
 export default function Login() {
-  // const router = useRouter()
-  // const handleSubmit = () => {
-  //   router.push('/dashboard/home')
-  // }
+  const { setIsLogin } = useAuthContext()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      setIsLoading(true)
+      const res = await fetcher.post('/users/login', {
+        email: email,
+        password: password,
+      })
+      if (res.data.token) {
+        Cookies.set('token', res.data.token)
+        setIsLogin(true)
+      }
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return (
     <section className="flex h-screen w-full justify-center items-center bg-image-background bg-cover">
       <div className="p-10 bg-black/50 border-2 border-white rounded-xl">
@@ -25,14 +49,23 @@ export default function Login() {
         <p className="mt-4 text-center text-white">
           Silahkan Login untuk memulai sesi Anda
         </p>
-        <form className="mt-10 flex flex-col gap-4">
+        <form
+          className="mt-10 flex flex-col gap-4"
+          onSubmit={(e) => {
+            handleSubmit(e)
+          }}
+        >
           <div className="form-group">
-            <label className="text-base text-white">Username</label>
+            <label className="text-base text-white">Email</label>
             <input
               className="w-full p-4 border-2 border-black rounded-xl"
-              type="text"
-              name=""
-              placeholder="johndoe45"
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value)
+              }}
             />
           </div>
           <div className="form-group">
@@ -41,13 +74,18 @@ export default function Login() {
               className="w-full p-4 border-2 border-black rounded-xl"
               type="password"
               name="password"
-              placeholder="**********"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value)
+              }}
             />
           </div>
           <div className="form-group mt-4">
             <button
               type="submit"
               className="w-full px-10 py-2 text-white bg-blue-500 rounded-xl"
+              disabled={isLoading}
               // onClick={handleSubmit}
             >
               Login
