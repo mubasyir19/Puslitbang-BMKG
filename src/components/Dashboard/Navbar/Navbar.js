@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { useAuthContext } from '@/contexts/AuthContext'
+import Cookies from 'js-cookie'
 
 export default function NavbarDashboard() {
   const { user, setIsLogin } = useAuthContext()
@@ -13,7 +14,7 @@ export default function NavbarDashboard() {
   }
 
   const handleLogout = () => {
-    localStorage.removeItem('token')
+    Cookies.remove('token')
     setIsLogin(false)
   }
 

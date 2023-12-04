@@ -3,6 +3,7 @@
 import { useState, useEffect, createContext, useContext } from 'react'
 import axios from 'axios'
 import { usePathname, useRouter } from 'next/navigation'
+import Cookies from 'js-cookie'
 
 export const AuthContext = createContext({})
 
@@ -33,13 +34,13 @@ const AuthContextProvider = ({ children }) => {
         }
       }
     } catch (err) {
-      localStorage.removeItem('token')
+      Cookies.remove('token')
       location.replace('/login')
     }
   }
 
   useEffect(() => {
-    const token = localStorage.getItem('token')
+    const token = Cookies.get('token')
     if (pathname !== '/login') {
       loginVerify(token, pathname)
     } else {

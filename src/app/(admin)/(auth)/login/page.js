@@ -3,7 +3,8 @@
 import Image from 'next/image'
 import { useAuthContext } from '@/contexts/AuthContext'
 import { useState } from 'react'
-import axios from 'axios'
+import { fetcher } from '@/helpers/fetcher'
+import Cookies from 'js-cookie'
 
 export default function Login() {
   const { setIsLogin } = useAuthContext()
@@ -15,16 +16,16 @@ export default function Login() {
     e.preventDefault()
     try {
       setIsLoading(true)
-      const res = await axios.post('https://falbas.net/api/users/login', {
+      const res = await fetcher.post('/users/login', {
         email: email,
         password: password,
       })
       if (res.data.token) {
-        localStorage.setItem('token', res.data.token)
+        Cookies.set('token', res.data.token)
         setIsLogin(true)
       }
     } catch (err) {
-      console.log(err.response.data)
+      console.error(err)
     } finally {
       setIsLoading(false)
     }
