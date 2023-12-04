@@ -2,10 +2,13 @@
 
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
+import { useSearchParams } from 'next/navigation'
 
 import chevronUpIcon from '~/icons/chevron-up.svg'
 
 export default function MapTimeControl() {
+  const searchParams = useSearchParams()
+  const initialTimeParams = searchParams.get('initialTime')
   const [initialTime, setInitialTime] = useState([])
   const [initialTimeVisible, setInitialTimeVisible] = useState(false)
   const [initialTimeActive, setInitialTimeActive] = useState(9)
@@ -15,7 +18,22 @@ export default function MapTimeControl() {
 
   useEffect(() => {
     const it = []
-    let date = new Date('2023-11-14')
+    let date = new Date()
+
+    if (initialTimeParams) {
+      const year = initialTimeParams.slice(0, 4)
+      const month = initialTimeParams.slice(4, 6)
+      const day = initialTimeParams.slice(6, 8)
+      const hour = initialTimeParams.slice(8, 10)
+      date = new Date(`${year}-${month}-${day}`)
+
+      for (let i = 0; i < initialHour.length; i++) {
+        if (hour === initialHour[i]) {
+          setInitialHourActive(i)
+        }
+      }
+    }
+
     for (let i = 0; i < 10; i++) {
       it.unshift(date)
       let d = new Date(date)
