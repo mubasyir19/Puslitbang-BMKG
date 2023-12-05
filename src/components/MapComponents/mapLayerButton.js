@@ -26,6 +26,7 @@ export default function MapLayerButton({
   return (
     <>
       <button
+        active={active.toString()}
         id={id}
         onClick={onClickHandler}
         onMouseEnter={() => {

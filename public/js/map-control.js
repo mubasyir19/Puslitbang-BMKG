@@ -40,6 +40,9 @@ const mapControl = {
 predTimeHandler()
 
 for (let i = 0; i < variableLayerController.length; i++) {
+  if (variableLayerController[i].getAttribute('active') === 'true') {
+    mapControl.variable = variableLayerController[i].getAttribute('id')
+  }
   variableLayerController[i].addEventListener('click', () => {
     const activeVariable = variableLayerController[i].getAttribute('id')
     mapControl.variable = activeVariable
@@ -48,6 +51,9 @@ for (let i = 0; i < variableLayerController.length; i++) {
 }
 
 for (let i = 0; i < levelLayerController.length; i++) {
+  if (levelLayerController[i].getAttribute('active') === 'true') {
+    mapControl.level = levelLayerController[i].getAttribute('id')
+  }
   levelLayerController[i].addEventListener('click', () => {
     const activeLevel = levelLayerController[i].getAttribute('id')
     mapControl.level = activeLevel
@@ -373,10 +379,12 @@ async function changeLayer() {
       mapControl.variableLabels[i].addTo(map)
     }
   } else {
-    for (let i = 0; i < mapControl.variableLabels.length; i++) {
-      mapControl.variableLabels[i].removeFrom(map)
+    if (mapControl.variableLabels !== null) {
+      for (let i = 0; i < mapControl.variableLabels.length; i++) {
+        mapControl.variableLabels[i].removeFrom(map)
+      }
+      mapControl.variableLabels = null
     }
-    mapControl.variableLabels = null
   }
 }
 
