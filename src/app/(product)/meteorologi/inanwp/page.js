@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Script from 'next/script'
+import { useSearchParams } from 'next/navigation'
 
 import { Components } from '@/components'
 import { MapComponents } from '@/components'
@@ -11,7 +12,67 @@ import temperatureIcon from '~/icons/temperature.svg'
 import humidityIcon from '~/icons/humidity.svg'
 import dotIcon from '~/icons/dot.svg'
 
+const PARAMETERS = [
+  {
+    id: 'wspd',
+    icon: windIcon,
+    text: 'Wind',
+    color: '/assets/wspd_color.txt',
+    active: true,
+  },
+  {
+    id: 'tc',
+    icon: temperatureIcon,
+    text: 'Temperature',
+    color: '/assets/tc_color.txt',
+    active: false,
+  },
+  {
+    id: 'rh',
+    icon: humidityIcon,
+    text: 'Humidity',
+    color: '/assets/rh_color.txt',
+    active: false,
+  },
+]
+
+const LEVELS = [
+  {
+    id: '200',
+    icon: dotIcon,
+    text: '200',
+    active: false,
+  },
+  {
+    id: '500',
+    icon: dotIcon,
+    text: '500',
+    active: false,
+  },
+  {
+    id: '700',
+    icon: dotIcon,
+    text: '700',
+    active: false,
+  },
+  {
+    id: '850',
+    icon: dotIcon,
+    text: '850',
+    active: false,
+  },
+  {
+    id: '1000',
+    icon: dotIcon,
+    text: '1000',
+    active: true,
+  },
+]
+
 export default function InaNwp() {
+  const searchParams = useSearchParams()
+  const pParameter = searchParams.get('parameter')
+  const pLevel = searchParams.get('level')
   const [colorbar, setColorbar] = useState('/assets/wspd_color.txt')
 
   const colorbarHandler = (c) => {
@@ -26,58 +87,29 @@ export default function InaNwp() {
           <Components.NavbarMap title="Indonesia Numerical Weather Prediction (InaNWP)" />
           <div className="absolute top-40 left-4 text-white flex flex-col gap-2">
             <MapComponents.MapLayerContainer id="variableLayerController">
-              <MapComponents.MapLayerButton
-                id="wspd"
-                icon={windIcon}
-                text={'Wind'}
-                onClick={() => {
-                  colorbarHandler('/assets/wspd_color.txt')
-                }}
-              />
-              <MapComponents.MapLayerButton
-                id="tc"
-                icon={temperatureIcon}
-                text={'Temperature'}
-                onClick={() => {
-                  colorbarHandler('/assets/tc_color.txt')
-                }}
-              />
-              <MapComponents.MapLayerButton
-                id="rh"
-                icon={humidityIcon}
-                text={'Humidity'}
-                onClick={() => {
-                  colorbarHandler('/assets/rh_color.txt')
-                }}
-              />
+              {PARAMETERS.map((p, key) => (
+                <MapComponents.MapLayerButton
+                  key={key}
+                  id={p.id}
+                  icon={p.icon}
+                  text={p.text}
+                  onClick={() => {
+                    colorbarHandler(p.color)
+                  }}
+                  active={pParameter !== null ? pParameter === p.id : p.active}
+                />
+              ))}
             </MapComponents.MapLayerContainer>
             <MapComponents.MapLayerContainer id="levelLayerController">
-              <MapComponents.MapLayerButton
-                id="200"
-                icon={dotIcon}
-                text={'200'}
-              />
-              <MapComponents.MapLayerButton
-                id="500"
-                icon={dotIcon}
-                text={'500'}
-              />
-              <MapComponents.MapLayerButton
-                id="700"
-                icon={dotIcon}
-                text={'700'}
-              />
-              <MapComponents.MapLayerButton
-                id="850"
-                icon={dotIcon}
-                text={'850'}
-              />
-              <MapComponents.MapLayerButton
-                id="1000"
-                icon={dotIcon}
-                text={'1000'}
-                active
-              />
+              {LEVELS.map((l, key) => (
+                <MapComponents.MapLayerButton
+                  key={key}
+                  id={l.id}
+                  icon={l.icon}
+                  text={l.text}
+                  active={pLevel !== null ? pLevel === l.id : l.active}
+                />
+              ))}
             </MapComponents.MapLayerContainer>
             <MapComponents.MapLayerCheckContainer>
               <MapComponents.MapLayerCheckButton
