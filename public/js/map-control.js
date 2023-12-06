@@ -446,7 +446,7 @@ map.on('click', async (e) => {
   const v = await onClickLayerHandler(e)
   if (v === null) return
 
-  let unit
+  let unit = ''
   switch (mapControl.variable) {
     case 'wspd':
       unit = 'm/s'
@@ -456,6 +456,9 @@ map.on('click', async (e) => {
       break
     case 'rh':
       unit = '%'
+      break
+    case 'tp':
+      unit = 'mm'
       break
   }
 
