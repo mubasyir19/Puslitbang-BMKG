@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function Scope() {
   return (
-    <section className="mt-20 px-6">
+    <section className="mt-20">
       <div>
         <div className="flex gap-x-4">
           <hr className="w-8 md:w-14 lg:w-20 border-2 border-black my-auto" />
