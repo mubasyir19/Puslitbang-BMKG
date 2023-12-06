@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Script from 'next/script'
 import { useSearchParams } from 'next/navigation'
 
@@ -74,6 +74,14 @@ export default function InaNwp() {
   const pParameter = searchParams.get('parameter')
   const pLevel = searchParams.get('level')
   const [colorbar, setColorbar] = useState('/assets/wspd_color.txt')
+
+  useEffect(() => {
+    PARAMETERS.map((p) => {
+      if (pParameter === p.id) {
+        setColorbar(p.color)
+      }
+    })
+  }, [pParameter])
 
   const colorbarHandler = (c) => {
     setColorbar(c)

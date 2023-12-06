@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+ul {
+  @apply list-disc;
+}
+
+ol {
+  @apply list-decimal;
+}
+
 .table-data {
   @apply px-4 py-2;
 }
