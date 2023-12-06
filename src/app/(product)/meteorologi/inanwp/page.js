@@ -10,6 +10,7 @@ import { MapComponents } from '@/components'
 import windIcon from '~/icons/wind.svg'
 import temperatureIcon from '~/icons/temperature.svg'
 import humidityIcon from '~/icons/humidity.svg'
+import precipitationIcon from '~/icons/precipitation.svg'
 import dotIcon from '~/icons/dot.svg'
 
 const PARAMETERS = [
@@ -32,6 +33,13 @@ const PARAMETERS = [
     icon: humidityIcon,
     text: 'Humidity',
     color: '/assets/rh_color.txt',
+    active: false,
+  },
+  {
+    id: 'tp',
+    icon: precipitationIcon,
+    text: 'Precipitation',
+    color: '/assets/tp_color.txt',
     active: false,
   },
 ]
