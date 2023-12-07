@@ -14,7 +14,7 @@ export default function MapLayerContainer({ children, className, id }) {
   useEffect(() => {
     setActiveChildren(Children.toArray(children)[0].props.id)
     Children.toArray(children).map((item) => {
-      if (item.props.active) {
+      if (item.props.active === true) {
         setActiveChildren(item.props.id)
       }
     })

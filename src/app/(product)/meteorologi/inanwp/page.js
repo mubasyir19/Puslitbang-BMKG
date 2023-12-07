@@ -7,6 +7,7 @@ import { useSearchParams } from 'next/navigation'
 import { Components } from '@/components'
 import { MapComponents } from '@/components'
 
+import infoIcon from '~/icons/info.svg'
 import windIcon from '~/icons/wind.svg'
 import temperatureIcon from '~/icons/temperature.svg'
 import humidityIcon from '~/icons/humidity.svg'
@@ -82,6 +83,7 @@ export default function InaNwp() {
   const pParameter = searchParams.get('parameter')
   const pLevel = searchParams.get('level')
   const [colorbar, setColorbar] = useState('/assets/wspd_color.txt')
+  const [showInfo, setShowInfo] = useState(false)
 
   useEffect(() => {
     PARAMETERS.map((p) => {
@@ -95,13 +97,40 @@ export default function InaNwp() {
     setColorbar(c)
   }
 
+  const infoHandler = () => {
+    setShowInfo(!showInfo)
+  }
+
   return (
     <>
       <div className="h-full flex flex-col">
         <div className="grow relative">
           <div id="map" className="h-full relative z-0"></div>
           <Components.NavbarMap title="Indonesia Numerical Weather Prediction (InaNWP)" />
-          <div className="absolute top-40 left-4 text-white flex flex-col gap-2">
+          <div className="absolute bottom-36 left-4 text-white flex flex-col gap-2">
+            {showInfo && (
+              <div className="w-[700px] absolute top-0 left-28 bg-[rgba(0,0,0,0.5)] rounded-lg p-4">
+                <small>
+                  <p>initialTime: set initial time value</p>
+                  <p>parameter: set parameter value</p>
+                  <p>level: set level value</p>
+                  <p>
+                    example:
+                    {location.host}
+                    /meteorologi/inanwp?initialTime=2023111412&parameter=tc&level=1000
+                  </p>
+                </small>
+              </div>
+            )}
+            <MapComponents.MapLayerCheckContainer>
+              <MapComponents.MapLayerCheckButton
+                id="info"
+                icon={infoIcon}
+                text="Info"
+                active={false}
+                onClick={infoHandler}
+              />
+            </MapComponents.MapLayerCheckContainer>
             <MapComponents.MapLayerContainer id="variableLayerController">
               {PARAMETERS.map((p, key) => (
                 <MapComponents.MapLayerButton

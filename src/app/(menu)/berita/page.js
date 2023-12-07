@@ -17,7 +17,7 @@ export default function Berita() {
           {data &&
             data.data.map((d, key) => (
               <Link key={key} href={`/berita/${d.slug}`}>
-                <div className="rounded-lg flex h-[200px] overflow-hidden border">
+                <div className="rounded-lg flex h-[240px] overflow-hidden border">
                   <div className="w-1/3 h-full">
                     <img
                       src={d.image}
@@ -26,7 +26,7 @@ export default function Berita() {
                     />
                   </div>
                   <div className="w-2/3 p-4">
-                    <h3 className="text-3xl font-bold">{d.title}</h3>
+                    <h3 className="text-3xl font-bold line-clamp-2">{d.title}</h3>
                     <p className="font-semibold">
                       <span>{d.author}</span> - {formatDate(d.created_at)}
                     </p>
