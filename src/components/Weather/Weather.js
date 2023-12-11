@@ -29,17 +29,6 @@ export default function Weather() {
           (param) => param.Id === 't',
         )
 
-        // const response = {
-        //   ID: d.ID,
-        //   Kota: d.Kota,
-        //   Provinsi: d.Provinsi,
-        //   Latitude: d.Latitude,
-        //   Longtitude: d.Longitude,
-        //   Coordinate: d.Coordinate,
-        //   Weather: filterWeather,
-        //   Temperature: filterTemperature,
-        // }
-
         return {
           ID: d.ID,
           Kota: d.Kota,
@@ -53,8 +42,6 @@ export default function Weather() {
       })
 
       setWilayah(filteredParamData)
-      // console.log('result :', responseData)
-      console.log('test :', filteredParamData)
     }
 
     fetchDataWeather()

@@ -1,4 +1,3 @@
-import Script from 'next/script'
 import Image from 'next/image'
 
 export default function Profile() {
@@ -29,9 +28,13 @@ export default function Profile() {
       </div>
       <div className="flex-col mt-10">
         <div className="text-justif text-center space-y-2 sm:text-left">
-          <h1 className=" text-center font-bold text-2xl mb-2">Struktur Organisasi</h1>
-          <ul className='list-disc'>
-            <li className='mt-5'>Bidang Penelitian dan Pengembangan Meteorologi</li>
+          <h1 className=" text-center font-bold text-2xl mb-2">
+            Struktur Organisasi
+          </h1>
+          <ul className="list-disc">
+            <li className="mt-5">
+              Bidang Penelitian dan Pengembangan Meteorologi
+            </li>
             <li>Bidang Penelitian dan Pengembangan Geofisika</li>
             <li>Bidang Penelitian dan Pengembangan Klimatologi</li>
             <li>Subbagian Tata Usaha</li>
@@ -42,7 +45,7 @@ export default function Profile() {
       <div>
         <div className="text-center space-y-2 sm:text-left">
           <h1 className="mt-10 text-center font-bold text-2xl mb-2">Profil</h1>
-          <p className='mt-10 text-justify'>
+          <p className="mt-10 text-justify">
             PUSAT PENELITIAN DAN PENGEMBANGAN BADAN METEOROLOGI KLIMATOLOGI DAN
             GEOFISIKA. Dasar HukumBerdasarkan Peraturan Kepala Badan Meteorologi
             Klimatologi dan Geofisika Nomor: KEP.03 Tahun 2009 tentang
@@ -63,7 +66,7 @@ export default function Profile() {
           <h1 className=" text-center font-bold text-2xl mb-2">
             Tugas Pokok Puslitbang
           </h1>
-          <p className='text-justify'>
+          <p className="text-justify">
             Puslitbang mempunyai tugas melaksanakan penelitian, pengkajian dan
             pengembangan, pembinaan dan pengendalian pelaksanaan pengkajian,
             penelitian dan pengembangan, koordinasi dan kerjasama serta
@@ -75,7 +78,7 @@ export default function Profile() {
       <div className="flex-col mt-10">
         <div className="text-center space-y-2 sm:text-left">
           <h1 className=" text-center font-bold text-2xl mb-2">Tujuan</h1>
-          <p className='text-justify'>
+          <p className="text-justify">
             Meningkatkan hasil penelitian ilmiah, pengembangan dan kajian metoda
             dan prosedur operasional di bidang MKKUG yang dapat digunakan untuk
             meningkatkan kualitas informasi MKKUG dan atau dipublikasikan secara
@@ -85,22 +88,42 @@ export default function Profile() {
       </div>
       <div className="flex-col mt-10">
         <div className="text-justif text-center space-y-2 sm:text-left">
-          <h1 className=" text-center font-bold text-2xl mb-2">Fungsi Puslitbang</h1>
-          <ul className='list-disc'>
-            <li className='mt-5'>Penyusunan rencana dan program penelitian, pengkajian danpengembangan di bidang meteorologi,
-klimatologi, kualitas udara dan geofisika</li>
-            <li>Pembinaan dan pengendalian pelaksanaan penelitian, pengkajian, dan pengembangan di bidang
-meteorologi, klimatologi, kualitas udara dan geofisika</li>
-            <li>Koordinasi dan kerjasama penelitian, pengkajian, dan pengembangan di bidang meteorologi, klimatologi,
-kualitas udara dan geofisika</li>
-            <li>Pelaksanaan penelitian, pengkajian dan pengembangan di bidang meteorologi, klimatologi, kualitas udara
-dan geofisika</li>
-            <li>Pemberian pelayanan penelitian, pengkajian dan pengembangan dan informasi ilmiah di bidang
-meteorologi, klimatologi, kualitas udara dan geofisika</li>
-            <li>Pelaksanaan evaluasi dan laporan kegiatan penelitian, pengkajian, dan pengembangan di bidang
-meteorologi, klimatologi, kualitas udara dan geofisika</li>
-            <li>Pelaksanaan diseminasi hasil penelitian, pengkajian dan pengembangan di bidang meteorologi,
-klimatologi dan geofisika</li>
+          <h1 className=" text-center font-bold text-2xl mb-2">
+            Fungsi Puslitbang
+          </h1>
+          <ul className="list-disc">
+            <li className="mt-5">
+              Penyusunan rencana dan program penelitian, pengkajian
+              danpengembangan di bidang meteorologi, klimatologi, kualitas udara
+              dan geofisika
+            </li>
+            <li>
+              Pembinaan dan pengendalian pelaksanaan penelitian, pengkajian, dan
+              pengembangan di bidang meteorologi, klimatologi, kualitas udara
+              dan geofisika
+            </li>
+            <li>
+              Koordinasi dan kerjasama penelitian, pengkajian, dan pengembangan
+              di bidang meteorologi, klimatologi, kualitas udara dan geofisika
+            </li>
+            <li>
+              Pelaksanaan penelitian, pengkajian dan pengembangan di bidang
+              meteorologi, klimatologi, kualitas udara dan geofisika
+            </li>
+            <li>
+              Pemberian pelayanan penelitian, pengkajian dan pengembangan dan
+              informasi ilmiah di bidang meteorologi, klimatologi, kualitas
+              udara dan geofisika
+            </li>
+            <li>
+              Pelaksanaan evaluasi dan laporan kegiatan penelitian, pengkajian,
+              dan pengembangan di bidang meteorologi, klimatologi, kualitas
+              udara dan geofisika
+            </li>
+            <li>
+              Pelaksanaan diseminasi hasil penelitian, pengkajian dan
+              pengembangan di bidang meteorologi, klimatologi dan geofisika
+            </li>
           </ul>
         </div>
       </div>

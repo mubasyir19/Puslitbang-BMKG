@@ -51,19 +51,21 @@ export default function Navbar() {
       }`}
     >
       <div className="flex max-w-6xl px-4 md:px-0 mx-auto justify-between">
-        <div className="flex gap-x-2 lg:gap-x-4">
-          <Image
-            src="/images/logo-bmkg.png"
-            className="w-auto h-8 lg:h-12 my-auto"
-            width={60}
-            height={60}
-            alt="logo"
-          />
-          <div className="my-auto text-xs lg:text-sm font-bold text-white">
-            <p>Badan Meteorologi</p>
-            <p>Klimatologi Geofisika</p>
+        <a href="/">
+          <div className="flex gap-x-2 lg:gap-x-4">
+            <Image
+              src="/images/logo-bmkg.png"
+              className="w-auto h-8 lg:h-12 my-auto"
+              width={60}
+              height={60}
+              alt="logo"
+            />
+            <div className="my-auto text-xs lg:text-sm font-bold text-white">
+              <p>Badan Meteorologi</p>
+              <p>Klimatologi Geofisika</p>
+            </div>
           </div>
-        </div>
+        </a>
         <div className="my-auto hidden md:flex gap-x-2 lg:gap-x-12 md:text-sm lg:text-base font-medium text-white">
           <Link
             href="/"

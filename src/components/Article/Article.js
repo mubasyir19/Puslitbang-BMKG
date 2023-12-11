@@ -1,82 +1,13 @@
-import Image from 'next/image'
+'use client'
+
 import Link from 'next/link'
-import React from 'react'
+import useSWR from 'swr'
+import { fetcherSWR } from '@/helpers/fetcher'
+import ArticleTextDisplay from '@/components/ArticleTextDisplay/ArticleTextDisplay'
+import { formatDate } from '@/helpers/utils'
 
 export default function Article() {
-  const ARTICLE_DATA = [
-    {
-      image: '/images/volcano.png',
-      date: '2023-10-18',
-      title: 'Gunung Api Meletus yang berakibat Gempa Bumi di Daerah Bekasi',
-      content:
-        'lorem ipsum sit dolor amet lorem ipsum sit dolor amet lorem ipsum sit dolor amet lorem ipsum sit dolor amet',
-    },
-    {
-      image: '/images/volcano.png',
-      date: '2023-10-18',
-      title: 'Gunung Api Meletus yang berakibat Gempa Bumi di Daerah Bekasi',
-      content:
-        'lorem ipsum sit dolor amet lorem ipsum sit dolor amet lorem ipsum sit dolor amet lorem ipsum sit dolor amet',
-    },
-    {
-      image: '/images/volcano.png',
-      date: '2023-10-18',
-      title: 'Gunung Api Meletus yang berakibat Gempa Bumi di Daerah Bekasi',
-      content:
-        'lorem ipsum sit dolor amet lorem ipsum sit dolor amet lorem ipsum sit dolor amet lorem ipsum sit dolor amet',
-    },
-  ]
-
-  const PERS_DATA = [
-    {
-      image: '/images/background.png',
-      date: '2023-10-9',
-      title: 'Gunung Api Meletus yang berakibat Gempa Bumi di Daerah A',
-      content:
-        'lorem ipsum sit dolor amet lorem ipsum sit dolor amet lorem ipsum sit dolor amet lorem ipsum sit dolor amet',
-    },
-    {
-      image: '/images/background.png',
-      date: '2023-10-9',
-      title: 'Gunung Api Meletus yang berakibat Gempa Bumi di Daerah A',
-      content:
-        'lorem ipsum sit dolor amet lorem ipsum sit dolor amet lorem ipsum sit dolor amet lorem ipsum sit dolor amet',
-    },
-    {
-      image: '/images/background.png',
-      date: '2023-10-9',
-      title: 'Gunung Api Meletus yang berakibat Gempa Bumi di Daerah A',
-      content:
-        'lorem ipsum sit dolor amet lorem ipsum sit dolor amet lorem ipsum sit dolor amet lorem ipsum sit dolor amet',
-    },
-    {
-      image: '/images/background.png',
-      date: '2023-10-9',
-      title: 'Gunung Api Meletus yang berakibat Gempa Bumi di Daerah A',
-      content:
-        'lorem ipsum sit dolor amet lorem ipsum sit dolor amet lorem ipsum sit dolor amet lorem ipsum sit dolor amet',
-    },
-  ]
-
-  const formatDate = (isoDate) => {
-    const date = new Date(isoDate)
-    const options = {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    }
-    const formatterDate = new Intl.DateTimeFormat('id-ID', options)
-    return formatterDate.format(date)
-  }
-
-  const limitTitle = (title, limit) => {
-    const words = title.split(' ')
-    if (words.length > limit) {
-      return words.slice(0, limit).join(' ') + '...'
-    }
-    return title
-  }
+  const { data, isLoading, error } = useSWR('/posts?limit=4', fetcherSWR)
 
   return (
     <section className="mt-32 px-8 lg:px-0">
@@ -84,67 +15,71 @@ export default function Article() {
         <h2 className="text-xl md:text-2xl lg:text-3xl font-bold underline underline-offset-8">
           Berita
         </h2>
-        <Link href="#" className="my-auto text-sm md:text-base text-blue-500">
+        <Link
+          href="/berita"
+          className="my-auto text-sm md:text-base text-blue-500"
+        >
           Lihat Semua
         </Link>
       </div>
-      <div className="flex flex-col lg:flex-row gap-x-5 mt-5">
-        <div className="main-article w-fit">
-          <Image
-            src="/images/background.png"
-            width={923}
-            height={454}
-            alt="news"
-            className="z-0 rounded-3xl h-auto w-fit lg:h-96 lg:w-full"
-          />
-          <div className="px-7 flex flex-col gap-y-4 justify-center items-start text-black">
-            <Link
-              href="#"
-              className="text-base md:text-lg lg:text-2xl mt-4 font-semibold"
-            >
-              Kunjungan 24 Negara Ke BMKG Untuk Pengkajian Terkait Iklim yang
-              Terjadi
-            </Link>
-            <div className="date flex gap-x-2">
-              <svg
-                className="w-3 md:w-4"
-                width="19"
-                height="21"
-                viewBox="0 0 19 21"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M9.12512 12.5069C8.83784 12.5069 8.59687 12.4071 8.4022 12.2076C8.20753 12.0082 8.11054 11.7616 8.11121 11.4679C8.11121 11.1735 8.20855 10.9266 8.40322 10.7271C8.59789 10.5276 8.83852 10.4282 9.12512 10.4289C9.41239 10.4289 9.65336 10.5286 9.84803 10.7281C10.0427 10.9276 10.1397 11.1742 10.139 11.4679C10.139 11.7623 10.0417 12.0092 9.84701 12.2087C9.65234 12.4082 9.41171 12.5076 9.12512 12.5069ZM5.06951 12.5069C4.78224 12.5069 4.54127 12.4071 4.3466 12.2076C4.15193 12.0082 4.05493 11.7616 4.05561 11.4679C4.05561 11.1735 4.15294 10.9266 4.34761 10.7271C4.54228 10.5276 4.78291 10.4282 5.06951 10.4289C5.35678 10.4289 5.59775 10.5286 5.79242 10.7281C5.98709 10.9276 6.08409 11.1742 6.08341 11.4679C6.08341 11.7623 5.98608 12.0092 5.79141 12.2087C5.59674 12.4082 5.35611 12.5076 5.06951 12.5069ZM13.1807 12.5069C12.8934 12.5069 12.6525 12.4071 12.4578 12.2076C12.2631 12.0082 12.1661 11.7616 12.1668 11.4679C12.1668 11.1735 12.2642 10.9266 12.4588 10.7271C12.6535 10.5276 12.8941 10.4282 13.1807 10.4289C13.468 10.4289 13.709 10.5286 13.9036 10.7281C14.0983 10.9276 14.1953 11.1742 14.1946 11.4679C14.1946 11.7623 14.0973 12.0092 13.9026 12.2087C13.7079 12.4082 13.4673 12.5076 13.1807 12.5069ZM9.12512 16.6628C8.83784 16.6628 8.59687 16.5631 8.4022 16.3636C8.20753 16.1641 8.11054 15.9175 8.11121 15.6238C8.11121 15.3294 8.20855 15.0825 8.40322 14.883C8.59789 14.6835 8.83852 14.5841 9.12512 14.5848C9.41239 14.5848 9.65336 14.6846 9.84803 14.8841C10.0427 15.0835 10.1397 15.3301 10.139 15.6238C10.139 15.9182 10.0417 16.1651 9.84701 16.3646C9.65234 16.5641 9.41171 16.6635 9.12512 16.6628ZM5.06951 16.6628C4.78224 16.6628 4.54127 16.5631 4.3466 16.3636C4.15193 16.1641 4.05493 15.9175 4.05561 15.6238C4.05561 15.3294 4.15294 15.0825 4.34761 14.883C4.54228 14.6835 4.78291 14.5841 5.06951 14.5848C5.35678 14.5848 5.59775 14.6846 5.79242 14.8841C5.98709 15.0835 6.08409 15.3301 6.08341 15.6238C6.08341 15.9182 5.98608 16.1651 5.79141 16.3646C5.59674 16.5641 5.35611 16.6635 5.06951 16.6628ZM13.1807 16.6628C12.8934 16.6628 12.6525 16.5631 12.4578 16.3636C12.2631 16.1641 12.1661 15.9175 12.1668 15.6238C12.1668 15.3294 12.2642 15.0825 12.4588 14.883C12.6535 14.6835 12.8941 14.5841 13.1807 14.5848C13.468 14.5848 13.709 14.6846 13.9036 14.8841C14.0983 15.0835 14.1953 15.3301 14.1946 15.6238C14.1946 15.9182 14.0973 16.1651 13.9026 16.3646C13.7079 16.5641 13.4673 16.6635 13.1807 16.6628ZM2.0278 20.8187C1.47016 20.8187 0.992611 20.6151 0.595162 20.2078C0.197712 19.8005 -0.000674213 19.3115 1.7214e-06 18.7408V4.195C1.7214e-06 3.62356 0.198726 3.13419 0.596176 2.72691C0.993625 2.31963 1.47083 2.11634 2.0278 2.11703H3.04171V0.0390625H5.06951V2.11703H13.1807V0.0390625H15.2085V2.11703H16.2224C16.7801 2.11703 17.2576 2.32067 17.6551 2.72795C18.0525 3.13523 18.2509 3.62425 18.2502 4.195V18.7408C18.2502 19.3122 18.0515 19.8016 17.6541 20.2089C17.2566 20.6161 16.7794 20.8194 16.2224 20.8187H2.0278ZM2.0278 18.7408H16.2224V8.35093H2.0278V18.7408Z"
-                  fill="black"
-                />
-              </svg>
-              <p className="my-auto text-xs md:text-sm">
-                Senin, 9 Oktober 2023
-              </p>
-            </div>
-            <p className="text-xs md:text-sm lg:text-base w-fit text-justify">
-              Lorem ipsum dolor sit amet consectetur. Ultrices fringilla lacus
-              convallis nunc. Donec in lacus volutpat aliquam purus
-              pellentesque. Enim scelerisque tincidunt in ut diam a elementum
-              aliquet. Elit curabitur cras at mi euismod sit sed magna. Magna
-              venenatis aliquet nulla fusce egestas ut. Consequat neque
-              scelerisque nunc ac. Sit praesent vivamus eu ac. Sit massa
-              hendrerit vitae duis. Non nam adipiscing viverra bibendum quisque
-              sit vestibulum ut. Tellus mattis ut sem quis enim lectus. Dui a
-              amet aliquam et euismod elit orci id suscipit.
-            </p>
+      {error ? (
+        'Error'
+      ) : isLoading ? (
+        'Loading...'
+      ) : (
+        <div className="flex flex-col lg:flex-row gap-x-5 mt-5">
+          <div className="w-3/4">
+            {data.data.slice(0, 1).map((d, key) => (
+              <div key={key} className="main-article w-fit">
+                <div className="w-full h-[500px]">
+                  <img
+                    src={d.image}
+                    alt={d.title}
+                    className="w-full h-full object-cover rounded-xl"
+                  />
+                </div>
+                <div className="flex flex-col gap-y-4 justify-center items-start text-black">
+                  <Link
+                    href={`/berita/${d.slug}`}
+                    className="text-base md:text-lg lg:text-2xl mt-4 font-semibold"
+                  >
+                    {d.title}
+                  </Link>
+                  <div className="date flex gap-x-2">
+                    <svg
+                      className="w-3 md:w-4"
+                      width="19"
+                      height="21"
+                      viewBox="0 0 19 21"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M9.12512 12.5069C8.83784 12.5069 8.59687 12.4071 8.4022 12.2076C8.20753 12.0082 8.11054 11.7616 8.11121 11.4679C8.11121 11.1735 8.20855 10.9266 8.40322 10.7271C8.59789 10.5276 8.83852 10.4282 9.12512 10.4289C9.41239 10.4289 9.65336 10.5286 9.84803 10.7281C10.0427 10.9276 10.1397 11.1742 10.139 11.4679C10.139 11.7623 10.0417 12.0092 9.84701 12.2087C9.65234 12.4082 9.41171 12.5076 9.12512 12.5069ZM5.06951 12.5069C4.78224 12.5069 4.54127 12.4071 4.3466 12.2076C4.15193 12.0082 4.05493 11.7616 4.05561 11.4679C4.05561 11.1735 4.15294 10.9266 4.34761 10.7271C4.54228 10.5276 4.78291 10.4282 5.06951 10.4289C5.35678 10.4289 5.59775 10.5286 5.79242 10.7281C5.98709 10.9276 6.08409 11.1742 6.08341 11.4679C6.08341 11.7623 5.98608 12.0092 5.79141 12.2087C5.59674 12.4082 5.35611 12.5076 5.06951 12.5069ZM13.1807 12.5069C12.8934 12.5069 12.6525 12.4071 12.4578 12.2076C12.2631 12.0082 12.1661 11.7616 12.1668 11.4679C12.1668 11.1735 12.2642 10.9266 12.4588 10.7271C12.6535 10.5276 12.8941 10.4282 13.1807 10.4289C13.468 10.4289 13.709 10.5286 13.9036 10.7281C14.0983 10.9276 14.1953 11.1742 14.1946 11.4679C14.1946 11.7623 14.0973 12.0092 13.9026 12.2087C13.7079 12.4082 13.4673 12.5076 13.1807 12.5069ZM9.12512 16.6628C8.83784 16.6628 8.59687 16.5631 8.4022 16.3636C8.20753 16.1641 8.11054 15.9175 8.11121 15.6238C8.11121 15.3294 8.20855 15.0825 8.40322 14.883C8.59789 14.6835 8.83852 14.5841 9.12512 14.5848C9.41239 14.5848 9.65336 14.6846 9.84803 14.8841C10.0427 15.0835 10.1397 15.3301 10.139 15.6238C10.139 15.9182 10.0417 16.1651 9.84701 16.3646C9.65234 16.5641 9.41171 16.6635 9.12512 16.6628ZM5.06951 16.6628C4.78224 16.6628 4.54127 16.5631 4.3466 16.3636C4.15193 16.1641 4.05493 15.9175 4.05561 15.6238C4.05561 15.3294 4.15294 15.0825 4.34761 14.883C4.54228 14.6835 4.78291 14.5841 5.06951 14.5848C5.35678 14.5848 5.59775 14.6846 5.79242 14.8841C5.98709 15.0835 6.08409 15.3301 6.08341 15.6238C6.08341 15.9182 5.98608 16.1651 5.79141 16.3646C5.59674 16.5641 5.35611 16.6635 5.06951 16.6628ZM13.1807 16.6628C12.8934 16.6628 12.6525 16.5631 12.4578 16.3636C12.2631 16.1641 12.1661 15.9175 12.1668 15.6238C12.1668 15.3294 12.2642 15.0825 12.4588 14.883C12.6535 14.6835 12.8941 14.5841 13.1807 14.5848C13.468 14.5848 13.709 14.6846 13.9036 14.8841C14.0983 15.0835 14.1953 15.3301 14.1946 15.6238C14.1946 15.9182 14.0973 16.1651 13.9026 16.3646C13.7079 16.5641 13.4673 16.6635 13.1807 16.6628ZM2.0278 20.8187C1.47016 20.8187 0.992611 20.6151 0.595162 20.2078C0.197712 19.8005 -0.000674213 19.3115 1.7214e-06 18.7408V4.195C1.7214e-06 3.62356 0.198726 3.13419 0.596176 2.72691C0.993625 2.31963 1.47083 2.11634 2.0278 2.11703H3.04171V0.0390625H5.06951V2.11703H13.1807V0.0390625H15.2085V2.11703H16.2224C16.7801 2.11703 17.2576 2.32067 17.6551 2.72795C18.0525 3.13523 18.2509 3.62425 18.2502 4.195V18.7408C18.2502 19.3122 18.0515 19.8016 17.6541 20.2089C17.2566 20.6161 16.7794 20.8194 16.2224 20.8187H2.0278ZM2.0278 18.7408H16.2224V8.35093H2.0278V18.7408Z"
+                        fill="black"
+                      />
+                    </svg>
+                    <p className="my-auto text-xs md:text-sm">
+                      {formatDate(d.created_at)}
+                    </p>
+                  </div>
+                  <p className="text-xs md:text-sm lg:text-base w-fit text-justify line-clamp-5">
+                    <ArticleTextDisplay content={d.text} />
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
-          {/* <div className=" mt-5 flex gap-x-5">
-            {ARTICLE_DATA.map((data, index) => (
-              <div key={index} className="card-news relative">
-                <Image
-                  src={data.image}
-                  width={400}
-                  height={217}
-                  alt="news"
-                  className="z-0 w-80 h-64 object-cover rounded-xl"
-                />
+          <div className="w-1/4 flex flex-col gap-4">
+            {data.data.slice(1, 4).map((d, key) => (
+              <div key={key} className="relative">
+                <div className="w-full h-[200px]">
+                  <img
+                    src={d.image}
+                    alt={d.title}
+                    className="rounded-xl w-full h-full object-cover"
+                  />
+                </div>
                 <div className="absolute w-full px-5 py-3 bottom-0 bg-black bg-opacity-40 flex flex-col justify-center items-start text-white  rounded-b-xl">
                   <div className="date flex gap-x-2">
                     <svg
@@ -160,12 +95,17 @@ export default function Article() {
                         fill="white"
                       />
                     </svg>
-                    <p className="my-auto text-xs">{formatDate(data.date)}</p>
+                    <p className="my-auto text-xs">
+                      {formatDate(d.created_at)}
+                    </p>
                   </div>
-                  <h1 className="text-base font-semibold">
-                    {limitTitle(data.title, 5)}
+                  <h1 className="text-sm md:text-base font-semibold line-clamp-1">
+                    {d.title}
                   </h1>
-                  <Link href="#" className="mt-2 flex gap-x-2    ">
+                  <Link
+                    href={`/berita/${d.slug}`}
+                    className="mt-1 md:mt-2 flex gap-x-2"
+                  >
                     <span className="text-xs">Baca Selengkapnya</span>
                     <svg
                       className="my-auto"
@@ -184,116 +124,9 @@ export default function Article() {
                 </div>
               </div>
             ))}
-          </div> */}
+          </div>
         </div>
-        <div className="list-card mt-4 lg:mt-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-5 w-fit">
-          {ARTICLE_DATA.map((data, index) => (
-            <div key={index} className="card-pers relative">
-              <Image
-                src={data.image}
-                width={400}
-                height={217}
-                alt="news"
-                className="z-0 rounded-xl"
-              />
-              <div className="absolute w-full px-5 py-3 bottom-0 bg-black bg-opacity-40 flex flex-col justify-center items-start text-white  rounded-b-xl">
-                <div className="date flex gap-x-2">
-                  <svg
-                    className="my-auto"
-                    width="13"
-                    height="14"
-                    viewBox="0 0 19 21"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M9.12512 12.5069C8.83784 12.5069 8.59687 12.4071 8.4022 12.2076C8.20753 12.0082 8.11054 11.7616 8.11121 11.4679C8.11121 11.1735 8.20855 10.9266 8.40322 10.7271C8.59789 10.5276 8.83852 10.4282 9.12512 10.4289C9.41239 10.4289 9.65336 10.5286 9.84803 10.7281C10.0427 10.9276 10.1397 11.1742 10.139 11.4679C10.139 11.7623 10.0417 12.0092 9.84701 12.2087C9.65234 12.4082 9.41171 12.5076 9.12512 12.5069ZM5.06951 12.5069C4.78224 12.5069 4.54127 12.4071 4.3466 12.2076C4.15193 12.0082 4.05493 11.7616 4.05561 11.4679C4.05561 11.1735 4.15294 10.9266 4.34761 10.7271C4.54228 10.5276 4.78291 10.4282 5.06951 10.4289C5.35678 10.4289 5.59775 10.5286 5.79242 10.7281C5.98709 10.9276 6.08409 11.1742 6.08341 11.4679C6.08341 11.7623 5.98608 12.0092 5.79141 12.2087C5.59674 12.4082 5.35611 12.5076 5.06951 12.5069ZM13.1807 12.5069C12.8934 12.5069 12.6525 12.4071 12.4578 12.2076C12.2631 12.0082 12.1661 11.7616 12.1668 11.4679C12.1668 11.1735 12.2642 10.9266 12.4588 10.7271C12.6535 10.5276 12.8941 10.4282 13.1807 10.4289C13.468 10.4289 13.709 10.5286 13.9036 10.7281C14.0983 10.9276 14.1953 11.1742 14.1946 11.4679C14.1946 11.7623 14.0973 12.0092 13.9026 12.2087C13.7079 12.4082 13.4673 12.5076 13.1807 12.5069ZM9.12512 16.6628C8.83784 16.6628 8.59687 16.5631 8.4022 16.3636C8.20753 16.1641 8.11054 15.9175 8.11121 15.6238C8.11121 15.3294 8.20855 15.0825 8.40322 14.883C8.59789 14.6835 8.83852 14.5841 9.12512 14.5848C9.41239 14.5848 9.65336 14.6846 9.84803 14.8841C10.0427 15.0835 10.1397 15.3301 10.139 15.6238C10.139 15.9182 10.0417 16.1651 9.84701 16.3646C9.65234 16.5641 9.41171 16.6635 9.12512 16.6628ZM5.06951 16.6628C4.78224 16.6628 4.54127 16.5631 4.3466 16.3636C4.15193 16.1641 4.05493 15.9175 4.05561 15.6238C4.05561 15.3294 4.15294 15.0825 4.34761 14.883C4.54228 14.6835 4.78291 14.5841 5.06951 14.5848C5.35678 14.5848 5.59775 14.6846 5.79242 14.8841C5.98709 15.0835 6.08409 15.3301 6.08341 15.6238C6.08341 15.9182 5.98608 16.1651 5.79141 16.3646C5.59674 16.5641 5.35611 16.6635 5.06951 16.6628ZM13.1807 16.6628C12.8934 16.6628 12.6525 16.5631 12.4578 16.3636C12.2631 16.1641 12.1661 15.9175 12.1668 15.6238C12.1668 15.3294 12.2642 15.0825 12.4588 14.883C12.6535 14.6835 12.8941 14.5841 13.1807 14.5848C13.468 14.5848 13.709 14.6846 13.9036 14.8841C14.0983 15.0835 14.1953 15.3301 14.1946 15.6238C14.1946 15.9182 14.0973 16.1651 13.9026 16.3646C13.7079 16.5641 13.4673 16.6635 13.1807 16.6628ZM2.0278 20.8187C1.47016 20.8187 0.992611 20.6151 0.595162 20.2078C0.197712 19.8005 -0.000674213 19.3115 1.7214e-06 18.7408V4.195C1.7214e-06 3.62356 0.198726 3.13419 0.596176 2.72691C0.993625 2.31963 1.47083 2.11634 2.0278 2.11703H3.04171V0.0390625H5.06951V2.11703H13.1807V0.0390625H15.2085V2.11703H16.2224C16.7801 2.11703 17.2576 2.32067 17.6551 2.72795C18.0525 3.13523 18.2509 3.62425 18.2502 4.195V18.7408C18.2502 19.3122 18.0515 19.8016 17.6541 20.2089C17.2566 20.6161 16.7794 20.8194 16.2224 20.8187H2.0278ZM2.0278 18.7408H16.2224V8.35093H2.0278V18.7408Z"
-                      fill="white"
-                    />
-                  </svg>
-                  <p className="my-auto text-xs">{formatDate(data.date)}</p>
-                </div>
-                <h1 className="text-sm md:text-base font-semibold">
-                  {limitTitle(data.title, 5)}
-                </h1>
-                <Link href="#" className="mt-1 md:mt-2 flex gap-x-2    ">
-                  <span className="text-xs">Baca Selengkapnya</span>
-                  <svg
-                    className="my-auto"
-                    width="5"
-                    height="9"
-                    viewBox="0 0 5 9"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M3.18702 4.5L0.209923 1.35202C0.0699741 1.20404 0 1.01569 0 0.786995C0 0.558296 0.0699741 0.369955 0.209923 0.221973C0.349872 0.0739907 0.527988 0 0.744273 0C0.960557 0 1.13867 0.0739907 1.27862 0.221973L4.79006 3.93498C4.8664 4.0157 4.9206 4.10314 4.95266 4.19731C4.98472 4.29148 5.0005 4.39238 4.99999 4.5C4.99999 4.60762 4.98396 4.70852 4.9519 4.80269C4.91984 4.89686 4.86589 4.9843 4.79006 5.06502L1.27862 8.77803C1.13867 8.92601 0.960557 9 0.744273 9C0.527988 9 0.349872 8.92601 0.209923 8.77803C0.0699741 8.63004 0 8.4417 0 8.213C0 7.9843 0.0699741 7.79596 0.209923 7.64798L3.18702 4.5Z"
-                      fill="white"
-                    />
-                  </svg>
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-      {/* <div className="pers">
-        <div className="title-pers">
-          <h2 className="text-3xl font-bold underline underline-offset-8">
-            Siaran Pers
-          </h2>
-        </div>
-        <div className="mt-5 list-card flex flex-col gap-y-5">
-          {PERS_DATA.map((data, index) => (
-            <div key={index} className="card-pers relative">
-              <Image
-                src={data.image}
-                width={400}
-                height={217}
-                alt="news"
-                className="z-0 rounded-xl"
-              />
-              <div className="absolute w-full px-5 py-3 bottom-0 bg-black bg-opacity-40 flex flex-col justify-center items-start text-white  rounded-b-xl">
-                <div className="date flex gap-x-2">
-                  <svg
-                    className="my-auto"
-                    width="13"
-                    height="14"
-                    viewBox="0 0 19 21"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M9.12512 12.5069C8.83784 12.5069 8.59687 12.4071 8.4022 12.2076C8.20753 12.0082 8.11054 11.7616 8.11121 11.4679C8.11121 11.1735 8.20855 10.9266 8.40322 10.7271C8.59789 10.5276 8.83852 10.4282 9.12512 10.4289C9.41239 10.4289 9.65336 10.5286 9.84803 10.7281C10.0427 10.9276 10.1397 11.1742 10.139 11.4679C10.139 11.7623 10.0417 12.0092 9.84701 12.2087C9.65234 12.4082 9.41171 12.5076 9.12512 12.5069ZM5.06951 12.5069C4.78224 12.5069 4.54127 12.4071 4.3466 12.2076C4.15193 12.0082 4.05493 11.7616 4.05561 11.4679C4.05561 11.1735 4.15294 10.9266 4.34761 10.7271C4.54228 10.5276 4.78291 10.4282 5.06951 10.4289C5.35678 10.4289 5.59775 10.5286 5.79242 10.7281C5.98709 10.9276 6.08409 11.1742 6.08341 11.4679C6.08341 11.7623 5.98608 12.0092 5.79141 12.2087C5.59674 12.4082 5.35611 12.5076 5.06951 12.5069ZM13.1807 12.5069C12.8934 12.5069 12.6525 12.4071 12.4578 12.2076C12.2631 12.0082 12.1661 11.7616 12.1668 11.4679C12.1668 11.1735 12.2642 10.9266 12.4588 10.7271C12.6535 10.5276 12.8941 10.4282 13.1807 10.4289C13.468 10.4289 13.709 10.5286 13.9036 10.7281C14.0983 10.9276 14.1953 11.1742 14.1946 11.4679C14.1946 11.7623 14.0973 12.0092 13.9026 12.2087C13.7079 12.4082 13.4673 12.5076 13.1807 12.5069ZM9.12512 16.6628C8.83784 16.6628 8.59687 16.5631 8.4022 16.3636C8.20753 16.1641 8.11054 15.9175 8.11121 15.6238C8.11121 15.3294 8.20855 15.0825 8.40322 14.883C8.59789 14.6835 8.83852 14.5841 9.12512 14.5848C9.41239 14.5848 9.65336 14.6846 9.84803 14.8841C10.0427 15.0835 10.1397 15.3301 10.139 15.6238C10.139 15.9182 10.0417 16.1651 9.84701 16.3646C9.65234 16.5641 9.41171 16.6635 9.12512 16.6628ZM5.06951 16.6628C4.78224 16.6628 4.54127 16.5631 4.3466 16.3636C4.15193 16.1641 4.05493 15.9175 4.05561 15.6238C4.05561 15.3294 4.15294 15.0825 4.34761 14.883C4.54228 14.6835 4.78291 14.5841 5.06951 14.5848C5.35678 14.5848 5.59775 14.6846 5.79242 14.8841C5.98709 15.0835 6.08409 15.3301 6.08341 15.6238C6.08341 15.9182 5.98608 16.1651 5.79141 16.3646C5.59674 16.5641 5.35611 16.6635 5.06951 16.6628ZM13.1807 16.6628C12.8934 16.6628 12.6525 16.5631 12.4578 16.3636C12.2631 16.1641 12.1661 15.9175 12.1668 15.6238C12.1668 15.3294 12.2642 15.0825 12.4588 14.883C12.6535 14.6835 12.8941 14.5841 13.1807 14.5848C13.468 14.5848 13.709 14.6846 13.9036 14.8841C14.0983 15.0835 14.1953 15.3301 14.1946 15.6238C14.1946 15.9182 14.0973 16.1651 13.9026 16.3646C13.7079 16.5641 13.4673 16.6635 13.1807 16.6628ZM2.0278 20.8187C1.47016 20.8187 0.992611 20.6151 0.595162 20.2078C0.197712 19.8005 -0.000674213 19.3115 1.7214e-06 18.7408V4.195C1.7214e-06 3.62356 0.198726 3.13419 0.596176 2.72691C0.993625 2.31963 1.47083 2.11634 2.0278 2.11703H3.04171V0.0390625H5.06951V2.11703H13.1807V0.0390625H15.2085V2.11703H16.2224C16.7801 2.11703 17.2576 2.32067 17.6551 2.72795C18.0525 3.13523 18.2509 3.62425 18.2502 4.195V18.7408C18.2502 19.3122 18.0515 19.8016 17.6541 20.2089C17.2566 20.6161 16.7794 20.8194 16.2224 20.8187H2.0278ZM2.0278 18.7408H16.2224V8.35093H2.0278V18.7408Z"
-                      fill="white"
-                    />
-                  </svg>
-                  <p className="my-auto text-xs">{formatDate(data.date)}</p>
-                </div>
-                <h1 className="text-base font-semibold">
-                  {limitTitle(data.title, 5)}
-                </h1>
-                <Link href="#" className="mt-2 flex gap-x-2    ">
-                  <span className="text-xs">Baca Selengkapnya</span>
-                  <svg
-                    className="my-auto"
-                    width="5"
-                    height="9"
-                    viewBox="0 0 5 9"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M3.18702 4.5L0.209923 1.35202C0.0699741 1.20404 0 1.01569 0 0.786995C0 0.558296 0.0699741 0.369955 0.209923 0.221973C0.349872 0.0739907 0.527988 0 0.744273 0C0.960557 0 1.13867 0.0739907 1.27862 0.221973L4.79006 3.93498C4.8664 4.0157 4.9206 4.10314 4.95266 4.19731C4.98472 4.29148 5.0005 4.39238 4.99999 4.5C4.99999 4.60762 4.98396 4.70852 4.9519 4.80269C4.91984 4.89686 4.86589 4.9843 4.79006 5.06502L1.27862 8.77803C1.13867 8.92601 0.960557 9 0.744273 9C0.527988 9 0.349872 8.92601 0.209923 8.77803C0.0699741 8.63004 0 8.4417 0 8.213C0 7.9843 0.0699741 7.79596 0.209923 7.64798L3.18702 4.5Z"
-                      fill="white"
-                    />
-                  </svg>
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div> */}
+      )}
     </section>
   )
 }
