@@ -2,12 +2,12 @@
 
 import Link from 'next/link'
 import useSWR from 'swr'
-import { fetcher } from '@/helpers/fetcher'
+import { fetcherSWR } from '@/helpers/fetcher'
 import ArticleTextDisplay from '@/components/ArticleTextDisplay/ArticleTextDisplay'
 import { formatDate } from '@/helpers/utils'
 
 export default function Article() {
-  const { data } = useSWR('/posts?limit=4', fetcher)
+  const { data, isLoading, error } = useSWR('/posts?limit=4', fetcherSWR)
 
   return (
     <section className="mt-32 px-8 lg:px-0">
@@ -22,10 +22,14 @@ export default function Article() {
           Lihat Semua
         </Link>
       </div>
-      <div className="flex flex-col lg:flex-row gap-x-5 mt-5">
-        <div className='w-3/4'>
-          {data &&
-            data.data.slice(0, 1).map((d, key) => (
+      {error ? (
+        'Error'
+      ) : isLoading ? (
+        'Loading...'
+      ) : (
+        <div className="flex flex-col lg:flex-row gap-x-5 mt-5">
+          <div className="w-3/4">
+            {data.data.slice(0, 1).map((d, key) => (
               <div key={key} className="main-article w-fit">
                 <div className="w-full h-[500px]">
                   <img
@@ -65,10 +69,9 @@ export default function Article() {
                 </div>
               </div>
             ))}
-        </div>
-        <div className="w-1/4 flex flex-col gap-4">
-          {data &&
-            data.data.slice(1, 4).map((d, key) => (
+          </div>
+          <div className="w-1/4 flex flex-col gap-4">
+            {data.data.slice(1, 4).map((d, key) => (
               <div key={key} className="relative">
                 <div className="w-full h-[200px]">
                   <img
@@ -121,8 +124,9 @@ export default function Article() {
                 </div>
               </div>
             ))}
+          </div>
         </div>
-      </div>
+      )}
     </section>
   )
 }

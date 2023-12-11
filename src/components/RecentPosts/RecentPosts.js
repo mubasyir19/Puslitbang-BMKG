@@ -17,7 +17,7 @@ export default function RecentPosts({ posts }) {
                 <p className="text-secondary text-xs md:text-sm">
                   {formatDate(post.created_at)}
                 </p>
-                <p className="mt-1 text-sm md:text-base font-semibold">
+                <p className="mt-1 text-sm md:text-base font-semibold line-clamp-2">
                   {post.title}
                 </p>
               </div>
