@@ -13,16 +13,14 @@ import TextAlign from '@tiptap/extension-text-align'
 import Superscript from '@tiptap/extension-superscript'
 import SubScript from '@tiptap/extension-subscript'
 import { Button } from '@mantine/core'
-import { useState } from 'react'
 import { useForm } from '@mantine/form'
+import { fetcher } from '@/helpers/fetcher'
 
 export default function AddArticlePage() {
-  const [content, setContent] = useState('')
-
   const form = useForm({
     initialValues: {
       title: '',
-      images: [],
+      image: null,
       slug: '',
       tags: [],
       text: '',
@@ -40,34 +38,28 @@ export default function AddArticlePage() {
       Highlight,
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
     ],
-    content: form.values.text,
     onUpdate: ({ editor }) => {
       form.setFieldValue('text', editor.getHTML())
     },
   })
 
-  const handleFileChange = (file) => {
-    form.setFieldValue('images', file)
-  }
-
-  const handleSubmit = (values) => {
+  const handleSubmit = async () => {
     form.validate()
     if (form.isValid()) {
-      console.log(form.values)
-      setContent(form.values)
-    } else {
-      console.log({ message: 'invalid' })
-      setContent(undefined)
+      const formData = new FormData()
+      for (const [key, value] of Object.entries(form.values)) {
+        formData.append(key, value)
+      }
+      try {
+        const res = await fetcher.post('/posts', formData)
+        console.log(res)
+      } catch (err) {}
     }
-  }
-
-  const handleClear = () => {
-    setContent('')
   }
 
   return (
     <section className="px-5 pt-6">
-      <div>
+      <div className='border-b mb-4'> 
         <h1 className="text-2xl font-semibold">Add User</h1>
       </div>
 
@@ -75,38 +67,35 @@ export default function AddArticlePage() {
         <form
           encType="multipart/form-data"
           onSubmit={form.onSubmit(handleSubmit)}
+          className="flex flex-col gap-2"
         >
           <TextInput
-            className="mt-2"
             label="Title"
             type="text"
             placeholder="Enter title"
             {...form.getInputProps('title')}
           />
           <FileInput
+            accept="image/png,image/jpeg"
             label="Upload File"
             placeholder="Pilih file"
-            multiple
-            onChange={handleFileChange}
-            {...form.getInputProps('images')}
+            {...form.getInputProps('image')}
           />
           <TextInput
-            className="mt-2"
             label="Slug"
             type="text"
             placeholder="Enter slug"
             {...form.getInputProps('slug')}
           />
           <TagsInput
-            className="mt-2"
             label="Tags"
             placeholder="Enter tag"
             data={[]}
             {...form.getInputProps('tags')}
           />
-          <div className="mt-2">
-            <p className="text-sm font-semibold">Content Article</p>
-            <RichTextEditor editor={editor}>
+          <div>
+            <p className="font-[500] text-[14px]">Content</p>
+            <RichTextEditor editor={editor} className="bg-white">
               <RichTextEditor.Toolbar>
                 <RichTextEditor.ControlsGroup>
                   <RichTextEditor.Bold />
@@ -153,16 +142,8 @@ export default function AddArticlePage() {
 
           <div className="mt-2 flex gap-x-2">
             <Button onClick={handleSubmit}>Submit</Button>
-            <Button onClick={handleClear}>Clear</Button>
           </div>
         </form>
-        <div>
-          <p>Judul : {content.title}</p>
-          {/* <p>Image : {content.images[0].name}</p> */}
-          <p>Slug : {content.slug}</p>
-          <p>Tags : {content.tags}</p>
-          <p>Content : {content.text}</p>
-        </div>
       </MantineProvider>
     </section>
   )
