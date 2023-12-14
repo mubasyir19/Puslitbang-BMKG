@@ -13,7 +13,7 @@ export default function ArticlePage() {
     pageSize: 10,
   })
   const { data, isLoading, error } = useSWR(
-    `/posts?page=${paginationModel.page + 1}`,
+    `/posts?page=${paginationModel.page + 1}&limit=${paginationModel.pageSize}`,
     fetcherSWR,
   )
   const [rowCountState, setRowCountState] = useState(data?.total_posts || 0)
@@ -70,54 +70,52 @@ export default function ArticlePage() {
   )
 
   return (
-    <>
-      {error ? (
-        'Error'
-      ) : isLoading ? (
-        'Loading...'
-      ) : (
-        <section className="px-5 pt-6">
-          <div>
-            <h1 className="text-2xl font-semibold">Article</h1>
-          </div>
-          <div className="mt-8">
-            <Link
-              href="/dashboard/article/add"
-              className="px-3 py-1 w-fit flex text-white bg-blue-400 rounded-lg"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 6v12m6-6H6"
-                />
-              </svg>
-              Tambah
-            </Link>
-          </div>
-          <div className="mt-4">
-            <Box sx={{ height: '700', width: 'fit' }}>
-              <DataGrid
-                rows={rows}
-                columns={columns}
-                pageSizeOptions={[10, 25, 50, 100]}
-                disableRowSelectionOnClick
-                rowCount={rowCountState}
-                paginationModel={paginationModel}
-                paginationMode="server"
-                onPaginationModelChange={setPaginationModel}
-              />
-            </Box>
-          </div>
-        </section>
-      )}
-    </>
+    <section className="px-5 pt-6">
+      <div className="border-b mb-4">
+        <h1 className="text-2xl font-semibold">Article</h1>
+      </div>
+      <div className="mt-8">
+        <Link
+          href="/dashboard/article/add"
+          className="px-3 py-1 w-fit flex text-white bg-blue-400 rounded-lg"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-6 h-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 6v12m6-6H6"
+            />
+          </svg>
+          Add Article
+        </Link>
+      </div>
+      <div className="mt-4">
+        {error ? (
+          'Error'
+        ) : isLoading ? (
+          'Loading...'
+        ) : (
+          <Box sx={{ height: 'fit', width: 'fit' }}>
+            <DataGrid
+              rows={rows}
+              columns={columns}
+              pageSizeOptions={[10, 25, 50, 100]}
+              disableRowSelectionOnClick
+              rowCount={rowCountState}
+              paginationModel={paginationModel}
+              paginationMode="server"
+              onPaginationModelChange={setPaginationModel}
+            />
+          </Box>
+        )}
+      </div>
+    </section>
   )
 }

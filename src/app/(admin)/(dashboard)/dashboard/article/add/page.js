@@ -2,6 +2,7 @@
 
 import '@mantine/tiptap/styles.css'
 import '@mantine/core/styles.css'
+import '@mantine/notifications/styles.css'
 
 import { FileInput, MantineProvider, TagsInput, TextInput } from '@mantine/core'
 import { RichTextEditor, Link } from '@mantine/tiptap'
@@ -13,8 +14,11 @@ import TextAlign from '@tiptap/extension-text-align'
 import Superscript from '@tiptap/extension-superscript'
 import SubScript from '@tiptap/extension-subscript'
 import { Button } from '@mantine/core'
-import { useForm } from '@mantine/form'
+import { useForm, isNotEmpty, matches } from '@mantine/form'
 import { fetcher } from '@/helpers/fetcher'
+import { Notifications, notifications } from '@mantine/notifications'
+import { useEffect } from 'react'
+import { convertToSlug } from '@/helpers/utils'
 
 export default function AddArticlePage() {
   const form = useForm({
@@ -25,7 +29,12 @@ export default function AddArticlePage() {
       tags: [],
       text: '',
     },
-    validate: {},
+    validate: {
+      title: isNotEmpty('Title is required'),
+      image: isNotEmpty('Image is required'),
+      slug: matches(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'Invalid slug format'),
+      text: isNotEmpty('Content is required'),
+    },
   })
 
   const editor = useEditor({
@@ -39,9 +48,18 @@ export default function AddArticlePage() {
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
     ],
     onUpdate: ({ editor }) => {
-      form.setFieldValue('text', editor.getHTML())
+      if (editor.getText() === '') {
+        form.setFieldValue('text', '')
+      } else {
+        form.setFieldValue('text', editor.getHTML())
+      }
     },
   })
+
+  useEffect(() => {
+    const slug = convertToSlug(form.values.title)
+    form.setFieldValue('slug', slug)
+  }, [form.values.title])
 
   const handleSubmit = async () => {
     form.validate()
@@ -50,17 +68,26 @@ export default function AddArticlePage() {
       for (const [key, value] of Object.entries(form.values)) {
         formData.append(key, value)
       }
+      console.log(form.values.text)
       try {
         const res = await fetcher.post('/posts', formData)
         console.log(res)
-      } catch (err) {}
+      } catch (err) {
+        if (err.response.data.message === 'slug is already taken') {
+          notifications.show({
+            color: 'red',
+            title: 'Title with same slug is already taken',
+            message: 'Try using custom slug',
+          })
+        }
+      }
     }
   }
 
   return (
     <section className="px-5 pt-6">
-      <div className='border-b mb-4'> 
-        <h1 className="text-2xl font-semibold">Add User</h1>
+      <div className="border-b mb-4">
+        <h1 className="text-2xl font-semibold">Add Article</h1>
       </div>
 
       <MantineProvider>
@@ -75,21 +102,21 @@ export default function AddArticlePage() {
             placeholder="Enter title"
             {...form.getInputProps('title')}
           />
-          <FileInput
-            accept="image/png,image/jpeg"
-            label="Upload File"
-            placeholder="Pilih file"
-            {...form.getInputProps('image')}
-          />
           <TextInput
             label="Slug"
             type="text"
             placeholder="Enter slug"
             {...form.getInputProps('slug')}
           />
+          <FileInput
+            accept="image/png,image/jpeg"
+            label="Cover image"
+            placeholder="Choose image"
+            {...form.getInputProps('image')}
+          />
           <TagsInput
-            label="Tags"
-            placeholder="Enter tag"
+            label="Tag"
+            placeholder="Enter tag (tap enter to select tag) (optional)"
             data={[]}
             {...form.getInputProps('tags')}
           />
@@ -138,12 +165,16 @@ export default function AddArticlePage() {
 
               <RichTextEditor.Content />
             </RichTextEditor>
+            <p className="text-[#fa5252] text-[12px] mt-[5px]">
+              {form.errors.text}
+            </p>
           </div>
 
           <div className="mt-2 flex gap-x-2">
             <Button onClick={handleSubmit}>Submit</Button>
           </div>
         </form>
+        <Notifications />
       </MantineProvider>
     </section>
   )
