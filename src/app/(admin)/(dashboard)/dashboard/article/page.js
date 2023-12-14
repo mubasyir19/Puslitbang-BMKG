@@ -3,74 +3,75 @@
 import { Box, Button } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import Link from 'next/link'
-
-const columns = [
-  { field: 'id', headerName: 'ID', width: 90 },
-  {
-    field: 'title',
-    headerName: 'Title',
-    editable: true,
-    flex: 1,
-    align: 'left',
-  },
-  {
-    field: 'author',
-    headerName: 'Author',
-    editable: true,
-    flex: 1,
-    align: 'left',
-  },
-  {
-    field: 'tags',
-    headerName: 'Tags',
-    editable: true,
-    flex: 1,
-    align: 'left',
-  },
-  {
-    field: 'action',
-    headerName: ' ',
-    flex: 1,
-    align: 'left',
-    renderCell: (params) => (
-      <div className="flex gap-x-2">
-        <Button
-          variant="contained"
-          color="primary"
-          size="small"
-          // onClick={() => handleEdit(params.row.id)}
-        >
-          Edit
-        </Button>
-        <Button
-          variant="contained"
-          color="error"
-          size="small"
-          // onClick={() => handleDelete(params.row.id)}
-        >
-          Delete
-        </Button>
-      </div>
-    ),
-  },
-]
-
-const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-]
+import useSWR from 'swr'
+import { fetcherSWR } from '@/helpers/fetcher'
+import { useMemo, useState, useEffect } from 'react'
 
 export default function ArticlePage() {
+  const [paginationModel, setPaginationModel] = useState({
+    page: 0,
+    pageSize: 10,
+  })
+  const { data, isLoading, error } = useSWR(
+    `/posts?page=${paginationModel.page + 1}&limit=${paginationModel.pageSize}`,
+    fetcherSWR,
+  )
+  const [rowCountState, setRowCountState] = useState(data?.total_posts || 0)
+
+  useEffect(() => {
+    setRowCountState((prevRowCountState) =>
+      data?.total_posts !== undefined ? data?.total_posts : prevRowCountState,
+    )
+  }, [data?.total_posts, setRowCountState])
+
+  const columns = [
+    { field: 'id', headerName: 'ID', width: 90 },
+    {
+      field: 'title',
+      headerName: 'Title',
+      flex: 1,
+    },
+    {
+      field: 'author',
+      headerName: 'Author',
+      flex: 1,
+    },
+    {
+      field: 'tags',
+      headerName: 'Tags',
+      flex: 1,
+    },
+    {
+      field: 'action',
+      headerName: 'Action',
+      flex: 1,
+      renderCell: () => (
+        <div className="flex gap-x-2">
+          <Button variant="contained" color="primary" size="small">
+            Edit
+          </Button>
+          <Button variant="contained" color="error" size="small">
+            Delete
+          </Button>
+        </div>
+      ),
+    },
+  ]
+
+  const rows = useMemo(
+    () =>
+      data?.data.map((r) => ({
+        id: r.id,
+        title: r.title,
+        author: r.author,
+        tags: r.tags,
+      })) || [],
+    [data],
+  )
+
   return (
     <section className="px-5 pt-6">
-      <div>
+      <div className="border-b mb-4">
         <h1 className="text-2xl font-semibold">Article</h1>
       </div>
       <div className="mt-8">
@@ -92,26 +93,28 @@ export default function ArticlePage() {
               d="M12 6v12m6-6H6"
             />
           </svg>
-          Tambah
+          Add Article
         </Link>
       </div>
       <div className="mt-4">
-        <Box sx={{ height: 400, width: 'fit' }}>
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            initialState={{
-              pagination: {
-                paginationModel: {
-                  pageSize: 5,
-                },
-              },
-            }}
-            pageSizeOptions={[5]}
-            checkboxSelection
-            disableRowSelectionOnClick
-          />
-        </Box>
+        {error ? (
+          'Error'
+        ) : isLoading ? (
+          'Loading...'
+        ) : (
+          <Box sx={{ height: 'fit', width: 'fit' }}>
+            <DataGrid
+              rows={rows}
+              columns={columns}
+              pageSizeOptions={[10, 25, 50, 100]}
+              disableRowSelectionOnClick
+              rowCount={rowCountState}
+              paginationModel={paginationModel}
+              paginationMode="server"
+              onPaginationModelChange={setPaginationModel}
+            />
+          </Box>
+        )}
       </div>
     </section>
   )

@@ -2,8 +2,9 @@
 
 import '@mantine/tiptap/styles.css'
 import '@mantine/core/styles.css'
+import '@mantine/notifications/styles.css'
 
-import { FileInput, MantineProvider, TagsInput, TextInput } from '@mantine/core'
+import { FileInput, TagsInput, TextInput } from '@mantine/core'
 import { RichTextEditor, Link } from '@mantine/tiptap'
 import { useEditor } from '@tiptap/react'
 import Highlight from '@tiptap/extension-highlight'
@@ -13,21 +14,30 @@ import TextAlign from '@tiptap/extension-text-align'
 import Superscript from '@tiptap/extension-superscript'
 import SubScript from '@tiptap/extension-subscript'
 import { Button } from '@mantine/core'
-import { useState } from 'react'
-import { useForm } from '@mantine/form'
+import { useForm, isNotEmpty, matches } from '@mantine/form'
+import { fetcher } from '@/helpers/fetcher'
+import { notifications } from '@mantine/notifications'
+import { useEffect } from 'react'
+import { convertToSlug } from '@/helpers/utils'
+import { useRouter } from 'next/navigation'
 
 export default function AddArticlePage() {
-  const [content, setContent] = useState('')
+  const router = useRouter()
 
   const form = useForm({
     initialValues: {
       title: '',
-      images: [],
+      image: null,
       slug: '',
       tags: [],
       text: '',
     },
-    validate: {},
+    validate: {
+      title: isNotEmpty('Title is required'),
+      image: isNotEmpty('Image is required'),
+      slug: matches(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'Invalid slug format'),
+      text: isNotEmpty('Content is required'),
+    },
   })
 
   const editor = useEditor({
@@ -40,130 +50,134 @@ export default function AddArticlePage() {
       Highlight,
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
     ],
-    content: form.values.text,
     onUpdate: ({ editor }) => {
-      form.setFieldValue('text', editor.getHTML())
+      if (editor.getText() === '') {
+        form.setFieldValue('text', '')
+      } else {
+        form.setFieldValue('text', editor.getHTML())
+      }
     },
   })
 
-  const handleFileChange = (file) => {
-    form.setFieldValue('images', file)
-  }
+  useEffect(() => {
+    const slug = convertToSlug(form.values.title)
+    form.setFieldValue('slug', slug)
+  }, [form.values.title])
 
-  const handleSubmit = (values) => {
+  const handleSubmit = async () => {
     form.validate()
     if (form.isValid()) {
-      console.log(form.values)
-      setContent(form.values)
-    } else {
-      console.log({ message: 'invalid' })
-      setContent(undefined)
+      const formData = new FormData()
+      for (const [key, value] of Object.entries(form.values)) {
+        formData.append(key, value)
+      }
+      try {
+        await fetcher.post('/posts', formData)
+        notifications.show({
+          title: 'Success add article',
+        })
+        router.push('/dashboard/article')
+      } catch (err) {
+        if (err.response.data.message === 'slug is already taken') {
+          notifications.show({
+            color: 'red',
+            title: 'Title with same slug is already taken',
+            message: 'Try using custom slug',
+          })
+        }
+      }
     }
-  }
-
-  const handleClear = () => {
-    setContent('')
   }
 
   return (
     <section className="px-5 pt-6">
-      <div>
-        <h1 className="text-2xl font-semibold">Add User</h1>
+      <div className="border-b mb-4">
+        <h1 className="text-2xl font-semibold">Add Article</h1>
       </div>
 
-      <MantineProvider>
-        <form
-          encType="multipart/form-data"
-          onSubmit={form.onSubmit(handleSubmit)}
-        >
-          <TextInput
-            className="mt-2"
-            label="Title"
-            type="text"
-            placeholder="Enter title"
-            {...form.getInputProps('title')}
-          />
-          <FileInput
-            label="Upload File"
-            placeholder="Pilih file"
-            multiple
-            onChange={handleFileChange}
-            {...form.getInputProps('images')}
-          />
-          <TextInput
-            className="mt-2"
-            label="Slug"
-            type="text"
-            placeholder="Enter slug"
-            {...form.getInputProps('slug')}
-          />
-          <TagsInput
-            className="mt-2"
-            label="Tags"
-            placeholder="Enter tag"
-            data={[]}
-            {...form.getInputProps('tags')}
-          />
-          <div className="mt-2">
-            <p className="text-sm font-semibold">Content Article</p>
-            <RichTextEditor editor={editor}>
-              <RichTextEditor.Toolbar>
-                <RichTextEditor.ControlsGroup>
-                  <RichTextEditor.Bold />
-                  <RichTextEditor.Italic />
-                  <RichTextEditor.Underline />
-                  <RichTextEditor.Strikethrough />
-                  <RichTextEditor.ClearFormatting />
-                  <RichTextEditor.Highlight />
-                  <RichTextEditor.Code />
-                </RichTextEditor.ControlsGroup>
-
-                <RichTextEditor.ControlsGroup>
-                  <RichTextEditor.H1 />
-                  <RichTextEditor.H2 />
-                  <RichTextEditor.H3 />
-                  <RichTextEditor.H4 />
-                </RichTextEditor.ControlsGroup>
-
-                <RichTextEditor.ControlsGroup>
-                  <RichTextEditor.Blockquote />
-                  <RichTextEditor.Hr />
-                  <RichTextEditor.BulletList />
-                  <RichTextEditor.OrderedList />
-                  <RichTextEditor.Subscript />
-                  <RichTextEditor.Superscript />
-                </RichTextEditor.ControlsGroup>
-
-                <RichTextEditor.ControlsGroup>
-                  <RichTextEditor.Link />
-                  <RichTextEditor.Unlink />
-                </RichTextEditor.ControlsGroup>
-
-                <RichTextEditor.ControlsGroup>
-                  <RichTextEditor.AlignLeft />
-                  <RichTextEditor.AlignCenter />
-                  <RichTextEditor.AlignJustify />
-                  <RichTextEditor.AlignRight />
-                </RichTextEditor.ControlsGroup>
-              </RichTextEditor.Toolbar>
-
-              <RichTextEditor.Content />
-            </RichTextEditor>
-          </div>
-
-          <div className="mt-2 flex gap-x-2">
-            <Button onClick={handleSubmit}>Submit</Button>
-            <Button onClick={handleClear}>Clear</Button>
-          </div>
-        </form>
+      <form
+        encType="multipart/form-data"
+        onSubmit={form.onSubmit(handleSubmit)}
+        className="flex flex-col gap-2"
+      >
+        <TextInput
+          label="Title"
+          type="text"
+          placeholder="Enter title"
+          {...form.getInputProps('title')}
+        />
+        <TextInput
+          label="Slug"
+          type="text"
+          placeholder="Enter slug"
+          {...form.getInputProps('slug')}
+        />
+        <FileInput
+          accept="image/png,image/jpeg"
+          label="Cover image"
+          placeholder="Choose image"
+          {...form.getInputProps('image')}
+        />
+        <TagsInput
+          label="Tag"
+          placeholder="Enter tag (tap enter to select tag) (optional)"
+          data={[]}
+          {...form.getInputProps('tags')}
+        />
         <div>
-          <p>Judul : {content.title}</p>
-          {/* <p>Image : {content.images[0].name}</p> */}
-          <p>Slug : {content.slug}</p>
-          <p>Tags : {content.tags}</p>
-          <p>Content : {content.text}</p>
+          <p className="font-[500] text-[14px]">Content</p>
+          <RichTextEditor editor={editor} className="bg-white">
+            <RichTextEditor.Toolbar>
+              <RichTextEditor.ControlsGroup>
+                <RichTextEditor.Bold />
+                <RichTextEditor.Italic />
+                <RichTextEditor.Underline />
+                <RichTextEditor.Strikethrough />
+                <RichTextEditor.ClearFormatting />
+                <RichTextEditor.Highlight />
+                <RichTextEditor.Code />
+              </RichTextEditor.ControlsGroup>
+
+              <RichTextEditor.ControlsGroup>
+                <RichTextEditor.H1 />
+                <RichTextEditor.H2 />
+                <RichTextEditor.H3 />
+                <RichTextEditor.H4 />
+              </RichTextEditor.ControlsGroup>
+
+              <RichTextEditor.ControlsGroup>
+                <RichTextEditor.Blockquote />
+                <RichTextEditor.Hr />
+                <RichTextEditor.BulletList />
+                <RichTextEditor.OrderedList />
+                <RichTextEditor.Subscript />
+                <RichTextEditor.Superscript />
+              </RichTextEditor.ControlsGroup>
+
+              <RichTextEditor.ControlsGroup>
+                <RichTextEditor.Link />
+                <RichTextEditor.Unlink />
+              </RichTextEditor.ControlsGroup>
+
+              <RichTextEditor.ControlsGroup>
+                <RichTextEditor.AlignLeft />
+                <RichTextEditor.AlignCenter />
+                <RichTextEditor.AlignJustify />
+                <RichTextEditor.AlignRight />
+              </RichTextEditor.ControlsGroup>
+            </RichTextEditor.Toolbar>
+
+            <RichTextEditor.Content />
+          </RichTextEditor>
+          <p className="text-[#fa5252] text-[12px] mt-[5px]">
+            {form.errors.text}
+          </p>
         </div>
-      </MantineProvider>
+
+        <div className="mt-2 flex gap-x-2">
+          <Button onClick={handleSubmit}>Submit</Button>
+        </div>
+      </form>
     </section>
   )
 }

@@ -17,3 +17,9 @@ export const limitContent = (content, limit) => {
   }
   return content
 }
+
+export const convertToSlug = (s) => {
+  let slug = s.replace(/\s+/g, '-')
+  slug = slug.replace(/[^a-zA-Z0-9-]/g, '').toLowerCase()
+  return slug
+}

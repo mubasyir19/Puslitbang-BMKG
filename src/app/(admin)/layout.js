@@ -2,6 +2,9 @@ import { Poppins } from 'next/font/google'
 import '../globals.css'
 import AuthContext from '@/contexts/AuthContext'
 
+import { MantineProvider } from '@mantine/core'
+import { Notifications } from '@mantine/notifications'
+
 const poppins = Poppins({
   weight: ['300', '400', '500', '600', '700'],
   style: ['normal', 'italic'],
@@ -18,7 +21,10 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={poppins.className}>
         <AuthContext>
-          <main>{children}</main>
+          <MantineProvider>
+            <main>{children}</main>
+            <Notifications />
+          </MantineProvider>
         </AuthContext>
       </body>
     </html>
