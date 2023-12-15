@@ -1,81 +1,29 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Autoplay, Pagination } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import Link from 'next/link'
-
-function ValidationColor(description) {
-  if (description === 'Baik') {
-    return 'bg-gradient-to-br from-yellow-300 to-green-600'
-  } else if (description === 'Sedang') {
-    return 'bg-gradient-to-br from-blue-500 to-indigo-800'
-  } else if (description === 'Tidak Sehat') {
-    return 'bg-gradient-to-br from-yellow-400 via-yellow-400 to-red-500'
-  } else if (description === 'Sangat Tidak Sehat') {
-    return 'bg-gradient-to-br from-rose-500 to-red-900'
-  } else if (description === 'Bahaya') {
-    return 'bg-gradient-to-br from-gray-900 to-black'
-  } else {
-    return 'bg-gradient-to-br from-gray-200 to-gray-400'
-  }
-}
+import axios from 'axios'
 
 export default function AirQuality() {
-  const AIRQUALITY_DATA = [
-    {
-      place: 'Jakarta',
-      quality: '31.6',
-      description: 'Baik',
-    },
-    {
-      place: 'Bandung',
-      quality: '31.6',
-      description: 'Sedang',
-    },
-    {
-      place: 'Bogor',
-      quality: '31.6',
-      description: 'Tidak Sehat',
-    },
-    {
-      place: 'Palembang',
-      quality: '31.6',
-      description: 'Sangat Tidak Sehat',
-    },
-    {
-      place: 'Surabaya',
-      quality: '31.6',
-      description: 'Bahaya',
-    },
-    {
-      place: 'Medan',
-      quality: '31.6',
-      description: 'Bahaya',
-    },
-    {
-      place: 'Aceh',
-      quality: '31.6',
-      description: 'Sedang',
-    },
-    {
-      place: 'Malang',
-      quality: '31.6',
-      description: 'Baik',
-    },
-    {
-      place: 'Yogyakarta',
-      quality: '31.6',
-      description: 'Sangat Tidak Sehat',
-    },
-    {
-      place: 'Lampung',
-      quality: '31.6',
-      description: 'Tidak Sehat',
-    },
-  ]
+  const [quality, setQuality] = useState([])
+
+  useEffect(() => {
+    const fetchDataQualityAir = async () => {
+      const response = await axios.get('/api?query=kudara')
+      const data = response.data
+      setQuality(data)
+    }
+
+    fetchDataQualityAir()
+  }, [])
+
+  const capitalizeLetter = (string) => {
+    return string.toLowerCase().replace(/\b\w/g, (match) => match.toUpperCase())
+  }
 
   const validationColor = (desc) => {
     if (desc === 'Baik') {
@@ -115,23 +63,23 @@ export default function AirQuality() {
           modules={[Autoplay, Pagination]}
           className=""
         >
-          {AIRQUALITY_DATA.map((data, index) => (
+          {quality.map((data, index) => (
             <SwiperSlide
               key={index}
               className={`card w-56 p-7 text-white rounded-3xl ${validationColor(
-                data.description,
+                data.status,
               )}`}
             >
               <div className="top-card">
-                <p className="h-20 my-auto text-base text-center">
-                  {data.description}
+                <p className="h-20 my-auto text-lg text-center">
+                  {data.status}
                 </p>
                 <p className="text-lg text-center">
                   PM<span className="text-xs">2.5</span>
                 </p>
               </div>
               <div className=" mx-auto border-8 border-white rounded-full w-32 h-32 flex justify-center items-center">
-                <p className="text-4xl">{data.quality}</p>
+                <p className="text-4xl">{data.pm2}</p>
               </div>
               <div className="mt-6 flex gap-x-2 justify-center">
                 <div className="flex">
@@ -150,7 +98,9 @@ export default function AirQuality() {
                 </div>
 
                 <div>
-                  <p className="text-2xl text-white">{data.place}</p>
+                  <p className="text-xl text-white">
+                    {capitalizeLetter(data.kota)}
+                  </p>
                 </div>
               </div>
             </SwiperSlide>
