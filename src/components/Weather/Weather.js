@@ -9,6 +9,7 @@ import 'swiper/css/pagination'
 import { useCallback, useEffect, useState } from 'react'
 // import { useCallback } from 'react'
 import { getDataWeather } from '@/services/weather'
+import axios from 'axios'
 // import { data } from 'autoprefixer'
 
 export default function Weather() {
@@ -17,101 +18,105 @@ export default function Weather() {
   const [temperature, setTemperature] = useState([])
 
   useEffect(() => {
-    const fetchDataWeather = async () => {
-      const responseData = await getDataWeather()
-
-      const filteredParamData = responseData.map((d) => {
-        const filterWeather = d.Parameter.filter(
-          (param) => param.Id === 'weather',
-        )
-
-        const filterTemperature = d.Parameter.filter(
-          (param) => param.Id === 't',
-        )
-
-        return {
-          ID: d.ID,
-          Kota: d.Kota,
-          Provinsi: d.Provinsi,
-          Latitude: d.Latitude,
-          Longtitude: d.Longitude,
-          Coordinate: d.Coordinate,
-          Weather: filterWeather,
-          Temperature: filterTemperature,
-        }
-      })
-
-      setWilayah(filteredParamData)
+    const fetchDataBMKG = async () => {
+      const response = await axios.get(
+        'http://localhost:3000/api?query=prakicu',
+      )
+      const data = response.data
+      setWilayah(data)
+      // console.log(response)
     }
-
-    fetchDataWeather()
+    fetchDataBMKG()
+    // const fetchDataWeather = async () => {
+    //   const responseData = await getDataWeather()
+    //   const filteredParamData = responseData.map((d) => {
+    //     const filterWeather = d.Parameter.filter(
+    //       (param) => param.Id === 'weather',
+    //     )
+    //     const filterTemperature = d.Parameter.filter(
+    //       (param) => param.Id === 't',
+    //     )
+    //     return {
+    //       ID: d.ID,
+    //       Kota: d.Kota,
+    //       Provinsi: d.Provinsi,
+    //       Latitude: d.Latitude,
+    //       Longtitude: d.Longitude,
+    //       Coordinate: d.Coordinate,
+    //       Weather: filterWeather,
+    //       Temperature: filterTemperature,
+    //     }
+    //   })
+    //   setWilayah(filteredParamData)
+    // }
+    // fetchDataWeather()
   }, [])
 
-  const WEATHER_DATA = [
-    {
-      place: 'Jakarta',
-      time: '19.00',
-      img: '/images/cerah-berawan.png',
-      weather: 'Cerah Berawan',
-      temp: '24°C',
-    },
-    {
-      place: 'Bandung',
-      time: '19.00',
-      img: '/images/cerah-berawan.png',
-      weather: 'Cerah Berawan',
-      temp: '24°C',
-    },
-    {
-      place: 'Bogor',
-      time: '19.00',
-      img: '/images/cerah-berawan.png',
-      weather: 'Cerah Berawan',
-      temp: '24°C',
-    },
-    {
-      place: 'Palembang',
-      time: '19.00',
-      img: '/images/cerah-berawan.png',
-      weather: 'Cerah Berawan',
-      temp: '24°C',
-    },
-    {
-      place: 'Medan',
-      time: '19.00',
-      img: '/images/cerah-berawan.png',
-      weather: 'Cerah Berawan',
-      temp: '24°C',
-    },
-    {
-      place: 'Aceh',
-      time: '19.00',
-      img: '/images/cerah-berawan.png',
-      weather: 'Cerah Berawan',
-      temp: '24°C',
-    },
-    {
-      place: 'Surabaya',
-      time: '19.00',
-      img: '/images/cerah-berawan.png',
-      weather: 'Cerah Berawan',
-      temp: '24°C',
-    },
-    {
-      place: 'Malang',
-      time: '19.00',
-      img: '/images/cerah-berawan.png',
-      weather: 'Cerah Berawan',
-      temp: '24°C',
-    },
-    {
-      place: 'Yogyakarta',
-      time: '19.00',
-      img: '/images/cerah-berawan.png',
-      weather: 'Cerah Berawan',
-      temp: '24°C',
-    },
-  ]
+  // const WEATHER_DATA = [
+  //   {
+  //     place: 'Jakarta',
+  //     time: '19.00',
+  //     img: '/images/cerah-berawan.png',
+  //     weather: 'Cerah Berawan',
+  //     temp: '24°C',
+  //   },
+  //   {
+  //     place: 'Bandung',
+  //     time: '19.00',
+  //     img: '/images/cerah-berawan.png',
+  //     weather: 'Cerah Berawan',
+  //     temp: '24°C',
+  //   },
+  //   {
+  //     place: 'Bogor',
+  //     time: '19.00',
+  //     img: '/images/cerah-berawan.png',
+  //     weather: 'Cerah Berawan',
+  //     temp: '24°C',
+  //   },
+  //   {
+  //     place: 'Palembang',
+  //     time: '19.00',
+  //     img: '/images/cerah-berawan.png',
+  //     weather: 'Cerah Berawan',
+  //     temp: '24°C',
+  //   },
+  //   {
+  //     place: 'Medan',
+  //     time: '19.00',
+  //     img: '/images/cerah-berawan.png',
+  //     weather: 'Cerah Berawan',
+  //     temp: '24°C',
+  //   },
+  //   {
+  //     place: 'Aceh',
+  //     time: '19.00',
+  //     img: '/images/cerah-berawan.png',
+  //     weather: 'Cerah Berawan',
+  //     temp: '24°C',
+  //   },
+  //   {
+  //     place: 'Surabaya',
+  //     time: '19.00',
+  //     img: '/images/cerah-berawan.png',
+  //     weather: 'Cerah Berawan',
+  //     temp: '24°C',
+  //   },
+  //   {
+  //     place: 'Malang',
+  //     time: '19.00',
+  //     img: '/images/cerah-berawan.png',
+  //     weather: 'Cerah Berawan',
+  //     temp: '24°C',
+  //   },
+  //   {
+  //     place: 'Yogyakarta',
+  //     time: '19.00',
+  //     img: '/images/cerah-berawan.png',
+  //     weather: 'Cerah Berawan',
+  //     temp: '24°C',
+  //   },
+  // ]
 
   return (
     <div className="lg:mt-[-150px]">
@@ -133,116 +138,14 @@ export default function Weather() {
             key={index}
             className="card p-5 bg-black bg-opacity-40 w-[175px] h-[287px] text-white text-center rounded-3xl border-2 border-white"
           >
-            <p className="font-medium text-lg">{data.Kota}</p>
-            <p className="font-medium text-md">{data.time}</p>
-            {/* {data.Weather[0].Elements.map((hour, i) => {
-              return (
-                <p key={i} className="font-medium text-md">
-                  {hour.h} == {hour.elements[0].value}
-                </p>
-              )
-            })} */}
+            <p className="font-medium text-lg">{data.kota}</p>
+            <p className="font-medium text-md">{data.waktu}</p>
             <div className="flex justify-center">
-              {data.Weather[0].Elements[0].elements[0].value === '0' ? (
-                <Image
-                  src="/images/cerah.png"
-                  width={101}
-                  height={101}
-                  alt="icon"
-                />
-              ) : data.Weather[0].Elements[0].elements[0].value === '1' ? (
-                <Image
-                  src="/images/cerah-berawan.png"
-                  width={101}
-                  height={101}
-                  alt="icon"
-                />
-              ) : data.Weather[0].Elements[0].elements[0].value === '3' ? (
-                <Image
-                  src="/images/berawan.png"
-                  width={101}
-                  height={101}
-                  alt="icon"
-                />
-              ) : data.Weather[0].Elements[0].elements[0].value === '4' ? (
-                <Image
-                  src="/images/berawan-tebal.png"
-                  width={101}
-                  height={101}
-                  alt="icon"
-                />
-              ) : data.Weather[0].Elements[0].elements[0].value === '5' ? (
-                <Image
-                  src="/images/berawan-tebal.png"
-                  width={101}
-                  height={101}
-                  alt="icon"
-                />
-              ) : data.Weather[0].Elements[0].elements[0].value === '10' ? (
-                <Image
-                  src="/images/asap.png"
-                  width={101}
-                  height={101}
-                  alt="icon"
-                />
-              ) : data.Weather[0].Elements[0].elements[0].value === '45' ? (
-                <Image
-                  src="/images/kabut.png"
-                  width={101}
-                  height={101}
-                  alt="icon"
-                />
-              ) : data.Weather[0].Elements[0].elements[0].value === '60' ? (
-                <Image
-                  src="/images/hujan-ringan.png"
-                  width={101}
-                  height={101}
-                  alt="icon"
-                />
-              ) : data.Weather[0].Elements[0].elements[0].value === '61' ? (
-                <Image
-                  src="/images/hujan-ringan.png"
-                  width={101}
-                  height={101}
-                  alt="icon"
-                />
-              ) : data.Weather[0].Elements[0].elements[0].value === '63' ? (
-                <Image
-                  src="/images/hujan-lebat.png"
-                  width={101}
-                  height={101}
-                  alt="icon"
-                />
-              ) : data.Weather[0].Elements[0].elements[0].value === '80' ? (
-                <Image
-                  src="/images/hujan-lebat.png"
-                  width={101}
-                  height={101}
-                  alt="icon"
-                />
-              ) : data.Weather[0].Elements[0].elements[0].value === '95' ? (
-                <Image
-                  src="/images/hujan-petir.png"
-                  width={101}
-                  height={101}
-                  alt="icon"
-                />
-              ) : data.Weather[0].Elements[0].elements[0].value === '97' ? (
-                <Image
-                  src="/images/hujan-petir.png"
-                  width={101}
-                  height={101}
-                  alt="icon"
-                />
-              ) : (
-                <p>icon</p>
-              )}
+              <Image src={data.icon} width={101} height={101} alt="icon" />
             </div>
-            <p className="font-medium text-md">{data.weather}</p>
-            <p className="font-medium text-lg">
-              {data.Temperature[0].Elements[0].elements[0].value}°C
-            </p>
-            <Link
+            <p className="font-medium text-md">{data.cuaca}</p>
+            <p className="font-medium text-lg">{data.suhu}</p>
+            {/* <Link
               href="#"
               className="flex justify-center gap-x-2 font-medium text-sm"
             >
@@ -260,7 +163,7 @@ export default function Weather() {
                   fill="white"
                 />
               </svg>
-            </Link>
+            </Link> */}
           </SwiperSlide>
         ))}
       </Swiper>
