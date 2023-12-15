@@ -26,7 +26,9 @@ export async function getPrakicu() {
     const data = {
       kota: fetchData[i].children[0].textContent,
       waktu: fetchData[i].children[1].textContent,
-      icon: fetchData[i].children[2].getAttribute('src'),
+      icon: `https://bmkg.go.id/${fetchData[i].children[2].getAttribute(
+        'src',
+      )}`,
       cuaca: fetchData[i].children[3].textContent,
       suhu: fetchData[i].children[4].textContent,
     }
