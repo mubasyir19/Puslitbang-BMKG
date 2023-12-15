@@ -6,117 +6,20 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { Autoplay, Pagination } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/pagination'
-import { useCallback, useEffect, useState } from 'react'
-// import { useCallback } from 'react'
-import { getDataWeather } from '@/services/weather'
+import { useEffect, useState } from 'react'
 import axios from 'axios'
-// import { data } from 'autoprefixer'
 
 export default function Weather() {
   const [wilayah, setWilayah] = useState([])
-  const [weather, setWeather] = useState([])
-  const [temperature, setTemperature] = useState([])
 
   useEffect(() => {
     const fetchDataBMKG = async () => {
-      const response = await axios.get(
-        'http://localhost:3000/api?query=prakicu',
-      )
+      const response = await axios.get('/api?query=prakicu')
       const data = response.data
       setWilayah(data)
-      // console.log(response)
     }
     fetchDataBMKG()
-    // const fetchDataWeather = async () => {
-    //   const responseData = await getDataWeather()
-    //   const filteredParamData = responseData.map((d) => {
-    //     const filterWeather = d.Parameter.filter(
-    //       (param) => param.Id === 'weather',
-    //     )
-    //     const filterTemperature = d.Parameter.filter(
-    //       (param) => param.Id === 't',
-    //     )
-    //     return {
-    //       ID: d.ID,
-    //       Kota: d.Kota,
-    //       Provinsi: d.Provinsi,
-    //       Latitude: d.Latitude,
-    //       Longtitude: d.Longitude,
-    //       Coordinate: d.Coordinate,
-    //       Weather: filterWeather,
-    //       Temperature: filterTemperature,
-    //     }
-    //   })
-    //   setWilayah(filteredParamData)
-    // }
-    // fetchDataWeather()
   }, [])
-
-  // const WEATHER_DATA = [
-  //   {
-  //     place: 'Jakarta',
-  //     time: '19.00',
-  //     img: '/images/cerah-berawan.png',
-  //     weather: 'Cerah Berawan',
-  //     temp: '24°C',
-  //   },
-  //   {
-  //     place: 'Bandung',
-  //     time: '19.00',
-  //     img: '/images/cerah-berawan.png',
-  //     weather: 'Cerah Berawan',
-  //     temp: '24°C',
-  //   },
-  //   {
-  //     place: 'Bogor',
-  //     time: '19.00',
-  //     img: '/images/cerah-berawan.png',
-  //     weather: 'Cerah Berawan',
-  //     temp: '24°C',
-  //   },
-  //   {
-  //     place: 'Palembang',
-  //     time: '19.00',
-  //     img: '/images/cerah-berawan.png',
-  //     weather: 'Cerah Berawan',
-  //     temp: '24°C',
-  //   },
-  //   {
-  //     place: 'Medan',
-  //     time: '19.00',
-  //     img: '/images/cerah-berawan.png',
-  //     weather: 'Cerah Berawan',
-  //     temp: '24°C',
-  //   },
-  //   {
-  //     place: 'Aceh',
-  //     time: '19.00',
-  //     img: '/images/cerah-berawan.png',
-  //     weather: 'Cerah Berawan',
-  //     temp: '24°C',
-  //   },
-  //   {
-  //     place: 'Surabaya',
-  //     time: '19.00',
-  //     img: '/images/cerah-berawan.png',
-  //     weather: 'Cerah Berawan',
-  //     temp: '24°C',
-  //   },
-  //   {
-  //     place: 'Malang',
-  //     time: '19.00',
-  //     img: '/images/cerah-berawan.png',
-  //     weather: 'Cerah Berawan',
-  //     temp: '24°C',
-  //   },
-  //   {
-  //     place: 'Yogyakarta',
-  //     time: '19.00',
-  //     img: '/images/cerah-berawan.png',
-  //     weather: 'Cerah Berawan',
-  //     temp: '24°C',
-  //   },
-  // ]
 
   return (
     <div className="lg:mt-[-150px]">
