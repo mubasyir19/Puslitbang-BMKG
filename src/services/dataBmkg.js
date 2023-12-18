@@ -38,6 +38,19 @@ export async function getPrakicu() {
 }
 
 export async function getKUdara() {
+  const fetchData2 = await fetchElement(
+    'https://bmkg.go.id',
+    '.owl-kualitas-udara>div>div',
+  )
+  const results2 = []
+  for (let i = 0; i < fetchData2.length; i++) {
+    const data = {
+      kota: fetchData2[i].children[1].getAttribute('id'),
+      status: fetchData2[i].children[2].textContent,
+    }
+    results2.push(data)
+  }
+
   const fetchData = await fetchElement(
     'https://bmkg.go.id',
     'script[type="text/javascript"]',
@@ -71,10 +84,10 @@ export async function getKUdara() {
     else return 'Berbahaya'
   }
 
-  const results = a.map((e) => {
+  const results = a.map((e, key) => {
     const value = parseFloat(e[4].split(':')[1])
     return {
-      kota: e[0].split(':')[1],
+      kota: results2[key].kota,
       value: value,
       status: getStatus(value),
     }

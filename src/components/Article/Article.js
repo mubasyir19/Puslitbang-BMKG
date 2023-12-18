@@ -7,7 +7,7 @@ import ArticleTextDisplay from '@/components/ArticleTextDisplay/ArticleTextDispl
 import { formatDate } from '@/helpers/utils'
 
 export default function Article() {
-  const { data, isLoading, error } = useSWR('/posts?limit=4', fetcherSWR)
+  const { data, isLoading, error } = useSWR('/posts?limit=4&sort=desc', fetcherSWR)
 
   return (
     <section className="mt-32 px-8 lg:px-0">

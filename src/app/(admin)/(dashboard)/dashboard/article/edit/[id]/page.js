@@ -15,7 +15,7 @@ import Superscript from '@tiptap/extension-superscript'
 import SubScript from '@tiptap/extension-subscript'
 import { Button } from '@mantine/core'
 import { useForm, isNotEmpty, matches } from '@mantine/form'
-import { fetcher } from '@/helpers/fetcher'
+import { fetcherSWR, fetcher } from '@/helpers/fetcher'
 import { notifications } from '@mantine/notifications'
 import { useEffect } from 'react'
 import { convertToSlug } from '@/helpers/utils'
@@ -24,7 +24,7 @@ import useSWR from 'swr'
 
 export default function Page({ params }) {
   const router = useRouter()
-  const { data, error } = useSWR(`/posts/${params.id}`, fetcher)
+  const { data, error, isLoading } = useSWR(`/posts/${params.id}`, fetcherSWR)
 
   const form = useForm({
     initialValues: {
@@ -61,14 +61,14 @@ export default function Page({ params }) {
   })
 
   useEffect(() => {
-    form.setFieldValue('title', data?.data.title || '')
-    form.setFieldValue('slug', data?.data.slug || '')
+    form.setFieldValue('title', data?.title || '')
+    form.setFieldValue('slug', data?.slug || '')
     form.setFieldValue(
       'tags',
-      data?.data.tags.split(',').map((tag) => tag) || [],
+      data?.tags !== null ? data?.tags.split(',').map((tag) => tag) : [],
     )
-    form.setFieldValue('text', data?.data.text || '')
-    editor?.commands.setContent(data?.data.text || '')
+    form.setFieldValue('text', data?.text || '')
+    editor?.commands.setContent(data?.text || '')
   }, [data])
 
   useEffect(() => {
@@ -107,96 +107,99 @@ export default function Page({ params }) {
         <h1 className="text-2xl font-semibold">Edit Article</h1>
       </div>
 
-      <form
-        encType="multipart/form-data"
-        onSubmit={form.onSubmit(handleSubmit)}
-        className="flex flex-col gap-2"
-      >
-        <TextInput
-          label="Title"
-          type="text"
-          placeholder="Enter title"
-          {...form.getInputProps('title')}
-        />
-        <TextInput
-          label="Slug"
-          type="text"
-          placeholder="Enter slug"
-          {...form.getInputProps('slug')}
-        />
-        <FileInput
-          accept="image/png,image/jpeg"
-          label="Cover image"
-          placeholder="Choose image"
-          {...form.getInputProps('image')}
-        />
-        <div className="h-[200px] w-[200px] border">
-          <p></p>
-          <img
-            src={data?.data.image}
-            className="w-full h-full object-contain"
+      {error ? (
+        'Error'
+      ) : isLoading ? (
+        'Loading...'
+      ) : (
+        <form
+          encType="multipart/form-data"
+          onSubmit={form.onSubmit(handleSubmit)}
+          className="flex flex-col gap-2"
+        >
+          <TextInput
+            label="Title"
+            type="text"
+            placeholder="Enter title"
+            {...form.getInputProps('title')}
           />
-        </div>
-        <TagsInput
-          label="Tag"
-          placeholder="Enter tag (tap enter to select tag) (optional)"
-          data={[]}
-          {...form.getInputProps('tags')}
-        />
-        <div>
-          <p className="font-[500] text-[14px]">Content</p>
-          <RichTextEditor editor={editor} className="bg-white">
-            <RichTextEditor.Toolbar>
-              <RichTextEditor.ControlsGroup>
-                <RichTextEditor.Bold />
-                <RichTextEditor.Italic />
-                <RichTextEditor.Underline />
-                <RichTextEditor.Strikethrough />
-                <RichTextEditor.ClearFormatting />
-                <RichTextEditor.Highlight />
-                <RichTextEditor.Code />
-              </RichTextEditor.ControlsGroup>
+          <TextInput
+            label="Slug"
+            type="text"
+            placeholder="Enter slug"
+            {...form.getInputProps('slug')}
+          />
+          <FileInput
+            accept="image/png,image/jpeg"
+            label="Cover image"
+            placeholder="Choose image"
+            {...form.getInputProps('image')}
+          />
+          <div className="h-[200px] w-[200px] border">
+            <p></p>
+            <img src={data?.image} className="w-full h-full object-contain" />
+          </div>
+          <TagsInput
+            label="Tag"
+            placeholder="Enter tag (tap enter to select tag) (optional)"
+            data={[]}
+            {...form.getInputProps('tags')}
+          />
+          <div>
+            <p className="font-[500] text-[14px]">Content</p>
+            <RichTextEditor editor={editor} className="bg-white">
+              <RichTextEditor.Toolbar>
+                <RichTextEditor.ControlsGroup>
+                  <RichTextEditor.Bold />
+                  <RichTextEditor.Italic />
+                  <RichTextEditor.Underline />
+                  <RichTextEditor.Strikethrough />
+                  <RichTextEditor.ClearFormatting />
+                  <RichTextEditor.Highlight />
+                  <RichTextEditor.Code />
+                </RichTextEditor.ControlsGroup>
 
-              <RichTextEditor.ControlsGroup>
-                <RichTextEditor.H1 />
-                <RichTextEditor.H2 />
-                <RichTextEditor.H3 />
-                <RichTextEditor.H4 />
-              </RichTextEditor.ControlsGroup>
+                <RichTextEditor.ControlsGroup>
+                  <RichTextEditor.H1 />
+                  <RichTextEditor.H2 />
+                  <RichTextEditor.H3 />
+                  <RichTextEditor.H4 />
+                </RichTextEditor.ControlsGroup>
 
-              <RichTextEditor.ControlsGroup>
-                <RichTextEditor.Blockquote />
-                <RichTextEditor.Hr />
-                <RichTextEditor.BulletList />
-                <RichTextEditor.OrderedList />
-                <RichTextEditor.Subscript />
-                <RichTextEditor.Superscript />
-              </RichTextEditor.ControlsGroup>
+                <RichTextEditor.ControlsGroup>
+                  <RichTextEditor.Blockquote />
+                  <RichTextEditor.Hr />
+                  <RichTextEditor.BulletList />
+                  <RichTextEditor.OrderedList />
+                  <RichTextEditor.Subscript />
+                  <RichTextEditor.Superscript />
+                </RichTextEditor.ControlsGroup>
 
-              <RichTextEditor.ControlsGroup>
-                <RichTextEditor.Link />
-                <RichTextEditor.Unlink />
-              </RichTextEditor.ControlsGroup>
+                <RichTextEditor.ControlsGroup>
+                  <RichTextEditor.Link />
+                  <RichTextEditor.Unlink />
+                </RichTextEditor.ControlsGroup>
 
-              <RichTextEditor.ControlsGroup>
-                <RichTextEditor.AlignLeft />
-                <RichTextEditor.AlignCenter />
-                <RichTextEditor.AlignJustify />
-                <RichTextEditor.AlignRight />
-              </RichTextEditor.ControlsGroup>
-            </RichTextEditor.Toolbar>
+                <RichTextEditor.ControlsGroup>
+                  <RichTextEditor.AlignLeft />
+                  <RichTextEditor.AlignCenter />
+                  <RichTextEditor.AlignJustify />
+                  <RichTextEditor.AlignRight />
+                </RichTextEditor.ControlsGroup>
+              </RichTextEditor.Toolbar>
 
-            <RichTextEditor.Content />
-          </RichTextEditor>
-          <p className="text-[#fa5252] text-[12px] mt-[5px]">
-            {form.errors.text}
-          </p>
-        </div>
+              <RichTextEditor.Content />
+            </RichTextEditor>
+            <p className="text-[#fa5252] text-[12px] mt-[5px]">
+              {form.errors.text}
+            </p>
+          </div>
 
-        <div className="mt-2 flex gap-x-2">
-          <Button onClick={handleSubmit}>Submit</Button>
-        </div>
-      </form>
+          <div className="mt-2 flex gap-x-2">
+            <Button onClick={handleSubmit}>Submit</Button>
+          </div>
+        </form>
+      )}
     </section>
   )
 }

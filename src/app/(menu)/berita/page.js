@@ -16,7 +16,6 @@ export default function Berita() {
   const pPage = searchParams.get('page')
   const [page, setPage] = useState(parseInt(pPage) > 0 ? parseInt(pPage) : 1)
   const { data, isLoading, error } = useSWR(`/posts?page=${page}`, fetcherSWR)
-  const { data: rData } = useSWR(`/posts`, fetcherSWR)
 
   const onNextHandler = () => {
     if (page < data.total_pages) {
@@ -95,7 +94,7 @@ export default function Berita() {
             </div>
           </div>
           <div className="w-full lg:w-1/4 mx-auto px-6 lg:px-0">
-            {rData && <RecentPosts posts={rData.data} />}
+            <RecentPosts />
           </div>
         </section>
       )}

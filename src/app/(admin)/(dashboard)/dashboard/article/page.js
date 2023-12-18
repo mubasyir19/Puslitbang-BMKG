@@ -19,7 +19,7 @@ export default function ArticlePage() {
     pageSize: 10,
   })
   const { data, isLoading, error, mutate } = useSWR(
-    `/posts?page=${paginationModel.page + 1}&limit=${paginationModel.pageSize}`,
+    `/posts?sort=desc&page=${paginationModel.page + 1}&limit=${paginationModel.pageSize}`,
     fetcherSWR,
   )
   const [rowCountState, setRowCountState] = useState(data?.total_posts || 0)
