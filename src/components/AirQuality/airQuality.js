@@ -79,7 +79,7 @@ export default function AirQuality() {
                 </p>
               </div>
               <div className=" mx-auto border-8 border-white rounded-full w-32 h-32 flex justify-center items-center">
-                <p className="text-4xl">{data.pm2}</p>
+                <p className="text-4xl">{data.value}</p>
               </div>
               <div className="mt-6 flex gap-x-2 justify-center">
                 <div className="flex">

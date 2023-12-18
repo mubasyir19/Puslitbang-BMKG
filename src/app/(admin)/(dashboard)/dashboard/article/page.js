@@ -1,28 +1,54 @@
 'use client'
 
+import '@mantine/core/styles.css'
+import '@mantine/notifications/styles.css'
+
 import { Box, Button } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import Link from 'next/link'
 import useSWR from 'swr'
-import { fetcherSWR } from '@/helpers/fetcher'
+import { fetcher, fetcherSWR } from '@/helpers/fetcher'
 import { useMemo, useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { notifications } from '@mantine/notifications'
 
 export default function ArticlePage() {
+  const router = useRouter()
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
     pageSize: 10,
   })
-  const { data, isLoading, error } = useSWR(
+  const { data, isLoading, error, mutate } = useSWR(
     `/posts?page=${paginationModel.page + 1}&limit=${paginationModel.pageSize}`,
     fetcherSWR,
   )
   const [rowCountState, setRowCountState] = useState(data?.total_posts || 0)
+  const [isButtonLoading, setIsButtonLoading] = useState(false)
 
   useEffect(() => {
     setRowCountState((prevRowCountState) =>
       data?.total_posts !== undefined ? data?.total_posts : prevRowCountState,
     )
   }, [data?.total_posts, setRowCountState])
+
+  const handleEdit = (id) => {
+    router.push(`/dashboard/article/edit/${id}`)
+  }
+
+  const handleDelete = async (id) => {
+    try {
+      await fetcher.delete(`/posts/${id}`)
+      notifications.show({
+        title: `Success delete article: ${id}`,
+      })
+      mutate()
+    } catch (err) {
+      notifications.show({
+        color: 'red',
+        title: `Failed delete article: ${id}`,
+      })
+    }
+  }
 
   const columns = [
     { field: 'id', headerName: 'ID', width: 90 },
@@ -45,12 +71,23 @@ export default function ArticlePage() {
       field: 'action',
       headerName: 'Action',
       flex: 1,
-      renderCell: () => (
+      renderCell: (cellValues) => (
         <div className="flex gap-x-2">
-          <Button variant="contained" color="primary" size="small">
+          <Button
+            onClick={() => handleEdit(cellValues.row.id)}
+            variant="contained"
+            color="primary"
+            size="small"
+          >
             Edit
           </Button>
-          <Button variant="contained" color="error" size="small">
+          <Button
+            onClick={() => handleDelete(cellValues.row.id)}
+            disabled={isButtonLoading}
+            variant="contained"
+            color="error"
+            size="small"
+          >
             Delete
           </Button>
         </div>
