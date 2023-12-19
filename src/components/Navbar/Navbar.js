@@ -82,7 +82,10 @@ export default function Navbar() {
             {openSubmenu == 'meteo' && (
               <div className="absolute bg-background text-white rounded-lg text-left mt-2 w-40">
                 <div className="p-3">
-                  <Link href="#" className="hover:text-sky-400">
+                  <Link
+                    href="/meteorologi/inanwp"
+                    className="hover:text-sky-400"
+                  >
                     InaNWP
                   </Link>
                 </div>
