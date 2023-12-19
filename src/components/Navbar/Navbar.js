@@ -75,31 +75,91 @@ export default function Navbar() {
           </Link>
 
           <button
-            className="p-2 hover:underline hover:underline-offset-4"
+            className="relative inline-block p-2 hover:underline hover:underline-offset-4"
             onClick={() => changeSubMenu('meteo')}
           >
             Meteorologi
+            {openSubmenu == 'meteo' && (
+              <div className="absolute bg-background text-white rounded-lg text-left mt-2 w-40">
+                <div className="p-3">
+                  <Link href="#" className="hover:text-sky-400">
+                    InaNWP
+                  </Link>
+                </div>
+              </div>
+            )}
           </button>
 
           <button
-            className="p-2 hover:underline hover:underline-offset-4"
+            className="relative inline-block p-2 hover:underline hover:underline-offset-4"
             onClick={() => changeSubMenu('klimat')}
           >
             Klimatologi
+            {openSubmenu == 'klimat' && (
+              <div className="absolute bg-background text-white rounded-lg text-left mt-2 w-40">
+                <div className="flex flex-col gap-y-3 p-4">
+                  <Link
+                    href="/klimatologi/inarcm"
+                    className="hover:text-sky-400"
+                  >
+                    InaRCM
+                  </Link>
+                  <Link href="#" className="hover:text-sky-400">
+                    Hotspot Occurrence
+                  </Link>
+                  <Link href="#" className="hover:text-sky-400">
+                    InaAQM
+                  </Link>
+                </div>
+              </div>
+            )}
           </button>
 
           <button
-            className="p-2 hover:underline hover:underline-offset-4"
+            className="relative inline-block p-2 hover:underline hover:underline-offset-4"
             onClick={() => changeSubMenu('geofis')}
           >
             Geofisika
+            {openSubmenu == 'geofis' && (
+              <div className="absolute bg-background text-white rounded-lg text-left mt-2 w-40">
+                <div className="flex flex-col gap-y-3 p-4">
+                  <Link href="#" className="hover:text-sky-400">
+                    Geofisika 1
+                  </Link>
+                  <Link href="#" className="hover:text-sky-400">
+                    Geofisika 2
+                  </Link>
+                  <Link href="#" className="hover:text-sky-400">
+                    Geofisika 3
+                  </Link>
+                </div>
+              </div>
+            )}
           </button>
 
           <button
-            className="p-2 hover:underline hover:underline-offset-4"
+            className="relative inline-block p-2 hover:underline hover:underline-offset-4"
             onClick={() => changeSubMenu('artikel')}
           >
             Artikel
+            {openSubmenu == 'artikel' && (
+              <div className="absolute bg-background text-white rounded-lg text-left mt-2 w-48">
+                <div className="flex flex-col gap-y-3 p-3">
+                  <Link href="/berita" className="hover:text-sky-400">
+                    Berita
+                  </Link>
+                  <Link
+                    href="https://jmg.bmkg.go.id/"
+                    className="hover:text-sky-400"
+                  >
+                    JMG{' '}
+                    <span className="text-xs">
+                      (Jurnal Meteorologi dan Geofisika)
+                    </span>
+                  </Link>
+                </div>
+              </div>
+            )}
           </button>
 
           <Link
@@ -231,72 +291,6 @@ export default function Navbar() {
           )}
         </div>
       </div>
-      {openSubmenu == 'klimat' && (
-        <div className="bg-background text-white">
-          <div className="mx-auto max-w-6xl flex">
-            <div className="my-auto">Klimatologi</div>
-            <div className="flex flex-col ml-60 py-4">
-              <Link href="/klimatologi/inarcm" className="hover:text-sky-400">
-                InaRCM
-              </Link>
-              <Link href="#" className="hover:text-sky-400">
-                Hotspot Occurrence
-              </Link>
-              <Link href="#" className="hover:text-sky-400">
-                InaAQM
-              </Link>
-            </div>
-          </div>
-        </div>
-      )}
-      {openSubmenu == 'meteo' && (
-        <div className="bg-background text-white">
-          <div className="mx-auto max-w-6xl flex">
-            <div className="my-auto">Meteorologi</div>
-            <div className="flex flex-col ml-60 py-4">
-              <Link href="/meteorologi/inanwp" className="hover:text-sky-400">
-                InaNWP
-              </Link>
-            </div>
-          </div>
-        </div>
-      )}
-      {openSubmenu == 'geofis' && (
-        <div className="bg-background text-white">
-          <div className="mx-auto max-w-6xl flex">
-            <div className="my-auto">Geofisika</div>
-            <div className="flex flex-col ml-60 py-4">
-              <Link href="#" className="hover:text-sky-400">
-                Geofisika1
-              </Link>
-              <Link href="#" className="hover:text-sky-400">
-                Geofisika2
-              </Link>
-              <Link href="#" className="hover:text-sky-400">
-                Geofisika3
-              </Link>
-            </div>
-          </div>
-        </div>
-      )}
-      {openSubmenu == 'artikel' && (
-        <div className="bg-background text-white">
-          <div className="mx-auto max-w-6xl flex">
-            <div className="my-auto">Artikel</div>
-            <div className="flex flex-col ml-60 py-4">
-              <Link href="/berita" className="hover:text-sky-400">
-                Berita
-              </Link>
-              <Link
-                href="https://jmg.bmkg.go.id/"
-                className="hover:text-sky-400"
-              >
-                JMG (Jurnal Meteorologi dan Geofisika)
-              </Link>
-            </div>
-          </div>
-        </div>
-      )}
     </nav>
   )
 }
