@@ -22,6 +22,7 @@ export default function Login() {
       })
       if (res.data.token) {
         Cookies.set('token', res.data.token)
+        fetcher.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.token
         setIsLogin(true)
       }
     } catch (err) {
