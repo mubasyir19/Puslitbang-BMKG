@@ -78,12 +78,14 @@ export default function AddArticlePage() {
         })
         router.push('/dashboard/article')
       } catch (err) {
-        if (err.response.data.message === 'slug is already taken') {
-          notifications.show({
-            color: 'red',
-            title: 'Title with same slug is already taken',
-            message: 'Try using custom slug',
-          })
+        if (err.response) {
+          if (err.response.data.message === 'slug is already taken') {
+            notifications.show({
+              color: 'red',
+              title: 'Title with same slug is already taken',
+              message: 'Try using custom slug',
+            })
+          }
         }
       }
     }

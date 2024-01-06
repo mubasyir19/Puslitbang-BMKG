@@ -5,6 +5,7 @@ import { useAuthContext } from '@/contexts/AuthContext'
 import { useState } from 'react'
 import { fetcher } from '@/helpers/fetcher'
 import Cookies from 'js-cookie'
+import { notifications } from '@mantine/notifications'
 
 export default function Login() {
   const { setIsLogin } = useAuthContext()
@@ -22,11 +23,15 @@ export default function Login() {
       })
       if (res.data.token) {
         Cookies.set('token', res.data.token)
-        fetcher.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.token
+        fetcher.defaults.headers.common['Authorization'] =
+          'Bearer ' + res.data.token
         setIsLogin(true)
       }
     } catch (err) {
-      console.error(err)
+      notifications.show({
+        color: 'red',
+        title: 'Login failed',
+      })
     } finally {
       setIsLoading(false)
     }
@@ -87,7 +92,6 @@ export default function Login() {
               type="submit"
               className="w-full px-10 py-2 text-white bg-blue-500 rounded-xl"
               disabled={isLoading}
-              // onClick={handleSubmit}
             >
               Login
             </button>

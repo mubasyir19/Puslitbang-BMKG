@@ -11,15 +11,19 @@ import { fetcher, fetcherSWR } from '@/helpers/fetcher'
 import { useMemo, useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { notifications } from '@mantine/notifications'
+import { useAuthContext } from '@/contexts/AuthContext'
 
 export default function ArticlePage() {
   const router = useRouter()
+  const { user } = useAuthContext()
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
     pageSize: 10,
   })
   const { data, isLoading, error, mutate } = useSWR(
-    `/posts?sort=desc&page=${paginationModel.page + 1}&limit=${paginationModel.pageSize}`,
+    `/posts?sort=desc&page=${paginationModel.page + 1}&limit=${
+      paginationModel.pageSize
+    }&author=${user.role === 'superadmin' ? '' : user.email}`,
     fetcherSWR,
   )
   const [rowCountState, setRowCountState] = useState(data?.total_posts || 0)
@@ -36,6 +40,7 @@ export default function ArticlePage() {
   }
 
   const handleDelete = async (id) => {
+    setIsButtonLoading(true)
     try {
       await fetcher.delete(`/posts/${id}`)
       notifications.show({
@@ -47,6 +52,8 @@ export default function ArticlePage() {
         color: 'red',
         title: `Failed delete article: ${id}`,
       })
+    } finally {
+      setIsButtonLoading(false)
     }
   }
 
@@ -75,6 +82,7 @@ export default function ArticlePage() {
         <div className="flex gap-x-2">
           <Button
             onClick={() => handleEdit(cellValues.row.id)}
+            disabled={isButtonLoading}
             variant="contained"
             color="primary"
             size="small"

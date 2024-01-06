@@ -1,7 +1,9 @@
 import { Poppins } from 'next/font/google'
 import '../globals.css'
-import AuthContext from '@/contexts/AuthContext'
+import '@mantine/core/styles.css'
+import '@mantine/notifications/styles.css'
 
+import AuthContext from '@/contexts/AuthContext'
 import { MantineProvider } from '@mantine/core'
 import { Notifications } from '@mantine/notifications'
 

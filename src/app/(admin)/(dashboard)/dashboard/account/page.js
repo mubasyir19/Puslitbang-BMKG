@@ -3,14 +3,16 @@
 import '@mantine/core/styles.css'
 import '@mantine/notifications/styles.css'
 
-import { TextInput, PasswordInput, Button } from '@mantine/core'
-import { useForm, isNotEmpty, matchesField, isEmail } from '@mantine/form'
-import { fetcher } from '@/helpers/fetcher'
+import useSWR from 'swr'
+import { fetcherSWR, fetcher } from '@/helpers/fetcher'
+import { TextInput, Button, PasswordInput } from '@mantine/core'
+import { useForm, isNotEmpty, matchesField } from '@mantine/form'
+import { useEffect, useState } from 'react'
 import { notifications } from '@mantine/notifications'
-import { useRouter } from 'next/navigation'
 
-export default function AddUserPage() {
-  const router = useRouter()
+export default function AccountPage() {
+  const { data } = useSWR('/users/info', fetcherSWR)
+  const [isLoading, setIsLoading] = useState(false)
 
   const form = useForm({
     initialValues: {
@@ -21,26 +23,38 @@ export default function AddUserPage() {
     },
     validate: {
       name: isNotEmpty('Name is required'),
-      email: isEmail('Invalid email'),
-      password: isNotEmpty('Password is required'),
       rPassword: matchesField('password', 'Repeat password are not the same'),
     },
   })
 
+  useEffect(() => {
+    if (data) {
+      form.setValues({ name: data.data.name, email: data.data.email })
+    }
+  }, [data])
+
   const handleSubmit = async () => {
     form.validate()
     if (form.isValid()) {
+      const body = {
+        name: form.values.name,
+        password: form.values.password || undefined,
+      }
+
+      setIsLoading(true)
       try {
-        await fetcher.post('/users/register', form.values)
+        await fetcher.put('/users', body)
         notifications.show({
-          title: 'Success add user',
+          title: 'Success update account',
         })
-        router.push('/dashboard/user')
       } catch (err) {
+        console.log(err)
         notifications.show({
           color: 'red',
-          title: 'Failed add user',
+          title: 'Failed update account',
         })
+      } finally {
+        setIsLoading(false)
       }
     }
   }
@@ -48,41 +62,41 @@ export default function AddUserPage() {
   return (
     <section className="px-5 pt-6">
       <div className="border-b mb-4">
-        <h1 className="text-2xl font-semibold">Add User</h1>
+        <h1 className="text-2xl font-semibold">Account</h1>
       </div>
 
       <form
-        encType="multipart/form-data"
+        autoComplete="off"
         onSubmit={form.onSubmit(handleSubmit)}
         className="flex flex-col gap-2 max-w-md"
       >
         <TextInput
           label="Name"
-          type="text"
           placeholder="Enter name"
           {...form.getInputProps('name')}
         />
         <TextInput
           label="Email"
-          type="text"
           placeholder="Enter email"
+          disabled
           {...form.getInputProps('email')}
         />
+        <h2 className="mt-4 font-bold">Update Password</h2>
         <PasswordInput
-          label="Password"
-          type="text"
-          placeholder="Enter password"
+          label="New Password"
+          placeholder="Enter new password"
           {...form.getInputProps('password')}
         />
         <PasswordInput
-          label="Repeat Password"
-          type="text"
-          placeholder="Enter repeat password"
+          label="Repeat New Password"
+          placeholder="Repeat new password"
           {...form.getInputProps('rPassword')}
         />
 
         <div className="mt-2 flex gap-x-2">
-          <Button onClick={handleSubmit}>Submit</Button>
+          <Button onClick={handleSubmit} disabled={isLoading}>
+            Update
+          </Button>
         </div>
       </form>
     </section>

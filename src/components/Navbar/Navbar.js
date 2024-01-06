@@ -101,17 +101,14 @@ export default function Navbar() {
             {openSubmenu == 'klimat' && (
               <div className="absolute bg-background text-white rounded-lg text-left mt-2 w-40">
                 <div className="flex flex-col gap-y-3 p-4">
-                  <Link
-                    href="/klimatologi/inarcm"
-                    className="hover:text-sky-400"
-                  >
-                    InaRCM
+                  <Link href="#" className="hover:text-sky-400">
+                    Klimatologi 1
                   </Link>
                   <Link href="#" className="hover:text-sky-400">
-                    Hotspot Occurrence
+                    Klimatologi 1
                   </Link>
                   <Link href="#" className="hover:text-sky-400">
-                    InaAQM
+                    Klimatologi 1
                   </Link>
                 </div>
               </div>

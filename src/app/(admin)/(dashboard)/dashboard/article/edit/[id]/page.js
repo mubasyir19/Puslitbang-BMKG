@@ -21,9 +21,11 @@ import { useEffect } from 'react'
 import { convertToSlug } from '@/helpers/utils'
 import { useRouter } from 'next/navigation'
 import useSWR from 'swr'
+import { useAuthContext } from '@/contexts/AuthContext'
 
 export default function Page({ params }) {
   const router = useRouter()
+  const { user } = useAuthContext()
   const { data, error, isLoading } = useSWR(`/posts/${params.id}`, fetcherSWR)
 
   const form = useForm({
@@ -61,6 +63,10 @@ export default function Page({ params }) {
   })
 
   useEffect(() => {
+    if (data?.author !== user.email) {
+      location.replace('/dashboard/article')
+    }
+
     form.setFieldValue('title', data?.title || '')
     form.setFieldValue('slug', data?.slug || '')
     form.setFieldValue(
