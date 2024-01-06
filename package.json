@@ -37,7 +37,6 @@
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^4.12.0",
-    "sweetalert2": "^11.10.1",
     "swiper": "^10.3.1",
     "swr": "^2.2.4",
     "xml-js": "^1.6.11"

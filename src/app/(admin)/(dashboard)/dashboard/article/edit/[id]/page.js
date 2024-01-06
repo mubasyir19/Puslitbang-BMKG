@@ -63,7 +63,7 @@ export default function Page({ params }) {
   })
 
   useEffect(() => {
-    if (data?.author !== user.email) {
+    if (data?.author !== user.email && user.role !== 'superadmin') {
       location.replace('/dashboard/article')
     }
 
