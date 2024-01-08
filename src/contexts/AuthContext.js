@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect, createContext, useContext } from 'react'
-import axios from 'axios'
 import { usePathname, useRouter } from 'next/navigation'
 import Cookies from 'js-cookie'
 import { fetcher } from '@/helpers/fetcher'

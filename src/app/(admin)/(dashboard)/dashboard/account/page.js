@@ -1,8 +1,5 @@
 'use client'
 
-import '@mantine/core/styles.css'
-import '@mantine/notifications/styles.css'
-
 import useSWR from 'swr'
 import { fetcherSWR, fetcher } from '@/helpers/fetcher'
 import { TextInput, Button, PasswordInput } from '@mantine/core'
@@ -43,12 +40,11 @@ export default function AccountPage() {
 
       setIsLoading(true)
       try {
-        await fetcher.put('/users', body)
+        await fetcher.patch('/users', body)
         notifications.show({
           title: 'Success update account',
         })
       } catch (err) {
-        console.log(err)
         notifications.show({
           color: 'red',
           title: 'Failed update account',
@@ -94,7 +90,7 @@ export default function AccountPage() {
         />
 
         <div className="mt-2 flex gap-x-2">
-          <Button onClick={handleSubmit} disabled={isLoading}>
+          <Button type="submit">
             Update
           </Button>
         </div>

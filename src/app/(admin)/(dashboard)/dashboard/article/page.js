@@ -1,8 +1,5 @@
 'use client'
 
-import '@mantine/core/styles.css'
-import '@mantine/notifications/styles.css'
-
 import { Box, Button } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import Link from 'next/link'

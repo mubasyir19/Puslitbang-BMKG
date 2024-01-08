@@ -1,5 +1,7 @@
 'use client'
 
+import '@mantine/core/styles.css'
+
 import { Components } from '@/components'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'

@@ -1,8 +1,6 @@
 'use client'
 
 import '@mantine/tiptap/styles.css'
-import '@mantine/core/styles.css'
-import '@mantine/notifications/styles.css'
 
 import { FileInput, TagsInput, TextInput } from '@mantine/core'
 import { RichTextEditor, Link } from '@mantine/tiptap'
@@ -90,19 +88,17 @@ export default function Page({ params }) {
         formData.append(key, value)
       }
       try {
-        await fetcher.put(`/posts/${params.id}`, formData)
+        await fetcher.patch(`/posts/${params.id}`, formData)
         notifications.show({
           title: 'Success edit article',
         })
         router.push('/dashboard/article')
       } catch (err) {
-        if (err.response.data.message === 'slug is already taken') {
-          notifications.show({
-            color: 'red',
-            title: 'Title with same slug is already taken',
-            message: 'Try using custom slug',
-          })
-        }
+        notifications.show({
+          color: 'red',
+          title: 'Failed add article',
+          message: err.response.data.message,
+        })
       }
     }
   }
@@ -141,9 +137,21 @@ export default function Page({ params }) {
             placeholder="Choose image"
             {...form.getInputProps('image')}
           />
-          <div className="h-[200px] w-[200px] border">
-            <p></p>
-            <img src={data?.image} className="w-full h-full object-contain" />
+          <div className="flex gap-4">
+            <div className="w-40 h-36">
+              <img
+                src={data?.image}
+                className="w-full h-full object-cover rounded-xl"
+              />
+            </div>
+            {form.values.image !== null && (
+              <div className="w-40 h-36">
+                <img
+                  src={URL.createObjectURL(form.values.image)}
+                  className="w-full h-full object-cover rounded-xl"
+                />
+              </div>
+            )}
           </div>
           <TagsInput
             label="Tag"

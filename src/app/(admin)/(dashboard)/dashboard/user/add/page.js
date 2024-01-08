@@ -1,8 +1,5 @@
 'use client'
 
-import '@mantine/core/styles.css'
-import '@mantine/notifications/styles.css'
-
 import { TextInput, PasswordInput, Button } from '@mantine/core'
 import { useForm, isNotEmpty, matchesField, isEmail } from '@mantine/form'
 import { fetcher } from '@/helpers/fetcher'
@@ -40,6 +37,7 @@ export default function AddUserPage() {
         notifications.show({
           color: 'red',
           title: 'Failed add user',
+          message: err.response.data.message,
         })
       }
     }

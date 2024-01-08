@@ -1,8 +1,6 @@
 'use client'
 
 import '@mantine/tiptap/styles.css'
-import '@mantine/core/styles.css'
-import '@mantine/notifications/styles.css'
 
 import { FileInput, TagsInput, TextInput } from '@mantine/core'
 import { RichTextEditor, Link } from '@mantine/tiptap'
@@ -78,15 +76,11 @@ export default function AddArticlePage() {
         })
         router.push('/dashboard/article')
       } catch (err) {
-        if (err.response) {
-          if (err.response.data.message === 'slug is already taken') {
-            notifications.show({
-              color: 'red',
-              title: 'Title with same slug is already taken',
-              message: 'Try using custom slug',
-            })
-          }
-        }
+        notifications.show({
+          color: 'red',
+          title: 'Failed add article',
+          message: err.response.data.message,
+        })
       }
     }
   }
@@ -120,6 +114,14 @@ export default function AddArticlePage() {
           placeholder="Choose image"
           {...form.getInputProps('image')}
         />
+        {form.values.image !== null && (
+          <div className="w-40 h-36">
+            <img
+              src={URL.createObjectURL(form.values.image)}
+              className="w-full h-full object-cover rounded-xl"
+            />
+          </div>
+        )}
         <TagsInput
           label="Tag"
           placeholder="Enter tag (tap enter to select tag) (optional)"
