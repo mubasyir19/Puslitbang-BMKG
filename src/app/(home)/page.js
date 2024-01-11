@@ -1,12 +1,13 @@
-import { Components } from '@/components'
+import { Weather, Scope, AirQuality, Article, AutoGempa } from '@/components'
 
 export default function Home() {
   return (
     <>
-      <Components.Weather />
-      <Components.Scope />
-      <Components.AirQuality />
-      <Components.Article />
+      <Weather />
+      <Scope />
+      <AirQuality />
+      <Article />
+      <AutoGempa />
     </>
   )
 }

@@ -7,7 +7,10 @@ import ArticleTextDisplay from '@/components/ArticleTextDisplay/ArticleTextDispl
 import { formatDate } from '@/helpers/utils'
 
 export default function Article() {
-  const { data, isLoading, error } = useSWR('/posts?limit=4&sort=desc', fetcherSWR)
+  const { data, isLoading, error } = useSWR(
+    '/posts?limit=4&sort=desc',
+    fetcherSWR,
+  )
 
   return (
     <section className="mt-32 px-8 lg:px-0">
@@ -19,7 +22,7 @@ export default function Article() {
           href="/berita"
           className="my-auto text-sm md:text-base text-blue-500"
         >
-          Lihat Semua
+          Selengkapnya
         </Link>
       </div>
       {error ? (

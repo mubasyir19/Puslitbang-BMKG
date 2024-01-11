@@ -2,7 +2,11 @@
 
 import '@mantine/core/styles.css'
 
-import { Components } from '@/components'
+import {
+  SidebarDashboard,
+  NavbarDashboard,
+  FooterDashboard,
+} from '@/components'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
 
@@ -24,13 +28,13 @@ export default function DashboardLayout({ children }) {
         'Loading...'
       ) : (
         <div className="flex h-screen">
-          <Components.SidebarDashboard />
+          <SidebarDashboard />
           <div className="flex-1 flex flex-col overflow-hidden">
-            <Components.NavbarDashboard />
+            <NavbarDashboard />
             <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-4">
               {children}
             </main>
-            <Components.FooterDashboard />
+            <FooterDashboard />
           </div>
         </div>
       )}

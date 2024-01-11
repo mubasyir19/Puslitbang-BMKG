@@ -5,7 +5,6 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { Autoplay, Pagination } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/pagination'
-import Link from 'next/link'
 import axios from 'axios'
 
 export default function AirQuality() {
@@ -13,7 +12,7 @@ export default function AirQuality() {
 
   useEffect(() => {
     const fetchDataQualityAir = async () => {
-      const response = await axios.get('/api?query=kudara')
+      const response = await axios.get('/api/kudara')
       const data = response.data
       setQuality(data)
     }
@@ -45,9 +44,13 @@ export default function AirQuality() {
     <section className="mt-32 ">
       <div className="flex justify-between">
         <h2 className="font-bold text-black text-4xl">Kualitas Udara</h2>
-        <Link href="#" className="my-auto text-blue-300">
-          Lihat Semua
-        </Link>
+        <a
+          href="https://bmkg.go.id/kualitas-udara/informasi-partikulat-pm25.bmkg"
+          target="_blank"
+          className="my-auto text-blue-500"
+        >
+          Selengkapnya
+        </a>
       </div>
       <div className="list-card mt-9 flex gap-x-11 justify-center">
         <Swiper

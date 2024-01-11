@@ -1,6 +1,6 @@
 'use client'
 
-import { Components } from '@/components'
+import { Navbar } from '@/components'
 import { useState } from 'react'
 
 export default function NavbarMap({ title = '' }) {
@@ -14,7 +14,7 @@ export default function NavbarMap({ title = '' }) {
         }`}
       >
         <div className="w-screen h-20">
-          <Components.Navbar />
+          <Navbar />
         </div>
         <h1
           className={`text-white text-center font-bold text-2xl transition-all duration-300 ${

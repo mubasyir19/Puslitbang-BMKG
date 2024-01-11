@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Script from 'next/script'
 import { useSearchParams } from 'next/navigation'
 
-import { Components } from '@/components'
+import { NavbarMap } from '@/components'
 import { MapComponents } from '@/components'
 
 import infoIcon from '~/icons/info.svg'
@@ -106,7 +106,7 @@ export default function InaNwp() {
       <div className="h-full flex flex-col">
         <div className="grow relative">
           <div id="map" className="h-full relative z-0"></div>
-          <Components.NavbarMap title="Indonesia Numerical Weather Prediction (InaNWP)" />
+          <NavbarMap title="Indonesia Numerical Weather Prediction (InaNWP)" />
           <div className="absolute bottom-36 left-4 text-white flex flex-col gap-2">
             {showInfo && (
               <div className="w-[700px] absolute top-0 left-28 bg-[rgba(0,0,0,0.5)] rounded-lg p-4">

@@ -17,3 +17,5 @@ const fetcherInstance = () => {
 export const fetcher = fetcherInstance()
 
 export const fetcherSWR = (url) => fetcher.get(url).then((res) => res.data)
+
+export const fetcherExt = (url) => axios.get(url).then((res) => res.data)

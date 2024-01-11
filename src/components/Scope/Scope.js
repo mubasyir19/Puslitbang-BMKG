@@ -70,7 +70,7 @@ export default function Scope() {
               meteorologi secara akurat dan terpercaya.
             </p>
             <Link
-              href="#"
+              href="/berita"
               className="mt-10 w-fit bg-white py-4 px-8 text-black rounded"
             >
               Selengkapnya

@@ -42,6 +42,8 @@ export default function Berita() {
         'Error'
       ) : isLoading ? (
         'Loading...'
+      ) : data.data.length === 0 ? (
+        'No Posts'
       ) : (
         <section className="lg:flex gap-4 mt-4">
           <div className="lg:w-3/4 flex flex-col gap-4">

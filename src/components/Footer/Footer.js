@@ -4,59 +4,41 @@ import React from 'react'
 
 export default function Footer() {
   return (
-    <footer className="px-36 py-20 mt-10 bg-background text-white">
-      <div className="grid grid-cols-4 gap-x-5">
+    <footer className="px-10 lg:px-16 pt-16 pb-4 mt-10 bg-background text-white">
+      <div className="flex flex-col lg:flex-row justify-between max-w-6xl mx-auto">
         <div>
           <Image
             src="/images/logo-bmkg.png"
             width={85}
             height={85}
-            className=""
+            className="w-auto h-20"
             alt="logo"
           />
           <div className="mt-3.5 text-sm font-bold text-white">
             <p>Badan Meteorologi</p>
             <p>Klimatologi Geofisika</p>
           </div>
-          {/* <div className='address mt-7'>
-          <p className='font-semibold text-xs text-white'>Kantor Pusat</p>
-          <p className='text-xs'>Jl. Angkasa I No.2 KemayoranJakarta Pusat, DKI Jakarta 10610PO Box 3540 Jkt.</p>
         </div>
-        <div className='telphone mt-7'>
-          <p className='font-semibold text-xs text-white'>Tel. & Fax</p>
-          <p className='text-xs'>Call Center (021)</p>
-          <p className='text-xs'>196Fax (021) 4246703</p>
-        </div>
-        <div className='telphone mt-7'>
-          <p className='font-semibold text-xs text-white'>Email :</p>
-          <p className='text-xs'>cc196@bmkg.go.id</p>
-        </div> */}
-        </div>
-        <div>
-          <h3 className="text-lg underline leading-4 font-medium">
-            Meteorologi
-          </h3>
-          <div className="mt-8 flex flex-col gap-y-6 text-base">
-            <Link href="#">InaNWP</Link>
+        <div className="mt-10 pe-40 lg:mt-0 flex flex-col lg:flex-row gap-y-8 gap-x-28">
+          <div>
+            <h3 className="text-base leading-4 font-bold">Meteorologi</h3>
+            <div className="mt-8 flex flex-col gap-y-6 text-sm">
+              <Link href="#" className="text-gray-500 hover:text-white">
+                InaNWP
+              </Link>
+            </div>
           </div>
-        </div>
-        <div>
-          <h3 className="text-lg underline leading-4 font-medium">
-            Klimatologi
-          </h3>
-          <div className="mt-8 flex flex-col gap-y-6 text-base">
-            <Link href="#">InaRWC</Link>
-            <Link href="#">InaSHO</Link>
-            <Link href="#">InaAQM</Link>
+          <div>
+            <h3 className="text-base leading-4 font-bold">Klimatologi</h3>
           </div>
-        </div>
-        <div>
-          <h3 className="text-lg underline leading-4 font-medium">Geofisika</h3>
-          <div className="mt-8 flex flex-col gap-y-6 text-base"></div>
+          <div>
+            <h3 className="text-base leading-4 font-bold">Geofisika</h3>
+            <div className="mt-8 flex flex-col gap-y-6 text-sm"></div>
+          </div>
         </div>
       </div>
       <hr className="mt-20 w-full border-white" />
-      <div className="mt-11 text-base text-center">
+      <div className="mt-11 text-sm text-center">
         <p>© 2023 - Pusat Penelitian dan Pengembangan BMKG</p>
       </div>
     </footer>
