@@ -13,7 +13,7 @@ export default function Weather() {
 
   useEffect(() => {
     const fetchDataBMKG = async () => {
-      const response = await axios.get('/api/prakicu')
+      const response = await axios.get('/services/prakicu')
       const data = response.data
       setWilayah(data)
     }

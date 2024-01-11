@@ -12,7 +12,7 @@ export default function AirQuality() {
 
   useEffect(() => {
     const fetchDataQualityAir = async () => {
-      const response = await axios.get('/api/kudara')
+      const response = await axios.get('/services/kudara')
       const data = response.data
       setQuality(data)
     }

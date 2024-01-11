@@ -7,7 +7,7 @@ import { IoIosClose } from 'react-icons/io'
 import { RiAlertFill } from 'react-icons/ri'
 
 export default function AutoGempa() {
-  const { data } = useSWR('/api/autogempa', fetcherExt)
+  const { data } = useSWR('/services/autogempa', fetcherExt)
   const [gempaShow, setGempaShow] = useState(false)
   const [lastGempa, setLastGempa] = useState('')
 
