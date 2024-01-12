@@ -15,7 +15,10 @@ export default function Berita() {
   const searchParams = useSearchParams()
   const pPage = searchParams.get('page')
   const [page, setPage] = useState(parseInt(pPage) > 0 ? parseInt(pPage) : 1)
-  const { data, isLoading, error } = useSWR(`/posts?page=${page}`, fetcherSWR)
+  const { data, isLoading, error } = useSWR(
+    `/posts?page=${page}&sort=desc`,
+    fetcherSWR,
+  )
 
   const onNextHandler = () => {
     if (page < data.total_pages) {
