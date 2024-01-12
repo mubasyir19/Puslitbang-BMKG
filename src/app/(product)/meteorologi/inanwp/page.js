@@ -13,6 +13,7 @@ import temperatureIcon from '~/icons/temperature.svg'
 import humidityIcon from '~/icons/humidity.svg'
 import precipitationIcon from '~/icons/precipitation.svg'
 import dotIcon from '~/icons/dot.svg'
+import rainIcon from '~/icons/rain.svg'
 
 const PARAMETERS = [
   {
@@ -41,6 +42,13 @@ const PARAMETERS = [
     icon: precipitationIcon,
     text: 'Precipitation',
     color: '/assets/tp_color.txt',
+    active: false,
+  },
+  {
+    id: 'rr',
+    icon: rainIcon,
+    text: 'Rain Rate',
+    color: '/assets/rr_color.txt',
     active: false,
   },
 ]

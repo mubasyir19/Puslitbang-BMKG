@@ -1,6 +1,6 @@
 'use client'
 
-import { TextInput, PasswordInput } from '@mantine/core'
+import { TextInput, PasswordInput, Button } from '@mantine/core'
 import { useForm, isNotEmpty, matchesField, isEmail } from '@mantine/form'
 import { fetcher } from '@/helpers/fetcher'
 import { notifications } from '@mantine/notifications'
@@ -80,12 +80,7 @@ export default function AddUserPage() {
         />
 
         <div className="mt-2 flex gap-x-2">
-          <button
-            type="submit"
-            className="bg-sky-500 text-white px-4 py-2 rounded"
-          >
-            Submit
-          </button>
+          <Button type="submit">Submit</Button>
         </div>
       </form>
     </section>

@@ -2,7 +2,7 @@
 
 import '@mantine/tiptap/styles.css'
 
-import { FileInput, TagsInput, TextInput } from '@mantine/core'
+import { FileInput, TagsInput, TextInput, Button } from '@mantine/core'
 import { RichTextEditor, Link } from '@mantine/tiptap'
 import { useEditor } from '@tiptap/react'
 import Highlight from '@tiptap/extension-highlight'
@@ -178,9 +178,7 @@ export default function AddArticlePage() {
         </div>
 
         <div className="mt-2 flex gap-x-2">
-          <button type="submit" className="bg-sky-500 text-white px-4 py-2 rounded">
-            Submit
-          </button>
+          <Button type="submit">Submit</Button>
         </div>
       </form>
     </section>
