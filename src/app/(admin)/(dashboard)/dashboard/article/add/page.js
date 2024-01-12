@@ -11,7 +11,6 @@ import Underline from '@tiptap/extension-underline'
 import TextAlign from '@tiptap/extension-text-align'
 import Superscript from '@tiptap/extension-superscript'
 import SubScript from '@tiptap/extension-subscript'
-import { Button } from '@mantine/core'
 import { useForm, isNotEmpty, matches } from '@mantine/form'
 import { fetcher } from '@/helpers/fetcher'
 import { notifications } from '@mantine/notifications'
@@ -179,7 +178,9 @@ export default function AddArticlePage() {
         </div>
 
         <div className="mt-2 flex gap-x-2">
-          <Button onClick={handleSubmit}>Submit</Button>
+          <button type="submit" className="bg-sky-500 text-white px-4 py-2 rounded">
+            Submit
+          </button>
         </div>
       </form>
     </section>

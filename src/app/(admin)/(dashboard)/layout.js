@@ -1,7 +1,5 @@
 'use client'
 
-import '@mantine/core/styles.css'
-
 import {
   SidebarDashboard,
   NavbarDashboard,

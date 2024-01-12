@@ -2,7 +2,7 @@
 
 import useSWR from 'swr'
 import { fetcherSWR, fetcher } from '@/helpers/fetcher'
-import { TextInput, Button, PasswordInput } from '@mantine/core'
+import { TextInput, PasswordInput } from '@mantine/core'
 import { useForm, isNotEmpty, matchesField } from '@mantine/form'
 import { useEffect, useState } from 'react'
 import { notifications } from '@mantine/notifications'
@@ -90,9 +90,12 @@ export default function AccountPage() {
         />
 
         <div className="mt-2 flex gap-x-2">
-          <Button type="submit">
+          <button
+            type="submit"
+            className="bg-sky-500 text-white px-4 py-2 rounded"
+          >
             Update
-          </Button>
+          </button>
         </div>
       </form>
     </section>
