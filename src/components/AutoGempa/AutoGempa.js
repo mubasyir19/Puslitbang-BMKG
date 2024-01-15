@@ -50,7 +50,7 @@ export default function AutoGempa() {
                   {`Gempabumi Terkini: ${data.Tanggal}, ${data.Jam}`}
                 </h1>
               </div>
-              <div className="relative flex">
+              <div className="relative flex px-8">
                 <div className="w-1/2">
                   <img src={data.Shakemap} className="w-full h-full" />
                 </div>
